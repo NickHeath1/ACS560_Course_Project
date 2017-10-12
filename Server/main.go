@@ -5,6 +5,9 @@ import (
 	"net/http"
 	"log"
 	"encoding/json"
+	_ "github.com/denisenkom/go-mssqldb"
+	"database/sql"
+	"fmt"
 )
 
 type Person struct {
@@ -31,4 +34,23 @@ func Test(w http.ResponseWriter, r *http.Request) {
 		i++;
 	}
 	json.NewEncoder(w).Encode(newPeople);
+	GetSQLData()
+}
+
+func GetSQLData() {
+	conn, err := sql.Open("sqlserver", `sqlserver://ChessGameService:ILikeChicken@localhost\SQLExpress:1433?database=ChessGameService&connection+timeout=30`)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	defer conn.Close()
+	stmt, err := conn.Prepare("SELECT * FROM Users")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	defer stmt.Close()
+	row := stmt.QueryRow()
+	var username string
+	var password string
+	row.Scan(username, password)
+	fmt.Printf(username + " " + password)
 }
