@@ -38,12 +38,12 @@ func Test(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetSQLData() {
-	conn, err := sql.Open("sqlserver", `sqlserver://ChessGameService:ILikeChicken@localhost\SQLExpress:1433?database=ChessGameService&connection+timeout=30`)
+	conn, err := sql.Open("sqlserver", `sqlserver://ChessGameService:ILikeChicken@(local)/SQLExpress?database=ChessGame&connection+timeout=30`)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 	defer conn.Close()
-	stmt, err := conn.Prepare("SELECT * FROM Users")
+	stmt, err := conn.Prepare("SELECT Username, PasswordHash FROM Users")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -51,6 +51,9 @@ func GetSQLData() {
 	row := stmt.QueryRow()
 	var username string
 	var password string
-	row.Scan(username, password)
+	row.Scan(&username, &password)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 	fmt.Printf(username + " " + password)
 }
