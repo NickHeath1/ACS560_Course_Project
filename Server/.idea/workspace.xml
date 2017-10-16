@@ -14,11 +14,11 @@
       <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="17" column="13" lean-forward="true" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+            <state relative-caret-position="305">
+              <caret line="19" column="19" lean-forward="true" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
               <folding>
-                <element signature="e#14#147#0" expanded="true" />
-                <marker date="1508020432745" expanded="true" signature="1027:1067" ph="SELECT * FRO... Users" />
+                <element signature="e#14#154#0" expanded="true" />
+                <marker date="1508125921112" expanded="true" signature="1065:1105" ph="SELECT * FRO... Users" />
               </folding>
             </state>
           </provider>
@@ -52,7 +52,7 @@
       <scroll-view-position x="0" y="0" />
     </layout>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-1485" />
     <option name="y" value="-8" />
     <option name="width" value="1400" />
@@ -137,7 +137,7 @@
     <option name="remove_strategy" value="false" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1608" y="-8" width="1616" height="876" extended-state="7" />
+    <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -170,7 +170,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/main.go</url>
-          <line>40</line>
+          <line>42</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
@@ -208,8 +208,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#14#147#0" expanded="true" />
-            <marker date="1508020432745" expanded="true" signature="1027:1067" ph="SELECT * FRO... Users" />
+            <element signature="e#14#154#0" expanded="true" />
+            <marker date="1508125921112" expanded="true" signature="1065:1105" ph="SELECT * FRO... Users" />
           </folding>
         </state>
       </provider>
@@ -219,8 +219,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#14#147#0" expanded="true" />
-            <marker date="1508020432745" expanded="true" signature="1027:1067" ph="SELECT * FRO... Users" />
+            <element signature="e#14#154#0" expanded="true" />
+            <marker date="1508125921112" expanded="true" signature="1065:1105" ph="SELECT * FRO... Users" />
           </folding>
         </state>
       </provider>
@@ -230,8 +230,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#14#147#0" expanded="true" />
-            <marker date="1508020432745" expanded="true" signature="1027:1067" ph="SELECT * FRO... Users" />
+            <element signature="e#14#154#0" expanded="true" />
+            <marker date="1508125921112" expanded="true" signature="1065:1105" ph="SELECT * FRO... Users" />
           </folding>
         </state>
       </provider>
@@ -241,8 +241,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#14#147#0" expanded="true" />
-            <marker date="1508020432745" expanded="true" signature="1027:1067" ph="SELECT * FRO... Users" />
+            <element signature="e#14#154#0" expanded="true" />
+            <marker date="1508125921112" expanded="true" signature="1065:1105" ph="SELECT * FRO... Users" />
           </folding>
         </state>
       </provider>
@@ -252,8 +252,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#14#147#0" expanded="true" />
-            <marker date="1508020432745" expanded="true" signature="1027:1067" ph="SELECT * FRO... Users" />
+            <element signature="e#14#154#0" expanded="true" />
+            <marker date="1508125921112" expanded="true" signature="1065:1105" ph="SELECT * FRO... Users" />
           </folding>
         </state>
       </provider>
@@ -263,8 +263,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#14#147#0" expanded="true" />
-            <marker date="1508020432745" expanded="true" signature="1027:1067" ph="SELECT * FRO... Users" />
+            <element signature="e#14#154#0" expanded="true" />
+            <marker date="1508125921112" expanded="true" signature="1065:1105" ph="SELECT * FRO... Users" />
           </folding>
         </state>
       </provider>
@@ -274,8 +274,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#14#147#0" expanded="true" />
-            <marker date="1508020432745" expanded="true" signature="1027:1067" ph="SELECT * FRO... Users" />
+            <element signature="e#14#154#0" expanded="true" />
+            <marker date="1508125921112" expanded="true" signature="1065:1105" ph="SELECT * FRO... Users" />
           </folding>
         </state>
       </provider>
@@ -332,11 +332,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="17" column="13" lean-forward="true" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        <state relative-caret-position="305">
+          <caret line="19" column="19" lean-forward="true" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
           <folding>
-            <element signature="e#14#147#0" expanded="true" />
-            <marker date="1508020432745" expanded="true" signature="1027:1067" ph="SELECT * FRO... Users" />
+            <element signature="e#14#154#0" expanded="true" />
+            <marker date="1508125921112" expanded="true" signature="1065:1105" ph="SELECT * FRO... Users" />
           </folding>
         </state>
       </provider>
