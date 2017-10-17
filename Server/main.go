@@ -8,7 +8,6 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 	"database/sql"
 	"fmt"
-	"net"
 )
 
 type Person struct {
@@ -17,7 +16,6 @@ type Person struct {
 }
 
 func main() {
-	conn, err := net.Dial("", "")
 	router := mux.NewRouter()
 	router.HandleFunc("/", Test).Methods("POST")
 	router.HandleFunc("/Test", Test).Methods("POST")
