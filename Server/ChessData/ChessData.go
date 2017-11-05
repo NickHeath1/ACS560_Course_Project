@@ -2,6 +2,10 @@ package ChessData
 
 import (
 	"time"
+	"database/sql"
+	"golang.org/x/crypto/bcrypt"
+	"os/user"
+	"net/http"
 )
 
 type User struct {
@@ -46,6 +50,31 @@ type Color struct {
 	Red int
 	Green int
 	Blue int
+}
+
+func UserExists(username string) bool {
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer conn.Close()
+	query := "SELECT * FROM USERS WHERE Username = @Username"
+	result, err := conn.Exec(query, sql.Named("Username", username))
+	if err != nil {
+		panic(err.Error())
+	}
+
+	if rowsAffected, _ := result.RowsAffected(); rowsAffected > 0 {
+		return true
+	}
+	return false
+}
+
+func CheckPassword(password, salt, hash string) bool {
+	if err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password + salt)); err != nil {
+		return false
+	}
+	return true
 }
 
 func RunServer() {

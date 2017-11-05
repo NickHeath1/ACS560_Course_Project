@@ -17,6 +17,7 @@ func RegisterRoutes() {
 	router := mux.NewRouter()
 	// User data
 	router.HandleFunc("/AddUser", AddUser).Methods("POST")
+	router.HandleFunc("/AuthenticateUser", AuthenticateUser).Methods("POST")
 	router.HandleFunc("/ChangePassword", ChangePassword).Methods("POST")
 	router.HandleFunc("/UpdateGamesWon", UpdateGamesWon).Methods("POST")
 	router.HandleFunc("/UpdateGamesLost", UpdateGamesLost).Methods("POST")
@@ -48,6 +49,10 @@ func RegisterRoutes() {
 func AddUser(w http.ResponseWriter, r *http.Request) {
 	var user User
 	json.NewDecoder(r.Body).Decode(&user)
+	if UserExists(user.Username) {
+		http.Error(w, "User already exists!", 400)
+		return
+	}
 	salt, err := bcrypt.GenerateFromPassword([]byte(user.PasswordHash), bcrypt.DefaultCost)
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.PasswordHash + string(salt)), bcrypt.DefaultCost)
 	if err != nil {
@@ -64,6 +69,31 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 	_, err = conn.Query(query, sql.Named("Username", user.Username), sql.Named("PasswordHash", user.PasswordHash), sql.Named("PasswordSalt", user.PasswordSalt), sql.Named("JoinDate",time.Now().Format("02-Jan-2006 15:04:05")))
 	if err != nil {
 		panic(err.Error())
+	}
+}
+
+func AuthenticateUser(w http.ResponseWriter, r *http.Request) {
+	var user User
+	json.NewDecoder(r.Body).Decode(&user)
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		panic(err.Error())
+	}
+	result, err := conn.Query("SELECT PasswordHash, PasswordSalt FROM Users WHERE Username = @Username", sql.Named("Username", user.Username))
+	if err != nil {
+		panic(err.Error())
+	}
+	if !result.Next() {
+		http.Error(w, "Incorrect username or password!", 400)
+		return
+	}
+	var PasswordHash string
+	var PasswordSalt string
+	result.Scan(&PasswordHash, &PasswordSalt)
+	//hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.PasswordHash + PasswordSalt), bcrypt.DefaultCost)
+	if CheckPassword(user.PasswordHash, PasswordSalt, PasswordHash) {
+		http.Error(w, "Incorrect username or password!", 400)
+		return
 	}
 }
 
