@@ -16,7 +16,7 @@ type Person struct {
 }
 
 func main() {
-	ChessData.RegisterRoutes()
+	ChessData.RunServer()
 }
 
 func Test(w http.ResponseWriter, r *http.Request) {

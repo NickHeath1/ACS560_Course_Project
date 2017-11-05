@@ -9,6 +9,7 @@ import (
 	"database/sql"
 	_ "github.com/denisenkom/go-mssqldb"
 	"time"
+	"fmt"
 )
 
 const Datasource string = `sqlserver://ChessGameService:ILikeChicken@(local)/SQLExpress?database=ChessGame&connection+timeout=30`
@@ -56,19 +57,25 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 	salt, err := bcrypt.GenerateFromPassword([]byte(user.PasswordHash), bcrypt.DefaultCost)
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.PasswordHash + string(salt)), bcrypt.DefaultCost)
 	if err != nil {
-		panic(err.Error())
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
 	}
 	user.PasswordHash = string(hashedPassword)
 	user.PasswordSalt = string(salt)
 	conn, err := sql.Open("sqlserver", Datasource)
 	if err != nil {
-		panic(err.Error())
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
 	}
 	defer conn.Close()
 	query := "INSERT INTO USERS (Username, PasswordHash, PasswordSalt, JoinDate) Values(@Username, @PasswordHash, @PasswordSalt, @JoinDate)"
 	_, err = conn.Query(query, sql.Named("Username", user.Username), sql.Named("PasswordHash", user.PasswordHash), sql.Named("PasswordSalt", user.PasswordSalt), sql.Named("JoinDate",time.Now().Format("02-Jan-2006 15:04:05")))
 	if err != nil {
-		panic(err.Error())
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
 	}
 }
 
@@ -77,11 +84,15 @@ func AuthenticateUser(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&user)
 	conn, err := sql.Open("sqlserver", Datasource)
 	if err != nil {
-		panic(err.Error())
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
 	}
 	result, err := conn.Query("SELECT PasswordHash, PasswordSalt FROM Users WHERE Username = @Username", sql.Named("Username", user.Username))
 	if err != nil {
-		panic(err.Error())
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
 	}
 	if !result.Next() {
 		http.Error(w, "Incorrect username or password!", 400)
@@ -90,27 +101,59 @@ func AuthenticateUser(w http.ResponseWriter, r *http.Request) {
 	var PasswordHash string
 	var PasswordSalt string
 	result.Scan(&PasswordHash, &PasswordSalt)
-	//hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.PasswordHash + PasswordSalt), bcrypt.DefaultCost)
-	if CheckPassword(user.PasswordHash, PasswordSalt, PasswordHash) {
+	if !CheckPassword(user.PasswordHash, PasswordSalt, PasswordHash) {
 		http.Error(w, "Incorrect username or password!", 400)
 		return
 	}
 }
 
 func ChangePassword(w http.ResponseWriter, r *http.Request) {
-
+	var user User
+	json.NewDecoder(r.Body).Decode(&user)
+	salt, err := bcrypt.GenerateFromPassword([]byte(user.PasswordHash), bcrypt.DefaultCost)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.PasswordHash + string(salt)), bcrypt.DefaultCost)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	user.PasswordHash = string(hashedPassword)
+	user.PasswordSalt = string(salt)
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+	query := "UPDATE USERS SET PasswordHash = @PasswordHash, PasswordSalt = @PasswordSalt WHERE Username = @Username"
+	_, err = conn.Query(query, sql.Named("Username", user.Username), sql.Named("PasswordHash", user.PasswordHash), sql.Named("PasswordSalt", user.PasswordSalt))
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
 }
 
 func UpdateGamesWon(w http.ResponseWriter, r *http.Request) {
-
+	var user User
+	json.NewDecoder(r.Body).Decode(&user)
+	statistic := GetGameStat("Won", user)
+	UpdateGameStat("Won", user, statistic + 1)
 }
 
 func UpdateGamesLost(w http.ResponseWriter, r *http.Request) {
-
+	var user User
+	json.NewDecoder(r.Body).Decode(&user)
+	statistic := GetGameStat("Lost", user)
+	UpdateGameStat("Lost", user, statistic + 1)
 }
 
 func UpdateGamesDrawn(w http.ResponseWriter, r *http.Request) {
-
+	var user User
+	json.NewDecoder(r.Body).Decode(&user)
+	statistic := GetGameStat("Drawn", user)
+	UpdateGameStat("Drawn", user, statistic + 1)
 }
 
 // Custom game data

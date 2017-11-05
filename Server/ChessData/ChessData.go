@@ -4,8 +4,6 @@ import (
 	"time"
 	"database/sql"
 	"golang.org/x/crypto/bcrypt"
-	"os/user"
-	"net/http"
 )
 
 type User struct {
@@ -75,6 +73,38 @@ func CheckPassword(password, salt, hash string) bool {
 		return false
 	}
 	return true
+}
+
+func GetGameStat(StatType string, user User) int {
+	var statistic int
+	conn, _ := sql.Open("sqlserver", Datasource)
+	defer conn.Close()
+	query := ""
+	if StatType == "Won" {
+		query = "SELECT GamesWon FROM Users WHERE Username = @Username"
+
+	} else if StatType == "Lost" {
+		query = "SELECT GamesLost FROM Users WHERE Username = @Username"
+	} else if StatType == "Drawn" {
+		query = "SELECT GamesDrawn FROM Users WHERE Username = @Username"
+	}
+	result, _ := conn.Query(query, sql.Named("Username", user.Username))
+	result.Scan(&statistic)
+	return statistic
+}
+
+func UpdateGameStat(StatType string, user User, statistic int) {
+	conn, _ := sql.Open("sqlserver", Datasource)
+	defer conn.Close()
+	query := ""
+	if StatType == "Won" {
+		query = "UPDATE USERS SET GamesWon = @statistic WHERE Username = @Username"
+	} else if StatType == "Lost" {
+		query = "UPDATE USERS SET GamesLost = @statistic WHERE Username = @Username"
+	} else if StatType == "Drawn" {
+		query = "UPDATE USERS SET GamesDrawn = @statistic WHERE Username = @Username"
+	}
+	conn.Exec(query, sql.Named("Username", user.Username), sql.Named ("statistic", statistic))
 }
 
 func RunServer() {
