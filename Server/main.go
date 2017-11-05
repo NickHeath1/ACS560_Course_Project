@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
+	"./ChessData"
 	"net/http"
 	"log"
 	"encoding/json"
@@ -16,10 +16,7 @@ type Person struct {
 }
 
 func main() {
-	router := mux.NewRouter()
-	router.HandleFunc("/", Test).Methods("POST")
-	router.HandleFunc("/Test", Test).Methods("POST")
-	log.Fatal(http.ListenAndServe(":2345", router))
+	ChessData.RegisterRoutes()
 }
 
 func Test(w http.ResponseWriter, r *http.Request) {

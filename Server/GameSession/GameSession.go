@@ -1,0 +1,5 @@
+package GameSession
+
+import (
+	"../ChessData"
+)
