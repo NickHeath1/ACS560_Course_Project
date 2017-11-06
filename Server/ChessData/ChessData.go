@@ -21,11 +21,13 @@ type User struct {
 }
 
 type CustomGame struct {
+	Username string
 	GameID int
 	Pieces []Piece
 }
 
 type CustomImage struct {
+	Username string
 	ID int
 	PieceName string
 	Image []byte
