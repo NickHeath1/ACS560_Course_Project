@@ -40,11 +40,11 @@
       <file leaf-file-name="DataApiController.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ChessData/DataApiController.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="87" column="5" lean-forward="true" selection-start-line="87" selection-start-column="5" selection-end-line="87" selection-end-column="5" />
+            <state relative-caret-position="1006">
+              <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
               <folding>
                 <element signature="e#19#190#0" expanded="true" />
-                <marker date="1509937733402" expanded="true" signature="3815:3886" ph="SELECT Usern... Users" />
+                <marker date="1509939937236" expanded="true" signature="3794:3865" ph="SELECT Usern... Users" />
               </folding>
             </state>
           </provider>
@@ -206,12 +206,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/ChessData/DataApiController.go</url>
-          <line>91</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/ChessData/DataApiController.go</url>
-          <line>119</line>
+          <line>118</line>
           <properties />
           <option name="timeStamp" value="13" />
         </line-breakpoint>
@@ -219,10 +214,10 @@
           <url>file://$PROJECT_DIR$/ChessData/DataApiController.go</url>
           <line>83</line>
           <properties />
-          <option name="timeStamp" value="19" />
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="20" />
+      <option name="time" value="21" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -299,7 +294,7 @@
           <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
           <folding>
             <element signature="e#19#190#0" expanded="true" />
-            <marker date="1509937733402" expanded="true" signature="3815:3886" ph="SELECT Usern... Users" />
+            <marker date="1509939937236" expanded="true" signature="3794:3865" ph="SELECT Usern... Users" />
           </folding>
         </state>
       </provider>
@@ -487,11 +482,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ChessData/DataApiController.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="87" column="5" lean-forward="true" selection-start-line="87" selection-start-column="5" selection-end-line="87" selection-end-column="5" />
+        <state relative-caret-position="1006">
+          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
           <folding>
             <element signature="e#19#190#0" expanded="true" />
-            <marker date="1509937733402" expanded="true" signature="3815:3886" ph="SELECT Usern... Users" />
+            <marker date="1509939937236" expanded="true" signature="3794:3865" ph="SELECT Usern... Users" />
           </folding>
         </state>
       </provider>

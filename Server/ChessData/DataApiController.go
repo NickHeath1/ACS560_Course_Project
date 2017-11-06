@@ -19,7 +19,7 @@ func RegisterRoutes() {
 	// User data
 	router.HandleFunc("/AddUser", AddUser).Methods("POST")
 	router.HandleFunc("/AuthenticateUser", AuthenticateUser).Methods("POST")
-	router.HandleFunc("/CheckUserAvailability", CheckUserAvailability).Methods("POST")
+	router.HandleFunc("/CheckUserAvailability/{username}", CheckUserAvailability).Methods("GET")
 	router.HandleFunc("/ChangePassword", ChangePassword).Methods("POST")
 	router.HandleFunc("/UpdateGamesWon", UpdateGamesWon).Methods("POST")
 	router.HandleFunc("/UpdateGamesLost", UpdateGamesLost).Methods("POST")
@@ -81,9 +81,8 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func CheckUserAvailability(w http.ResponseWriter, r *http.Request) {
-	var username string
-	json.NewDecoder(r.Body).Decode(&username)
-	if UserExists(username) {
+	params := mux.Vars(r)
+	if UserExists(params["username"]) {
 		http.Error(w, "User already exists!", 400)
 	}
 }
