@@ -53,6 +53,7 @@
         <entry file="file://$PROJECT_DIR$/ChessData/DataApiController.go">
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <state relative-caret-position="924">
               <caret line="54" column="14" lean-forward="true" selection-start-line="54" selection-start-column="14" selection-end-line="54" selection-end-column="14" />
               <folding>
@@ -65,6 +66,13 @@
                 <element signature="e#19#190#0" expanded="true" />
                 <marker date="1509937733402" expanded="true" signature="3815:3886" ph="SELECT Usern... Users" />
 >>>>>>> 5d94bb3624e1c847ae8396f81a27a3fac7a2a0a0
+=======
+            <state relative-caret-position="1006">
+              <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+              <folding>
+                <element signature="e#19#190#0" expanded="true" />
+                <marker date="1509939937236" expanded="true" signature="3794:3865" ph="SELECT Usern... Users" />
+>>>>>>> 7aa1fb8eef9033cc23040619baab05c14d734927
               </folding>
             </state>
           </provider>
@@ -285,6 +293,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/ChessData/DataApiController.go</url>
+<<<<<<< HEAD
           <line>91</line>
 >>>>>>> 5d94bb3624e1c847ae8396f81a27a3fac7a2a0a0
           <option name="timeStamp" value="12" />
@@ -307,6 +316,9 @@
       <option name="time" value="19" />
 =======
           <line>119</line>
+=======
+          <line>118</line>
+>>>>>>> 7aa1fb8eef9033cc23040619baab05c14d734927
           <properties />
           <option name="timeStamp" value="13" />
         </line-breakpoint>
@@ -314,11 +326,15 @@
           <url>file://$PROJECT_DIR$/ChessData/DataApiController.go</url>
           <line>83</line>
           <properties />
-          <option name="timeStamp" value="19" />
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
+<<<<<<< HEAD
       <option name="time" value="20" />
 >>>>>>> 5d94bb3624e1c847ae8396f81a27a3fac7a2a0a0
+=======
+      <option name="time" value="21" />
+>>>>>>> 7aa1fb8eef9033cc23040619baab05c14d734927
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -407,10 +423,14 @@
           <folding>
             <element signature="e#19#190#0" expanded="true" />
 <<<<<<< HEAD
+<<<<<<< HEAD
             <marker date="1509908432692" expanded="true" signature="3520:3591" ph="SELECT Passw... Users" />
 =======
             <marker date="1509937733402" expanded="true" signature="3815:3886" ph="SELECT Usern... Users" />
 >>>>>>> 5d94bb3624e1c847ae8396f81a27a3fac7a2a0a0
+=======
+            <marker date="1509939937236" expanded="true" signature="3794:3865" ph="SELECT Usern... Users" />
+>>>>>>> 7aa1fb8eef9033cc23040619baab05c14d734927
           </folding>
         </state>
       </provider>
@@ -854,6 +874,7 @@
     <entry file="file://$PROJECT_DIR$/ChessData/DataApiController.go">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <state relative-caret-position="924">
           <caret line="54" column="14" lean-forward="true" selection-start-line="54" selection-start-column="14" selection-end-line="54" selection-end-column="14" />
           <folding>
@@ -866,6 +887,13 @@
             <element signature="e#19#190#0" expanded="true" />
             <marker date="1509937733402" expanded="true" signature="3815:3886" ph="SELECT Usern... Users" />
 >>>>>>> 5d94bb3624e1c847ae8396f81a27a3fac7a2a0a0
+=======
+        <state relative-caret-position="1006">
+          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+          <folding>
+            <element signature="e#19#190#0" expanded="true" />
+            <marker date="1509939937236" expanded="true" signature="3794:3865" ph="SELECT Usern... Users" />
+>>>>>>> 7aa1fb8eef9033cc23040619baab05c14d734927
           </folding>
         </state>
       </provider>
