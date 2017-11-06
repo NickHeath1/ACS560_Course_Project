@@ -19,6 +19,7 @@ func RegisterRoutes() {
 	// User data
 	router.HandleFunc("/AddUser", AddUser).Methods("POST")
 	router.HandleFunc("/AuthenticateUser", AuthenticateUser).Methods("POST")
+	router.HandleFunc("/CheckUserAvailability", CheckUserAvailability).Methods("POST")
 	router.HandleFunc("/ChangePassword", ChangePassword).Methods("POST")
 	router.HandleFunc("/UpdateGamesWon", UpdateGamesWon).Methods("POST")
 	router.HandleFunc("/UpdateGamesLost", UpdateGamesLost).Methods("POST")
@@ -76,6 +77,14 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "An error occurred on the server!", 500)
 		fmt.Println(err.Error())
 		return
+	}
+}
+
+func CheckUserAvailability(w http.ResponseWriter, r *http.Request) {
+	var username string
+	json.NewDecoder(r.Body).Decode(&username)
+	if UserExists(username) {
+		http.Error(w, "User already exists!", 400)
 	}
 }
 
@@ -158,7 +167,31 @@ func UpdateGamesDrawn(w http.ResponseWriter, r *http.Request) {
 
 // Custom game data
 func AddCustomGame(w http.ResponseWriter, r *http.Request) {
-
+	var game CustomGame
+	json.NewDecoder(r.Body).Decode(&game)
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+	query := "INSERT INTO UserCustomGames VALUES(@Username)"
+	result, err := conn.Exec(query, sql.Named("Username", game.Username))
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	GameID, _ := result.LastInsertId()
+	for _, piece := range game.Pieces {
+		query = "INSERT INTO UserCustomGamePieces VALUES(@GameID, @Piece, @XCoordinate, @YCoordinate)"
+		_, err := conn.Query(query, sql.Named("GameID", GameID), sql.Named("Piece", piece.Name), sql.Named("XCoordinate", piece.XCoordinate), sql.Named("YCoordinate", piece.YCoordinate))
+		if err != nil {
+			http.Error(w, "An error occurred on the server!", 500)
+			fmt.Println(err.Error())
+		}
+	}
 }
 
 func GetCustomGamesForUser(w http.ResponseWriter, r *http.Request) {
