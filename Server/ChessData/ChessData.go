@@ -21,16 +21,16 @@ type User struct {
 }
 
 type CustomGame struct {
-	Username string
-	GameID int
-	Pieces []Piece
+	Username string `json:"Username,omitempty"`
+	GameID int `json:"GameID,omitempty"`
+	Pieces []Piece `json:"Pieces,omitempty"`
 }
 
 type CustomImage struct {
-	Username string
-	ID int
-	PieceName string
-	Image []byte
+	Username string `json:"Username,omitempty"`
+	ID int `json:"ID,omitempty"`
+	PieceName string `json:"PieceName,omitempty"`
+	Image []byte `json:"Image,omitempty"`
 }
 
 type Piece struct {
@@ -40,10 +40,10 @@ type Piece struct {
 }
 
 type Achievement struct {
-	AchievementID int
-	Title string
-	Description string
-	Difficulty string
+	AchievementID int `json:"AchievementID,omitempty"`
+	Title string `json:"Title,omitempty"`
+	Description string `json:"Description,omitempty"`
+	Difficulty string `json:"Difficulty,omitempty"`
 }
 
 type Color struct {
