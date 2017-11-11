@@ -34,9 +34,8 @@ type CustomImage struct {
 }
 
 type Piece struct {
-	Name string
-	XCoordinate int
-	YCoordinate int
+	Name string `json:"Name,omitempty"`
+	XYCoordinates Coordinate `json:"Coordinates,omitempty"`
 }
 
 type Achievement struct {
@@ -50,6 +49,19 @@ type Color struct {
 	Red int
 	Green int
 	Blue int
+}
+
+type Move struct {
+	SessionID int `json:"SessionID,omitempty"`
+	Player int `json:"Player,omitempty"`
+	Source Piece `json:"Source,omitempty"`
+	Destination Piece `json:"Destination,omitempty"`
+	Checkstate bool `json:"Checkstate,omitempty"`
+}
+
+type Coordinate struct {
+	X int `json:"X,omitempty"`
+	Y int `json:"Y,omitempty"`
 }
 
 func UserExists(username string) bool {

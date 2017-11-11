@@ -186,7 +186,7 @@ func AddCustomGame(w http.ResponseWriter, r *http.Request) {
 	GameID, _ := result.LastInsertId()
 	for _, piece := range game.Pieces {
 		query = "INSERT INTO UserCustomGamePieces VALUES(@GameID, @Piece, @XCoordinate, @YCoordinate)"
-		_, err := conn.Query(query, sql.Named("GameID", GameID), sql.Named("Piece", piece.Name), sql.Named("XCoordinate", piece.XCoordinate), sql.Named("YCoordinate", piece.YCoordinate))
+		_, err := conn.Query(query, sql.Named("GameID", GameID), sql.Named("Piece", piece.Name), sql.Named("XCoordinate", piece.XYCoordinates.X), sql.Named("YCoordinate", piece.XYCoordinates.Y))
 		if err != nil {
 			http.Error(w, "An error occurred on the server!", 500)
 			fmt.Println(err.Error())
@@ -214,7 +214,7 @@ func GetCustomGamesForUser(w http.ResponseWriter, r *http.Request) {
 		gamePiecesResults, _ := conn.Query(query, sql.Named("GameID", currentCustomGame.GameID))
 		for gamePiecesResults.Next() {
 			var piece Piece
-			gamePiecesResults.Scan(&piece.Name, &piece.XCoordinate, &piece.YCoordinate)
+			gamePiecesResults.Scan(&piece.Name, &piece.XYCoordinates.X, &piece.XYCoordinates.Y)
 			currentCustomGame.Pieces = append(currentCustomGame.Pieces, piece)
 		}
 		games = append(games, currentCustomGame)
