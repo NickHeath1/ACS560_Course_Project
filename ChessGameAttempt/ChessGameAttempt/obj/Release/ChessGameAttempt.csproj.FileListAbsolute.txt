@@ -1,0 +1,9 @@
+C:\Users\TwiDashOTP\source\repos\ChessGameAttempt\ChessGameAttempt\bin\Release\ChessGameAttempt.exe.config
+C:\Users\TwiDashOTP\source\repos\ChessGameAttempt\ChessGameAttempt\bin\Release\ChessGameAttempt.exe
+C:\Users\TwiDashOTP\source\repos\ChessGameAttempt\ChessGameAttempt\bin\Release\ChessGameAttempt.pdb
+C:\Users\TwiDashOTP\source\repos\ChessGameAttempt\ChessGameAttempt\obj\Release\ChessGameAttempt.Form1.resources
+C:\Users\TwiDashOTP\source\repos\ChessGameAttempt\ChessGameAttempt\obj\Release\ChessGameAttempt.Properties.Resources.resources
+C:\Users\TwiDashOTP\source\repos\ChessGameAttempt\ChessGameAttempt\obj\Release\ChessGameAttempt.csproj.GenerateResource.Cache
+C:\Users\TwiDashOTP\source\repos\ChessGameAttempt\ChessGameAttempt\obj\Release\ChessGameAttempt.csproj.CoreCompileInputs.cache
+C:\Users\TwiDashOTP\source\repos\ChessGameAttempt\ChessGameAttempt\obj\Release\ChessGameAttempt.exe
+C:\Users\TwiDashOTP\source\repos\ChessGameAttempt\ChessGameAttempt\obj\Release\ChessGameAttempt.pdb

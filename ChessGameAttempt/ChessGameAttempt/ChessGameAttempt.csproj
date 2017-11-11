@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{61FCBEF9-B8B9-44AF-9E1D-3202C0F20851}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ChessGameAttempt</RootNamespace>
+    <AssemblyName>ChessGameAttempt</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CreateUserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateUserForm.Designer.cs">
+      <DependentUpon>CreateUserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomGameSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomGameSetupForm.Designer.cs">
+      <DependentUpon>CustomGameSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameSession.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameSession.Designer.cs">
+      <DependentUpon>GameSession.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameDetailsForm.Designer.cs">
+      <DependentUpon>GameDetailsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LobbyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LobbyForm.Designer.cs">
+      <DependentUpon>LobbyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogInForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogInForm.Designer.cs">
+      <DependentUpon>LogInForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoveAttackLogic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PawnPromotionFormBlack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PawnPromotionFormBlack.Designer.cs">
+      <DependentUpon>PawnPromotionFormBlack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PawnPromotionFormWhite.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PawnPromotionFormWhite.Designer.cs">
+      <DependentUpon>PawnPromotionFormWhite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User.cs" />
+    <EmbeddedResource Include="CreateUserForm.resx">
+      <DependentUpon>CreateUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomGameSetupForm.resx">
+      <DependentUpon>CustomGameSetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSession.resx">
+      <DependentUpon>GameSession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameDetailsForm.resx">
+      <DependentUpon>GameDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LobbyForm.resx">
+      <DependentUpon>LobbyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogInForm.resx">
+      <DependentUpon>LogInForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PawnPromotionFormBlack.resx">
+      <DependentUpon>PawnPromotionFormBlack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PawnPromotionFormWhite.resx">
+      <DependentUpon>PawnPromotionFormWhite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bBishop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bKing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bKnight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bQueen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bRook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wBishop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wKing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wKnight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wQueen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wRook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Abstract-Blue-Water-Backgrounds-800x600.jpg" />
+    <Content Include="Resources\background.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
