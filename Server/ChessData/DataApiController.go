@@ -10,6 +10,7 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 	"time"
 	"fmt"
+	"strconv"
 )
 
 const Datasource string = `sqlserver://ChessGameService:ILikeChicken@(local)/SQLExpress?database=ChessGame&connection+timeout=30`
@@ -27,8 +28,8 @@ func RegisterRoutes() {
 
 	// Custom Game Data
 	router.HandleFunc("/AddCustomGame", AddCustomGame).Methods("POST")
-	router.HandleFunc("/GetCustomGamesForUser", GetCustomGamesForUser).Methods("GET")
-	router.HandleFunc("/DeleteCustomGame", DeleteCustomGame).Methods("POST")
+	router.HandleFunc("/GetCustomGamesForUser/{username}", GetCustomGamesForUser).Methods("GET")
+	router.HandleFunc("/DeleteCustomGame/{GameID}", DeleteCustomGame).Methods("POST")
 
 	// Custom piece images
 	router.HandleFunc("/AddCustomPieceImages", AddCustomPieceImages).Methods("POST")
@@ -37,8 +38,8 @@ func RegisterRoutes() {
 
 	// Achievement data
 	router.HandleFunc("/GetAllAchievements", GetAllAchievements).Methods("GET")
-	router.HandleFunc("/GetAchievementsForUser", GetAchievementsForUser).Methods("GET")
-	router.HandleFunc("/AwardAchievementToUser", AwardAchievementToUser).Methods("POST")
+	router.HandleFunc("/GetAchievementsForUser/{username}", GetAchievementsForUser).Methods("GET")
+	router.HandleFunc("/AwardAchievementToUser/{username}/{id}", AwardAchievementToUser).Methods("POST")
 
 	// Custom chessboard data
 	router.HandleFunc("/AddCustomChessboard", AddCustomChessboard).Methods("POST")
@@ -194,11 +195,44 @@ func AddCustomGame(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetCustomGamesForUser(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+	query := "SELECT * FROM UserCustomGames WHERE [User] = @Username"
+	gameResults, err := conn.Query(query, sql.Named("Username", params["username"]))
+	query = "SELECT * FROM UserCustomGamePieces WHERE GameID = @GameID"
+	var games []CustomGame
 
+	for gameResults.Next() {
+		var currentCustomGame CustomGame
+		gameResults.Scan(&currentCustomGame.GameID, &currentCustomGame.Username)
+		gamePiecesResults, _ := conn.Query(query, sql.Named("GameID", currentCustomGame.GameID))
+		for gamePiecesResults.Next() {
+			var piece Piece
+			gamePiecesResults.Scan(&piece.Name, &piece.XCoordinate, &piece.YCoordinate)
+			currentCustomGame.Pieces = append(currentCustomGame.Pieces, piece)
+		}
+		games = append(games, currentCustomGame)
+	}
+	json.NewEncoder(w).Encode(games)
 }
 
 func DeleteCustomGame(w http.ResponseWriter, r *http.Request) {
-
+	params := mux.Vars(r)
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	query := "DELETE FROM UserCustomGames WHERE GameID = @GameID"
+	GameID, err := strconv.ParseInt(params["GameID"], 10, 32)
+	conn.Exec(query, sql.Named("GameID", GameID))
 }
 
 // Custom piece images
@@ -216,15 +250,54 @@ func DeleteCustomPieceImages(w http.ResponseWriter, r *http.Request) {
 
 // Achievement data
 func GetAllAchievements(w http.ResponseWriter, r *http.Request) {
-
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	query := "SELECT * FROM Achievements"
+	var achievements []Achievement
+	results, err := conn.Query(query)
+	for (results.Next()) {
+		var achievement Achievement
+		results.Scan(&achievement.AchievementID, &achievement.Title, &achievement.Description, &achievement.Difficulty)
+		achievements = append(achievements, achievement)
+	}
+	json.NewEncoder(w).Encode(achievements)
 }
 
 func GetAchievementsForUser(w http.ResponseWriter, r *http.Request) {
-
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+	params := mux.Vars(r)
+	query := "SELECT a.* FROM UserAchievements AS ua JOIN Achievements AS a on ua.AchievementID = a.AchievementID WHERE ua.[User] = @Username"
+	results, err := conn.Query(query, sql.Named("Username", params["username"]))
+	var achievements []Achievement
+	for results.Next() {
+		var achievement Achievement
+		results.Scan(&achievement.AchievementID, &achievement.Title, &achievement.Description, &achievement.Difficulty)
+		achievements = append(achievements, achievement)
+	}
+	json.NewEncoder(w).Encode(achievements)
 }
 
 func AwardAchievementToUser(w http.ResponseWriter, r *http.Request) {
-
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+	params := mux.Vars(r)
+	query := "INSERT INTO UserAchievements VALUES (@Username, @AchievementID)"
+	conn.Exec(query, sql.Named("Username", params["username"]), sql.Named("AchievementID", params["id"]))
 }
 
 // Custom chessboard data
