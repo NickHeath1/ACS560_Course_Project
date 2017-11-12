@@ -14,16 +14,27 @@ type User struct {
 	GamesWon int `json:"GamesWon,omitempty"`
 	GamesLost int `json:"GamesLost,omitempty"`
 	GamesDrawn int `json:"GamesDrawn,omitempty"`
-	CustomGames []CustomGame
-	Achievements []Achievement
-	ChessboardColor1 Color
-	ChessboardColor2 Color
 }
 
 type CustomGame struct {
 	Username string `json:"Username,omitempty"`
 	GameID int `json:"GameID,omitempty"`
 	Pieces []Piece `json:"Pieces,omitempty"`
+}
+
+type AllPieceImages struct {
+	WhitePawn CustomImage `json:"WhitePawn,omitempty"`
+	BlackPawn CustomImage `json:"BlackPawn,omitempty"`
+	WhiteKnight CustomImage `json:"WhiteKnight,omitempty"`
+	BlackKnight CustomImage `json:"BlackKnight,omitempty"`
+	WhiteBishop CustomImage `json:"WhiteBishop,omitempty"`
+	BlackBishop CustomImage `json:"BlackBishop,omitempty"`
+	WhiteRook CustomImage `json:"WhiteRook,omitempty"`
+	BlackRook CustomImage `json:"BlackRook,omitempty"`
+	WhiteQueen CustomImage `json:"WhiteQueen,omitempty"`
+	BlackQueen CustomImage `json:"BlackQueen,omitempty"`
+	WhiteKing CustomImage `json:"WhiteKing,omitempty"`
+	BlackKing CustomImage `json:"BlackKing,omitempty"`
 }
 
 type CustomImage struct {
@@ -45,18 +56,21 @@ type Achievement struct {
 	Difficulty string `json:"Difficulty,omitempty"`
 }
 
-type Color struct {
-	Red int
-	Green int
-	Blue int
-}
-
 type Move struct {
-	SessionID int `json:"SessionID,omitempty"`
 	Player int `json:"Player,omitempty"`
 	Source Piece `json:"Source,omitempty"`
 	Destination Piece `json:"Destination,omitempty"`
 	Checkstate bool `json:"Checkstate,omitempty"`
+}
+
+type CustomChessboard struct {
+	User string `json:"User,omitempty"`
+	Red1 int `json:"Red1,omitempty"`
+	Green1 int `json:"Green1,omitempty"`
+	Blue1 int `json:Blue1,omitempty"`
+	Red2 int `json:"Red2,omitempty"`
+	Green2 int `json:"Green2,omitempty"`
+	Blue2 int `json:"Blue2,omitempty"`
 }
 
 type Coordinate struct {
@@ -90,20 +104,21 @@ func CheckPassword(password, salt, hash string) bool {
 }
 
 func GetGameStat(StatType string, user User) int {
-	var statistic int
+	statistic := 0
 	conn, _ := sql.Open("sqlserver", Datasource)
 	defer conn.Close()
 	query := ""
 	if StatType == "Won" {
 		query = "SELECT GamesWon FROM Users WHERE Username = @Username"
-
 	} else if StatType == "Lost" {
 		query = "SELECT GamesLost FROM Users WHERE Username = @Username"
 	} else if StatType == "Drawn" {
 		query = "SELECT GamesDrawn FROM Users WHERE Username = @Username"
 	}
 	result, _ := conn.Query(query, sql.Named("Username", user.Username))
-	result.Scan(&statistic)
+	if result.Next() {
+		result.Scan(&statistic)
+	}
 	return statistic
 }
 
