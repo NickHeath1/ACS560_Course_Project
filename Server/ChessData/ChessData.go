@@ -90,13 +90,12 @@ func CheckPassword(password, salt, hash string) bool {
 }
 
 func GetGameStat(StatType string, user User) int {
-	var statistic int
+	statistic := 0
 	conn, _ := sql.Open("sqlserver", Datasource)
 	defer conn.Close()
 	query := ""
 	if StatType == "Won" {
 		query = "SELECT GamesWon FROM Users WHERE Username = @Username"
-
 	} else if StatType == "Lost" {
 		query = "SELECT GamesLost FROM Users WHERE Username = @Username"
 	} else if StatType == "Drawn" {
