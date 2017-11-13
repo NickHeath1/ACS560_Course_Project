@@ -17,6 +17,13 @@ namespace TCPTester
             
             NetworkStream stream = client.GetStream();
             stream.Write(json, 0, json.Length);
+            if (stream.DataAvailable)
+            {
+                byte[] data = new byte[4096];
+                stream.Read(data, 0, data.Length);
+                string dataString = UnicodeEncoding.ASCII.GetString(data);
+                Console.WriteLine(dataString);
+            }
         }
     }
 }

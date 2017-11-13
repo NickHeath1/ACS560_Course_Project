@@ -21,8 +21,10 @@ type Session struct {
 
 type TCPSignal struct {
 	SignalType int `json:"SignalType,omitempty"`
+	SessionID int `json:"SessionID,omitempty"`
 	PlayerMove ChessData.Move `json:"PlayerMove,omitempty"`
 	NewSession Session `json:"NewSession,omitempty"`
+	PlayerMessage string `json:"PlayerMessage,omitempty"`
 }
 
 const EXIT_FAILURE = 1
@@ -57,9 +59,22 @@ func ListenOnTCP() {
 		if tcpSignal.SignalType == 1 {
 			CreateSession(conn, tcpSignal.NewSession)
 		} else if tcpSignal.SignalType == 2 {
-			MakeMove(conn, tcpSignal.PlayerMove)
+			MakeMove(conn, tcpSignal.PlayerMove, tcpSignal.SessionID)
+		} else if tcpSignal.SignalType == 3 {
+			GetSessions(conn)
+		} else if tcpSignal.SignalType == 4 {
+			SendMessage(conn, tcpSignal.PlayerMessage)
 		}
 	}
+}
+
+func GetSessions(conn net.Conn) {
+	jsonBytes, err := json.Marshal(activeSessions)
+	if err != nil {
+		fmt.Println("Error: ", err.Error())
+		return
+	}
+	conn.Write(jsonBytes)
 }
 
 func CreateSession(conn net.Conn, session Session) {
@@ -67,9 +82,9 @@ func CreateSession(conn net.Conn, session Session) {
 	conn.Write([]byte("Success"))
 }
 
-func MakeMove(conn net.Conn, move ChessData.Move) {
+func MakeMove(conn net.Conn, move ChessData.Move, SessionID int) {
 	for _, session := range activeSessions {
-		if move.SessionID == session.SessionID {
+		if SessionID == session.SessionID {
 			if move.Player == 1 {
 				session.HostPlayerPieces[move.Source.XYCoordinates.X - 1][move.Source.XYCoordinates.Y - 1].Name = "NoPiece"
 				session.HostPlayerPieces[move.Destination.XYCoordinates.X - 1][move.Destination.XYCoordinates.Y - 1].Name = move.Destination.Name
@@ -80,4 +95,8 @@ func MakeMove(conn net.Conn, move ChessData.Move) {
 			break
 		}
 	}
+}
+
+func SendMessage(conn net.Conn, message string) {
+	conn.Write([]byte(message))
 }
