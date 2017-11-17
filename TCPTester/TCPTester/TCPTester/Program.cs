@@ -17,7 +17,7 @@ namespace TCPTester
             NetworkStream stream = client.GetStream();
             while (true)
             {
-                byte[] data = UnicodeEncoding.ASCII.GetBytes("Hello!\n");
+                byte[] data = UnicodeEncoding.ASCII.GetBytes("Hello!\r");
                 stream.Write(data, 0, data.Length);
             }
         }

@@ -68,37 +68,37 @@ var activeSessions []Session
 //	}
 //}
 
-func GetSessions(conn net.Conn) {
+func GetSessions(client *Client) {
 	jsonBytes, err := json.Marshal(activeSessions)
 	if err != nil {
 		fmt.Println("Error: ", err.Error())
 		return
 	}
-	conn.Write(jsonBytes)
+	client.WriteData(string(jsonBytes))
 }
 
-func CreateSession(conn net.Conn, session Session) {
-	activeSessions = append(activeSessions, session)
-	conn.Write([]byte("Success"))
+func CreateSession(client *Client, session *Session) {
+	session.SessionID = len(activeSessions) + 1
+	activeSessions = append(activeSessions, *session)
+	client.session = &activeSessions[len(activeSessions) - 1]
 }
 
-func MakeMove(conn net.Conn, move ChessData.Move, SessionID int) {
-	for _, session := range activeSessions {
-		if SessionID == session.SessionID {
-			if move.Player == 1 {
-				session.HostPlayerPieces[move.Source.XYCoordinates.X - 1][move.Source.XYCoordinates.Y - 1].Name = "NoPiece"
-				session.HostPlayerPieces[move.Destination.XYCoordinates.X - 1][move.Destination.XYCoordinates.Y - 1].Name = move.Destination.Name
-			} else if move.Player == 2 {
-				session.GuestPlayerPieces[move.Source.XYCoordinates.X - 1][move.Source.XYCoordinates.Y - 1].Name = "NoPiece"
-				session.GuestPlayerPieces[move.Destination.XYCoordinates.X - 1][move.Destination.XYCoordinates.Y - 1].Name = move.Destination.Name
-			}
-			break
-		}
+func JoinSession(conn net.Conn, session Session) {
+
+}
+
+func MakeMove(client *Client, move ChessData.Move) {
+	if move.Player == 1 {
+		client.session.HostPlayerPieces[move.Source.XYCoordinates.X - 1][move.Source.XYCoordinates.Y - 1].Name = "NoPiece"
+		client.session.HostPlayerPieces[move.Destination.XYCoordinates.X - 1][move.Destination.XYCoordinates.Y - 1].Name = move.Destination.Name
+	} else if move.Player == 2 {
+		client.session.GuestPlayerPieces[move.Source.XYCoordinates.X - 1][move.Source.XYCoordinates.Y - 1].Name = "NoPiece"
+		client.session.GuestPlayerPieces[move.Destination.XYCoordinates.X - 1][move.Destination.XYCoordinates.Y - 1].Name = move.Destination.Name
 	}
 }
 
-func SendMessage(conn net.Conn, message string) {
-	conn.Write([]byte(message))
+func SendMessage(client *Client, message string) {
+
 }
 
 func ListenOnTCP() {
@@ -115,13 +115,14 @@ func ListenOnTCP() {
 			fmt.Println(err.Error())
 		}
 		client := NewClient(conn)
-		for clientList, _ := range allClients {
-			if clientList.connection == nil {
-				client.connection = clientList
-				clientList.connection = client
-				fmt.Println("Connected")
-			}
-		}
+
+		//for clientList, _ := range allClients {
+		//	if clientList.connection == nil {
+		//		client.connection = clientList
+		//		clientList.connection = client
+		//		fmt.Println("Connected")
+		//	}
+		//}
 		allClients[client] = 1
 		fmt.Println(len(allClients))
 	}
@@ -131,6 +132,7 @@ var allClients map[*Client]int
 
 type Client struct {
 	// incoming chan string
+	session *Session
 	outgoing   chan string
 	reader     *bufio.Reader
 	writer     *bufio.Writer
@@ -140,8 +142,25 @@ type Client struct {
 
 func (client *Client) Read() {
 	for {
-		line, err := client.reader.ReadString('\n')
+		line, err := client.reader.ReadString('\r')
 		if err == nil {
+			tcpSignal := new(TCPSignal)
+			byteData := []byte(line)
+			err = json.Unmarshal(byteData[:len(line)], &tcpSignal)
+					if err != nil {
+						fmt.Println("Error: ", err.Error())
+						continue
+					}
+					if tcpSignal.SignalType == 1 {
+						CreateSession(client, &tcpSignal.NewSession)
+					} else if tcpSignal.SignalType == 2 {
+						MakeMove(client, tcpSignal.PlayerMove)
+					} else if tcpSignal.SignalType == 3 {
+						GetSessions(client)
+					} else if tcpSignal.SignalType == 4 {
+						client.connection.outgoing <- tcpSignal.PlayerMessage
+					}
+
 			if client.connection != nil {
 				client.connection.outgoing <- line
 			}
@@ -157,6 +176,11 @@ func (client *Client) Read() {
 		client.connection.connection = nil
 	}
 	client = nil
+}
+
+func (client *Client) WriteData(data string) {
+	client.writer.WriteString(data)
+	client.writer.Flush()
 }
 
 func (client *Client) Write() {
