@@ -60,7 +60,7 @@ type Move struct {
 	Player int `json:"Player,omitempty"`
 	Source Piece `json:"Source,omitempty"`
 	Destination Piece `json:"Destination,omitempty"`
-	Checkstate bool `json:"Checkstate,omitempty"`
+	CheckState bool `json:"Checkstate,omitempty"`
 }
 
 type CustomChessboard struct {
