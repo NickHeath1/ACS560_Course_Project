@@ -1,31 +1,4 @@
 {
-	"SignalType" : 1,
-	"SessionID" : 0,
-	"NewSession" : {
-		"HostPlayer" : "Someone",
-		"GuestPlayer" : "Someone2",
-		"HostPlayerPieces" : [
-			[
-				{
-					"Name" : "Pawn",
-					"Coordinates" : {
-						"X" : 1,
-						"Y" : 1
-					}
-				}
-			]
-		],
-		"GuestPlayerPieces" : [
-			[
-				{
-					"Name" : "Pawn",
-					"Coordinates" : {
-						"X" : 1,
-						"Y" : 1
-					}
-				}
-			]
-		]
-	},
+	"SignalType" : 4,
 	"PlayerMessage" : "Hello Mr. Anderson!"
 }
