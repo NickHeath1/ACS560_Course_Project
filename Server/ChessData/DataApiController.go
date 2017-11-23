@@ -33,8 +33,8 @@ func RegisterRoutes() {
 
 	// Custom piece images
 	router.HandleFunc("/AddCustomPieceImages", AddCustomPieceImages).Methods("POST")
-	router.HandleFunc("/GetCustomPieceImagesForUser", GetCustomPieceImagesForUser).Methods("GET")
-	router.HandleFunc("/DeleteCustomPieceImages", DeleteCustomPieceImages).Methods("POST")
+	router.HandleFunc("/GetCustomPieceImagesForUser/{username}", GetCustomPieceImagesForUser).Methods("GET")
+	router.HandleFunc("/DeleteCustomPieceImage/{id}", DeleteCustomPieceImages).Methods("POST")
 
 	// Achievement data
 	router.HandleFunc("/GetAllAchievements", GetAllAchievements).Methods("GET")
@@ -42,9 +42,8 @@ func RegisterRoutes() {
 	router.HandleFunc("/AwardAchievementToUser/{username}/{id}", AwardAchievementToUser).Methods("POST")
 
 	// Custom chessboard data
-	router.HandleFunc("/AddCustomChessboard", AddCustomChessboard).Methods("POST")
-	router.HandleFunc("/GetCustomChessboardForUser", GetCustomChessboardForUser).Methods("GET")
-	router.HandleFunc("/DeleteCustomChessboard", DeleteCustomChessboard).Methods("POST")
+	router.HandleFunc("/EditCustomChessboard", EditCustomChessboard).Methods("POST")
+	router.HandleFunc("/GetCustomChessboardForUser/{username}", GetCustomChessboardForUser).Methods("GET")
 	log.Fatal(http.ListenAndServe(":2345", router))
 }
 
@@ -97,6 +96,7 @@ func AuthenticateUser(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 		return
 	}
+	defer conn.Close()
 	result, err := conn.Query("SELECT PasswordHash, PasswordSalt FROM Users WHERE Username = @Username", sql.Named("Username", user.Username))
 	if err != nil {
 		http.Error(w, "An error occurred on the server!", 500)
@@ -230,6 +230,7 @@ func DeleteCustomGame(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 		return
 	}
+	defer conn.Close()
 	query := "DELETE FROM UserCustomGames WHERE GameID = @GameID"
 	GameID, err := strconv.ParseInt(params["GameID"], 10, 32)
 	conn.Exec(query, sql.Named("GameID", GameID))
@@ -237,15 +238,56 @@ func DeleteCustomGame(w http.ResponseWriter, r *http.Request) {
 
 // Custom piece images
 func AddCustomPieceImages(w http.ResponseWriter, r *http.Request) {
-
+	var customPieceImages []CustomImage
+	json.NewDecoder(r.Body).Decode(customPieceImages)
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+	query := "INSERT INTO UserCustomPieceImages VALUES (@Username, @PieceName, @Image)"
+	for _, image := range customPieceImages {
+		_, err := conn.Exec(query, sql.Named("Username", image.Username), sql.Named("PieceName", image.PieceName), sql.Named("Image", image.Image))
+		if err != nil {
+			http.Error(w, "An error occurred on the server!", 500)
+			fmt.Println(err.Error())
+		}
+	}
 }
 
 func GetCustomPieceImagesForUser(w http.ResponseWriter, r *http.Request) {
-
+	params := mux.Vars(r)
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+	var customPieceImages []CustomImage
+	query := "SELECT * FROM UserCustomPieceImages WHERE User = @Username"
+	results, err := conn.Query(query, sql.Named("Username", params["username"]));
+	for results.Next() {
+		var customPieceImage CustomImage
+		results.Scan(&customPieceImage.ID, &customPieceImage.Username, &customPieceImage.PieceName, &customPieceImage.Image)
+		customPieceImages = append(customPieceImages, customPieceImage)
+	}
+	json.NewEncoder(w).Encode(customPieceImages)
 }
 
 func DeleteCustomPieceImages(w http.ResponseWriter, r *http.Request) {
-
+	params := mux.Vars(r)
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+	query := "DELETE FROM UserCustomPieceImages WHERE ID = @ID"
+	conn.Exec(query, sql.Named("ID", params["id"]))
 }
 
 // Achievement data
@@ -256,6 +298,7 @@ func GetAllAchievements(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 		return
 	}
+	defer conn.Close()
 	query := "SELECT * FROM Achievements"
 	var achievements []Achievement
 	results, err := conn.Query(query)
@@ -301,15 +344,40 @@ func AwardAchievementToUser(w http.ResponseWriter, r *http.Request) {
 }
 
 // Custom chessboard data
-func AddCustomChessboard(w http.ResponseWriter, r *http.Request) {
-
+func EditCustomChessboard(w http.ResponseWriter, r *http.Request) {
+	var customChessBoard CustomChessboard
+	json.NewDecoder(r.Body).Decode(customChessBoard)
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+	query := "SELECT * FROM UserCustomChessboard WHERE User = @Username"
+	result, err := conn.Exec(query, sql.Named("Username", customChessBoard.User))
+	if rowsAffected, _ := result.RowsAffected(); rowsAffected == 0 {
+		query = "INSERT INTO UserCustomChessboard VALUES (@Username, @Color1Red, @Color1Green, @Color1Blue, @Color2Red, @Color2Green, @Color2Blue)"
+		conn.Exec(query, sql.Named("Username", customChessBoard.User), sql.Named("Color1Red", customChessBoard.Red1), sql.Named("Color1Green", customChessBoard.Green1), sql.Named("Color1Blue", customChessBoard.Blue1), sql.Named("Color2Red", customChessBoard.Red2), sql.Named("Color2Green", customChessBoard.Green2), sql.Named("Color2Blue", customChessBoard.Blue2))
+	} else {
+		query = "UPDATE UserCustomChessboard SET Color1Red = @Color1Red, Color1Green = @Color1Green, Color1Blue = @Color1Blue, Color2Red = @Color2Red, Color2Green = @Color2Green, Color2Blue = @Color2Blue"
+		conn.Exec(query, sql.Named("Color1Red", customChessBoard.Red1), sql.Named("Color1Green", customChessBoard.Green1), sql.Named("Color1Blue", customChessBoard.Blue1), sql.Named("Color2Red", customChessBoard.Red2), sql.Named("Color2Green", customChessBoard.Green2), sql.Named("Color2Blue", customChessBoard.Blue2))
+	}
 }
 
 func GetCustomChessboardForUser(w http.ResponseWriter, r *http.Request) {
-
-}
-
-func DeleteCustomChessboard(w http.ResponseWriter, r *http.Request) {
-
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+	params := mux.Vars(r)
+	query := "SELECT * FROM UserCustomChessboard WHERE User = @Username"
+	result, err := conn.Query(query, sql.Named("Username", params["username"]))
+	var customChessBoard CustomChessboard
+	result.Scan(&customChessBoard.User, &customChessBoard.Red1, &customChessBoard.Green1, &customChessBoard.Blue1, &customChessBoard.Red2, &customChessBoard.Green2, &customChessBoard.Blue2)
+	json.NewEncoder(w).Encode(customChessBoard)
 }
 
