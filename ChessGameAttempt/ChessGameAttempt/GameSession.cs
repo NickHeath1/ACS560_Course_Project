@@ -565,11 +565,6 @@ namespace ChessGameAttempt
                 (piece.color == pieceColor.black && !whiteTurn);
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private bool IsPieceOn(int x, int y)
         {
             return GetPieceStringOn(x, y) != "";
