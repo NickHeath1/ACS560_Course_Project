@@ -13,10 +13,10 @@ type Session struct {
 	SessionID int `json:"SessionID,omitempty"`
 	HostPlayer string `json:"HostPlayer,omitempty"`
 	GuestPlayer string `json:"GuestPlayer,omitempty"`
-	GameTimerMinutes int `json:"GameTimerMinutes,omitempty"`
+	GameTimerSeconds int `json:"GameTimerSeconds,omitempty"`
 	MoveTimerSeconds int `json:"MoveTimerSeconds,omitempty"`
-	HostPlayerPieces [][]ChessData.Piece `json:"HostPlayerPieces,omitempty"`
-	GuestPlayerPieces [][]ChessData.Piece `json:"GuestPlayerPieces,omitempty"`
+	BoardPieces [][]ChessData.Piece `json:"BoardPieces,omitempty"`
+	CustomGameMode int `json:"CustomGameMode,omitempty"`
 }
 
 type TCPSignal struct {
@@ -64,13 +64,8 @@ func JoinSession(client *Client, sessionID int) {
 }
 
 func MakeMove(client *Client, move ChessData.Move) {
-	if move.Player == 1 {
-		client.session.HostPlayerPieces[move.Source.XYCoordinates.X - 1][move.Source.XYCoordinates.Y - 1].Name = "NoPiece"
-		client.session.HostPlayerPieces[move.Destination.XYCoordinates.X - 1][move.Destination.XYCoordinates.Y - 1].Name = move.Destination.Name
-	} else if move.Player == 2 {
-		client.session.GuestPlayerPieces[move.Source.XYCoordinates.X-1][move.Source.XYCoordinates.Y-1].Name = "NoPiece"
-		client.session.GuestPlayerPieces[move.Destination.XYCoordinates.X-1][move.Destination.XYCoordinates.Y-1].Name = move.Destination.Name
-	}
+	client.session.BoardPieces[move.Source.XYCoordinates.X - 1][move.Source.XYCoordinates.Y - 1].Name = "NoPiece"
+	client.session.BoardPieces[move.Destination.XYCoordinates.X - 1][move.Destination.XYCoordinates.Y - 1].Name = move.Destination.Name
 }
 
 func SendMessage(client *Client, message string) {
