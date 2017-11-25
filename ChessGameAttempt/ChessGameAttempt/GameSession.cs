@@ -107,6 +107,7 @@ namespace ChessGameAttempt
     {
         // bool to determine which player's turn it is
         public bool whiteTurn = true;
+        public bool myTurn;
 
         // The following are used for the castling conditions
         bool whiteKingMoved = false;
@@ -116,12 +117,16 @@ namespace ChessGameAttempt
         bool whiteLeftRookMoved = false;
         bool whiteRightRookMoved = false;
 
+        // booleans for the chat window options
+        bool isMuted = false;
+        bool isChatVisible = true;
+
         // List of squares that will be highlighted and are possible for a given piece to move to
         List<Button> movePieceTo = new List<Button>();
 
         // List of buttons for white and black players
-        List<PlayerPiece> whitePieces = new List<PlayerPiece>();
-        List<PlayerPiece> blackPieces = new List<PlayerPiece>();
+        public List<Piece> whitePieces = new List<Piece>();
+        public List<Piece> blackPieces = new List<Piece>();
 
         Button selectedButton, previousButton;
         Color colorHighlight1 = Color.LimeGreen;
@@ -154,6 +159,14 @@ namespace ChessGameAttempt
             NoPiece = 6
         }
 
+        public enum CheckCondition
+        {
+            NoCheck = 0,
+            Check = 1,
+            Checkmate = 2,
+            Stalemate = 4
+        }
+
         // corresponding strings for enums
         public string[] pieceString = new string[] 
         {
@@ -169,10 +182,11 @@ namespace ChessGameAttempt
         // Coordinate struct used for passing coordinates of a piece
         public struct Coordinates
         {
-            public int x;
-            public int y;
+            public int X;
+            public int Y;
         }
-        public struct PlayerPiece
+
+        public struct Piece
         {
             public pieceColor color;
             public string piece;
@@ -212,7 +226,7 @@ namespace ChessGameAttempt
                 }
             }
 
-            UpdatePlayerPieces();
+            UpdatePlayerPieces(whitePieces, blackPieces);
             UpdateAttackedSquares();
 
             SetUpButtons();
@@ -241,7 +255,7 @@ namespace ChessGameAttempt
             }
         }
 
-        private void UpdatePlayerPieces()
+        private void UpdatePlayerPieces(List<Piece> whitePieces, List<Piece> blackPieces)
         {
             whitePieces.Clear();
             blackPieces.Clear();
@@ -253,7 +267,7 @@ namespace ChessGameAttempt
                     Button button = buttons[i, j];
                     if (IsPieceOn(i, j))
                     {
-                        PlayerPiece piece = GetPieceOnSquare(i, j);
+                        Piece piece = GetPieceOnSquare(i, j);
 
                         if (piece.color == pieceColor.white)
                         {
@@ -274,7 +288,7 @@ namespace ChessGameAttempt
             {
                 for (int j = 0; j < 8; ++j)
                 {
-                    PlayerPiece piece = GetPieceOnSquare(i, j);
+                    Piece piece = GetPieceOnSquare(i, j);
                     List<Button> attackedSquares = new List<Button>();
 
                     switch (piece.piece)
@@ -312,7 +326,7 @@ namespace ChessGameAttempt
             foreach (Button button in buttons)
             {
                 Coordinates c = GetCoordinatesOfButton(button);
-                button.BackColor = (c.x + c.y) % 2 == 0 ? colorHighlight1 : colorHighlight2;
+                button.BackColor = (c.X + c.Y) % 2 == 0 ? colorHighlight1 : colorHighlight2;
             }
         }
 
@@ -326,7 +340,7 @@ namespace ChessGameAttempt
             Button currentButton = sender as Button;
             selectedButton = currentButton;
             Coordinates c = GetCoordinatesOfButton(currentButton);
-            PlayerPiece piece = GetPieceOnSquare(c.x, c.y);
+            Piece piece = GetPieceOnSquare(c.X, c.Y);
 
             // If there is a piece on the selected square that is current player's color
             if (IsMyPiece(piece))
@@ -342,7 +356,7 @@ namespace ChessGameAttempt
                 {
                     Coordinates pc = GetCoordinatesOfButton(previousButton);
                     Coordinates cc = GetCoordinatesOfButton(currentButton);
-                    PlayerPiece thisPiece = GetPieceOnSquare(pc.x, pc.y);
+                    Piece thisPiece = GetPieceOnSquare(pc.X, pc.Y);
                     if (IsMyPiece(thisPiece))
                     {
                         // Move piece to new square
@@ -354,7 +368,7 @@ namespace ChessGameAttempt
                         previousButton.Image = null;
 
                         // Check for pawn promotion
-                        if (cc.x % 7 == 0 && currentButton.Tag.ToString().Contains("Pawn"))
+                        if (cc.X % 7 == 0 && currentButton.Tag.ToString().Contains("Pawn"))
                         {
                             // White promotion
                             if (thisPiece.color == pieceColor.white)
@@ -453,7 +467,7 @@ namespace ChessGameAttempt
             // Highlight new locations
             List<Button> locations = new List<Button>();
             Coordinates c = GetCoordinatesOfButton(button);
-            PlayerPiece piece = GetPieceOnSquare(c.x, c.y);
+            Piece piece = GetPieceOnSquare(c.X, c.Y);
 
             // If there is a piece on the selected square that is the color of the current player...
             if (piece.piece != pieceString[(int)BoardPiece.NoPiece] && IsMyPiece(piece))
@@ -461,7 +475,7 @@ namespace ChessGameAttempt
                 // Highlight the clicked button
                 HighlightSelectedButton(button);
 
-                string stringOfPiece = GetPieceStringOn(c.x, c.y);
+                string stringOfPiece = GetPieceStringOn(c.X, c.Y);
 
                 switch (stringOfPiece.Substring(1))
                 {
@@ -504,15 +518,15 @@ namespace ChessGameAttempt
             return null;
         }
 
-        private PlayerPiece GetPieceOnSquare(int x, int y)
+        private Piece GetPieceOnSquare(int x, int y)
         {
-            PlayerPiece piece = new PlayerPiece();
+            Piece piece = new Piece();
             if (IsPieceOn(x, y))
             {
                 piece.button = buttons[x, y];
                 piece.color = buttons[x, y].Tag.ToString()[0] == 'w' ? pieceColor.white : pieceColor.black;
-                piece.coords.x = x;
-                piece.coords.y = y;
+                piece.coords.X = x;
+                piece.coords.Y = y;
                 piece.piece = buttons[x, y].Tag.ToString().Substring(1);
             }
             else
@@ -529,8 +543,8 @@ namespace ChessGameAttempt
             int x = Convert.ToInt16(buttonName[buttonName.Length - 2].ToString());
             int y = Convert.ToInt16(buttonName[buttonName.Length - 1].ToString());
 
-            c.x = x;
-            c.y = y;
+            c.X = x;
+            c.Y = y;
 
             return c;
         }
@@ -558,11 +572,74 @@ namespace ChessGameAttempt
             return (button.BackColor == colorHighlight1 || button.BackColor == colorHighlight2);
         }
 
-        private bool IsMyPiece(PlayerPiece piece)
+        private bool IsMyPiece(Piece piece)
         {
             return
                 (piece.color == pieceColor.white && whiteTurn) ||
                 (piece.color == pieceColor.black && !whiteTurn);
+        }
+
+        private void settingsIcon_Click(object sender, EventArgs e)
+        {
+            // Open settings
+        
+        }
+
+        private void tieButton_Click(object sender, EventArgs e)
+        {
+            // Offer draw
+
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            // Forfeit
+            
+        }
+
+        private void muteButton_Click(object sender, EventArgs e)
+        {
+            // Mute / unmute sounds
+            isMuted = !isMuted;
+            // Change icon
+
+            muteButton.BackgroundImage = isMuted ?
+                ChessGameAttempt.Properties.Resources.muteIcon :
+                ChessGameAttempt.Properties.Resources.unmuteIcon;
+        }
+
+        private void hideChatButton_Click(object sender, EventArgs e)
+        {
+            // Hide / unhide chat window
+            isChatVisible = !isChatVisible;
+
+            chatWindow.Visible = isChatVisible;
+            chatToSend.Visible = isChatVisible;
+            sendButton.Visible = isChatVisible;
+        }
+
+
+
+        private void sendButton_Click(object sender, EventArgs e)
+        {
+            if (chatToSend.Text != "")
+            {
+                if(chatWindow.Text != "")
+                {
+                    chatWindow.Text += "\n";
+                }
+
+                //chatWindow += me
+            }
+        }
+
+        private void chatToSend_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == '\r')
+            {
+                sendButton_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
         }
 
         private bool IsPieceOn(int x, int y)

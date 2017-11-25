@@ -26,13 +26,13 @@ namespace ChessGameAttempt
 
     class Session
     {
-        int SessionID;
-        String HostPlayer;
-        String GuestPlayer;
-        int GameTimerMinutes;
-        int MoveTimerSeconds;
-        List<Piece> HostPlayerPieces;
-        List<Piece> GuestPlayerPieces;
+        public int SessionID;
+        public string HostPlayer;
+        public string GuestPlayer;
+        public int GameTimerSeconds;
+        public int MoveTimerSeconds;
+        public Piece[][] BoardPieces;
+        public int CustomGameMode;
     }
 
     class TCPSignal

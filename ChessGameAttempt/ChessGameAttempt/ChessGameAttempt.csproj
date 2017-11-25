@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckConditions.cs" />
     <Compile Include="CreateUserForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,8 +100,11 @@
     <Compile Include="PawnPromotionFormWhite.Designer.cs">
       <DependentUpon>PawnPromotionFormWhite.cs</DependentUpon>
     </Compile>
+    <Compile Include="PieceImageSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SquareColorSettings.cs" />
+    <Compile Include="TCPSignal.cs" />
     <Compile Include="User.cs" />
     <EmbeddedResource Include="CreateUserForm.resx">
       <DependentUpon>CreateUserForm.cs</DependentUpon>
@@ -187,6 +191,14 @@
     <None Include="Resources\wRook.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\unmuteIcon.png" />
+    <None Include="Resources\TitleBG.jpg" />
+    <None Include="Resources\tieIcon.png" />
+    <None Include="Resources\settingsIcon.png" />
+    <None Include="Resources\muteIcon.png" />
+    <None Include="Resources\hideWindowIcon.png" />
+    <None Include="Resources\forfeitIcon.jpg" />
+    <None Include="Resources\CHESSLOGIN.png" />
     <None Include="Resources\Abstract-Blue-Water-Backgrounds-800x600.jpg" />
     <Content Include="Resources\background.jpg" />
   </ItemGroup>

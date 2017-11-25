@@ -157,4 +157,28 @@
   <data name="Abstract-Blue-Water-Backgrounds-800x600" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Abstract-Blue-Water-Backgrounds-800x600.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CHESSLOGIN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CHESSLOGIN.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="forfeitIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\forfeitIcon.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hideWindowIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hideWindowIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muteIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muteIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="settingsIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\settingsIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tieIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tieIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TitleBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TitleBG.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="unmuteIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\unmuteIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

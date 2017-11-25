@@ -16,7 +16,7 @@ namespace ChessGameAttempt
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GameSession());
+            Application.Run(new LobbyForm("user123"));
         }
     }
 }

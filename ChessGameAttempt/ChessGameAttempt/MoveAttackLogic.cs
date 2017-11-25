@@ -14,14 +14,14 @@ namespace ChessGameAttempt
     public partial class GameSession : Form
     {
         // Used for King/Knight movements (DRY)
-        public void CheckOffset(PlayerPiece piece, int xInc, int yInc, List<Button> locations)
+        public void CheckOffset(Piece piece, int xInc, int yInc, List<Button> locations)
         {
             int newX, newY;
             Button square;
             Coordinates c = piece.coords;
 
-            newX = c.x + xInc;
-            newY = c.y + yInc;
+            newX = c.X + xInc;
+            newY = c.Y + yInc;
             square = GetButtonOn(newX, newY);
             if (square != null && !IsMyPiece(GetPieceOnSquare(newX, newY)))
             {
@@ -29,7 +29,7 @@ namespace ChessGameAttempt
             }
         }
 
-        public void KingMoveLogic(PlayerPiece piece, List<Button> moveLocations)
+        public void KingMoveLogic(Piece piece, List<Button> moveLocations)
         {
             for (int i = -1; i <= 1; ++i)
             {
@@ -44,7 +44,7 @@ namespace ChessGameAttempt
             }
         }
 
-        public void KnightMoveLogic(PlayerPiece piece, List<Button> moveLocations)
+        public void KnightMoveLogic(Piece piece, List<Button> moveLocations)
         {
             for (int i = -2; i <= 2; ++i)
             {
@@ -67,20 +67,20 @@ namespace ChessGameAttempt
             }
         }
 
-        public void QueenMoveLogic(PlayerPiece piece, List<Button> moveLocations)
+        public void QueenMoveLogic(Piece piece, List<Button> moveLocations)
         {
             RookMoveLogic(piece, moveLocations);
             BishopMoveLogic(piece, moveLocations);
         }
 
-        public void RookMoveLogic(PlayerPiece piece, List<Button> moveLocations)
+        public void RookMoveLogic(Piece piece, List<Button> moveLocations)
         {
             Coordinates c = piece.coords;
             int i, j, newX, newY;
 
             // DRY cannot be applied here
-            newX = c.x + 1;
-            newY = c.y;
+            newX = c.X + 1;
+            newY = c.Y;
             for (i = newX; i < 8; ++i)
             {
                 if (GetButtonOn(i, newY) != null)
@@ -106,7 +106,7 @@ namespace ChessGameAttempt
                 }
             }
 
-            newX = c.x - 1;
+            newX = c.X - 1;
             for (i = newX; i >= 0; --i)
             {
                 if (GetButtonOn(i, newY) != null)
@@ -129,8 +129,8 @@ namespace ChessGameAttempt
                 }
             }
 
-            newX = c.x;
-            newY = c.y + 1;
+            newX = c.X;
+            newY = c.Y + 1;
             for (j = newY; j < 8; ++j)
             {
                 if (GetButtonOn(newX, j) != null)
@@ -153,7 +153,7 @@ namespace ChessGameAttempt
                 }
             }
 
-            newY = c.y - 1;
+            newY = c.Y - 1;
             for (j = newY; j >= 0; --j)
             {
                 if (GetButtonOn(newX, j) != null)
@@ -177,8 +177,8 @@ namespace ChessGameAttempt
             }
 
             // Capture logic
-            newX = c.x + 1;
-            newY = c.y;
+            newX = c.X + 1;
+            newY = c.Y;
             for (i = newX; i < 8; ++i)
             {
                 if (GetButtonOn(i, newY) != null)
@@ -196,7 +196,7 @@ namespace ChessGameAttempt
                 }
             }
 
-            newX = c.x - 1;
+            newX = c.X - 1;
             for (i = newX; i >= 0; --i)
             {
                 if (GetButtonOn(i, newY) != null)
@@ -214,8 +214,8 @@ namespace ChessGameAttempt
                 }
             }
 
-            newX = c.x;
-            newY = c.y + 1;
+            newX = c.X;
+            newY = c.Y + 1;
             for (j = newY; j < 8; ++j)
             {
                 if (GetButtonOn(newX, j) != null)
@@ -233,7 +233,7 @@ namespace ChessGameAttempt
                 }
             }
 
-            newY = c.y - 1;
+            newY = c.Y - 1;
             for (j = newY; j >= 0; --j)
             {
                 if (GetButtonOn(newX, j) != null)
@@ -252,14 +252,14 @@ namespace ChessGameAttempt
             }
         }
 
-        public void BishopMoveLogic(PlayerPiece piece, List<Button> moveLocations)
+        public void BishopMoveLogic(Piece piece, List<Button> moveLocations)
         {
             Coordinates c = piece.coords;
             int i, j, newX, newY;
             // Move logic...
             // Bishops move diagonally
-            newX = c.x + 1;
-            newY = c.y + 1;
+            newX = c.X + 1;
+            newY = c.Y + 1;
             for (i = newX, j = newY; i < 8 && j < 8; ++i, ++j)
             {
                 if (GetButtonOn(i, j) != null &&
@@ -269,8 +269,8 @@ namespace ChessGameAttempt
                 }
                 else break;
             }
-            newX = c.x - 1;
-            newY = c.y - 1;
+            newX = c.X - 1;
+            newY = c.Y - 1;
             for (i = newX, j = newY; i >= 0 && j >= 0; --i, --j)
             {
                 if (GetButtonOn(i, j) != null &&
@@ -280,8 +280,8 @@ namespace ChessGameAttempt
                 }
                 else break;
             }
-            newX = c.x + 1;
-            newY = c.y - 1;
+            newX = c.X + 1;
+            newY = c.Y - 1;
             for (i = newX, j = newY; i < 8 && j >= 0; ++i, --j)
             {
                 if (GetButtonOn(i, j) != null &&
@@ -291,8 +291,8 @@ namespace ChessGameAttempt
                 }
                 else break;
             }
-            newX = c.x - 1;
-            newY = c.y + 1;
+            newX = c.X - 1;
+            newY = c.Y + 1;
             for (i = newX, j = newY; i >= 0 && j < 8; --i, ++j)
             {
                 if (GetButtonOn(i, j) != null &&
@@ -304,8 +304,8 @@ namespace ChessGameAttempt
             }
 
             // Capture logic
-            newX = c.x + 1;
-            newY = c.y + 1;
+            newX = c.X + 1;
+            newY = c.Y + 1;
             for (i = newX, j = newY; i < 8 && j < 8; ++i, ++j)
             {
                 if (GetButtonOn(i, j) != null)
@@ -323,8 +323,8 @@ namespace ChessGameAttempt
                 }
             }
 
-            newX = c.x - 1;
-            newY = c.y - 1;
+            newX = c.X - 1;
+            newY = c.Y - 1;
             for (i = newX, j = newY; i >= 0 && j >= 0; --i, --j)
             {
                 if (GetButtonOn(i, j) != null)
@@ -342,8 +342,8 @@ namespace ChessGameAttempt
                 }
             }
 
-            newX = c.x + 1;
-            newY = c.y - 1;
+            newX = c.X + 1;
+            newY = c.Y - 1;
             for (i = newX, j = newY; i < 8 && j >= 0; ++i, --j)
             {
                 if (GetButtonOn(i, j) != null)
@@ -361,8 +361,8 @@ namespace ChessGameAttempt
                 }
             }
 
-            newX = c.x - 1;
-            newY = c.y + 1;
+            newX = c.X - 1;
+            newY = c.Y + 1;
             for (i = newX, j = newY; i >= 0 && j < 8; --i, ++j)
             {
                 if (GetButtonOn(i, j) != null)
@@ -382,37 +382,37 @@ namespace ChessGameAttempt
         }
 
         // TODO : Add En Passant
-        public void PawnMoveLogic(PlayerPiece piece, List<Button> moveLocations)
+        public void PawnMoveLogic(Piece piece, List<Button> moveLocations)
         {
             Coordinates c = piece.coords;
             // First move for pawn
             if (piece.color == pieceColor.white && whiteTurn)
             {
                 // Move logic...
-                if (GetButtonOn(c.x - 1, c.y) != null &&
-                    GetPieceOnSquare(c.x - 1, c.y).piece == pieceString[(int)BoardPiece.NoPiece])
+                if (GetButtonOn(c.X - 1, c.Y) != null &&
+                    GetPieceOnSquare(c.X - 1, c.Y).piece == pieceString[(int)BoardPiece.NoPiece])
                 {
-                    moveLocations.Add(buttons[c.x - 1, c.y]);
+                    moveLocations.Add(buttons[c.X - 1, c.Y]);
 
                     // First position only
-                    if (c.x == 6 &&
-                    GetButtonOn(c.x - 2, c.y) != null &&
-                    GetPieceOnSquare(c.x - 2, c.y).piece == pieceString[(int)BoardPiece.NoPiece])
+                    if (c.X == 6 &&
+                    GetButtonOn(c.X - 2, c.Y) != null &&
+                    GetPieceOnSquare(c.X - 2, c.Y).piece == pieceString[(int)BoardPiece.NoPiece])
                     {
-                        moveLocations.Add(buttons[c.x - 2, c.y]);
+                        moveLocations.Add(buttons[c.X - 2, c.Y]);
                     }
                 }
 
                 // Capture logic
-                if (GetButtonOn(c.x - 1, c.y - 1) != null &&
-                    GetPieceOnSquare(c.x - 1, c.y - 1).color == pieceColor.black)
+                if (GetButtonOn(c.X - 1, c.Y - 1) != null &&
+                    GetPieceOnSquare(c.X - 1, c.Y - 1).color == pieceColor.black)
                 {
-                    moveLocations.Add(buttons[c.x - 1, c.y - 1]);
+                    moveLocations.Add(buttons[c.X - 1, c.Y - 1]);
                 }
-                if (GetButtonOn(c.x - 1, c.y + 1) != null &&
-                    GetPieceOnSquare(c.x - 1, c.y + 1).color == pieceColor.black)
+                if (GetButtonOn(c.X - 1, c.Y + 1) != null &&
+                    GetPieceOnSquare(c.X - 1, c.Y + 1).color == pieceColor.black)
                 {
-                    moveLocations.Add(buttons[c.x - 1, c.y + 1]);
+                    moveLocations.Add(buttons[c.X - 1, c.Y + 1]);
                 }
 
             }
@@ -420,29 +420,29 @@ namespace ChessGameAttempt
             else if (piece.color == pieceColor.black && !whiteTurn)
             {
                 // Move logic
-                if (GetButtonOn(c.x + 1, c.y) != null &&
-                    GetPieceOnSquare(c.x + 1, c.y).piece == pieceString[(int)BoardPiece.NoPiece])
+                if (GetButtonOn(c.X + 1, c.Y) != null &&
+                    GetPieceOnSquare(c.X + 1, c.Y).piece == pieceString[(int)BoardPiece.NoPiece])
                 {
-                    moveLocations.Add(buttons[c.x + 1, c.y]);
+                    moveLocations.Add(buttons[c.X + 1, c.Y]);
 
-                    if (c.x == 1 &&
-                    GetButtonOn(c.x + 2, c.y) != null &&
-                    GetPieceOnSquare(c.x + 2, c.y).piece == pieceString[(int)BoardPiece.NoPiece])
+                    if (c.X == 1 &&
+                    GetButtonOn(c.X + 2, c.Y) != null &&
+                    GetPieceOnSquare(c.X + 2, c.Y).piece == pieceString[(int)BoardPiece.NoPiece])
                     {
-                        moveLocations.Add(buttons[c.x + 2, c.y]);
+                        moveLocations.Add(buttons[c.X + 2, c.Y]);
                     }
                 }
 
                 // Capture logic
-                if (GetButtonOn(c.x + 1, c.y - 1) != null &&
-                    GetPieceOnSquare(c.x + 1, c.y - 1).color == pieceColor.white)
+                if (GetButtonOn(c.X + 1, c.Y - 1) != null &&
+                    GetPieceOnSquare(c.X + 1, c.Y - 1).color == pieceColor.white)
                 {
-                    moveLocations.Add(buttons[c.x + 1, c.y - 1]);
+                    moveLocations.Add(buttons[c.X + 1, c.Y - 1]);
                 }
-                if (GetButtonOn(c.x + 1, c.y + 1) != null &&
-                    GetPieceOnSquare(c.x + 1, c.y + 1).color == pieceColor.white)
+                if (GetButtonOn(c.X + 1, c.Y + 1) != null &&
+                    GetPieceOnSquare(c.X + 1, c.Y + 1).color == pieceColor.white)
                 {
-                    moveLocations.Add(buttons[c.x + 1, c.y + 1]);
+                    moveLocations.Add(buttons[c.X + 1, c.Y + 1]);
                 }
             }
         }

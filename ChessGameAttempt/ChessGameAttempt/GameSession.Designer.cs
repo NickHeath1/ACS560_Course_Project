@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameSession));
             this.square47 = new System.Windows.Forms.Button();
             this.square46 = new System.Windows.Forms.Button();
@@ -61,7 +62,7 @@
             this.square30 = new System.Windows.Forms.Button();
             this.square52 = new System.Windows.Forms.Button();
             this.square27 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.settingsIcon = new System.Windows.Forms.Button();
             this.square07 = new System.Windows.Forms.Button();
             this.square06 = new System.Windows.Forms.Button();
             this.square05 = new System.Windows.Forms.Button();
@@ -94,14 +95,14 @@
             this.square72 = new System.Windows.Forms.Button();
             this.square71 = new System.Windows.Forms.Button();
             this.square70 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
+            this.chatWindow = new System.Windows.Forms.RichTextBox();
+            this.sendButton = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.chatToSend = new System.Windows.Forms.TextBox();
+            this.tieButton = new System.Windows.Forms.Button();
+            this.exitButton = new System.Windows.Forms.Button();
+            this.muteButton = new System.Windows.Forms.Button();
+            this.hideChatButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // square47
@@ -456,15 +457,17 @@
             this.square27.TabIndex = 47;
             this.square27.UseVisualStyleBackColor = false;
             // 
-            // button1
+            // settingsIcon
             // 
-            this.button1.Location = new System.Drawing.Point(51, 585);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 32);
-            this.button1.TabIndex = 64;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.settingsIcon.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("settingsIcon.BackgroundImage")));
+            this.settingsIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.settingsIcon.Location = new System.Drawing.Point(50, 590);
+            this.settingsIcon.Margin = new System.Windows.Forms.Padding(2);
+            this.settingsIcon.Name = "settingsIcon";
+            this.settingsIcon.Size = new System.Drawing.Size(85, 75);
+            this.settingsIcon.TabIndex = 64;
+            this.settingsIcon.UseVisualStyleBackColor = true;
+            this.settingsIcon.Click += new System.EventHandler(this.settingsIcon_Click);
             // 
             // square07
             // 
@@ -882,84 +885,86 @@
             this.square70.Tag = "wRook";
             this.square70.UseVisualStyleBackColor = false;
             // 
-            // button2
+            // chatWindow
             // 
-            this.button2.Location = new System.Drawing.Point(142, 585);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(87, 32);
-            this.button2.TabIndex = 65;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.chatWindow.BackColor = System.Drawing.Color.White;
+            this.chatWindow.Location = new System.Drawing.Point(602, 51);
+            this.chatWindow.Margin = new System.Windows.Forms.Padding(0);
+            this.chatWindow.Name = "chatWindow";
+            this.chatWindow.ReadOnly = true;
+            this.chatWindow.Size = new System.Drawing.Size(455, 490);
+            this.chatWindow.TabIndex = 68;
+            this.chatWindow.Text = "";
             // 
-            // button3
+            // sendButton
             // 
-            this.button3.Location = new System.Drawing.Point(51, 622);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(87, 32);
-            this.button3.TabIndex = 66;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.sendButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sendButton.Location = new System.Drawing.Point(972, 541);
+            this.sendButton.Margin = new System.Windows.Forms.Padding(0);
+            this.sendButton.Name = "sendButton";
+            this.sendButton.Size = new System.Drawing.Size(85, 29);
+            this.sendButton.TabIndex = 72;
+            this.sendButton.Text = "Send";
+            this.sendButton.UseVisualStyleBackColor = true;
+            this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
             // 
-            // button4
+            // chatToSend
             // 
-            this.button4.Location = new System.Drawing.Point(142, 622);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(87, 32);
-            this.button4.TabIndex = 67;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.chatToSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chatToSend.Location = new System.Drawing.Point(602, 541);
+            this.chatToSend.Margin = new System.Windows.Forms.Padding(0);
+            this.chatToSend.Name = "chatToSend";
+            this.chatToSend.Size = new System.Drawing.Size(370, 29);
+            this.chatToSend.TabIndex = 73;
+            this.chatToSend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chatToSend_KeyDown);
             // 
-            // richTextBox1
+            // tieButton
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(602, 54);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(419, 464);
-            this.richTextBox1.TabIndex = 68;
-            this.richTextBox1.Text = "";
+            this.tieButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tieButton.BackgroundImage")));
+            this.tieButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.tieButton.Location = new System.Drawing.Point(180, 590);
+            this.tieButton.Margin = new System.Windows.Forms.Padding(2);
+            this.tieButton.Name = "tieButton";
+            this.tieButton.Size = new System.Drawing.Size(85, 75);
+            this.tieButton.TabIndex = 74;
+            this.tieButton.UseVisualStyleBackColor = true;
+            this.tieButton.Click += new System.EventHandler(this.tieButton_Click);
             // 
-            // button5
+            // exitButton
             // 
-            this.button5.Location = new System.Drawing.Point(602, 522);
-            this.button5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(87, 32);
-            this.button5.TabIndex = 69;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
+            this.exitButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitButton.BackgroundImage")));
+            this.exitButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.exitButton.Location = new System.Drawing.Point(310, 590);
+            this.exitButton.Margin = new System.Windows.Forms.Padding(2);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(85, 75);
+            this.exitButton.TabIndex = 75;
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
-            // button6
+            // muteButton
             // 
-            this.button6.Location = new System.Drawing.Point(716, 522);
-            this.button6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(87, 32);
-            this.button6.TabIndex = 70;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
+            this.muteButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("muteButton.BackgroundImage")));
+            this.muteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.muteButton.Location = new System.Drawing.Point(842, 590);
+            this.muteButton.Margin = new System.Windows.Forms.Padding(2);
+            this.muteButton.Name = "muteButton";
+            this.muteButton.Size = new System.Drawing.Size(85, 75);
+            this.muteButton.TabIndex = 76;
+            this.muteButton.UseVisualStyleBackColor = true;
+            this.muteButton.Click += new System.EventHandler(this.muteButton_Click);
             // 
-            // button7
+            // hideChatButton
             // 
-            this.button7.Location = new System.Drawing.Point(826, 522);
-            this.button7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(87, 32);
-            this.button7.TabIndex = 71;
-            this.button7.Text = "button7";
-            this.button7.UseVisualStyleBackColor = true;
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(933, 522);
-            this.button8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(87, 32);
-            this.button8.TabIndex = 72;
-            this.button8.Text = "button8";
-            this.button8.UseVisualStyleBackColor = true;
+            this.hideChatButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("hideChatButton.BackgroundImage")));
+            this.hideChatButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.hideChatButton.Location = new System.Drawing.Point(972, 590);
+            this.hideChatButton.Margin = new System.Windows.Forms.Padding(2);
+            this.hideChatButton.Name = "hideChatButton";
+            this.hideChatButton.Size = new System.Drawing.Size(85, 75);
+            this.hideChatButton.TabIndex = 77;
+            this.hideChatButton.UseVisualStyleBackColor = true;
+            this.hideChatButton.Click += new System.EventHandler(this.hideChatButton_Click);
             // 
             // GameSession
             // 
@@ -968,16 +973,15 @@
             this.AutoSize = true;
             this.BackgroundImage = global::ChessGameAttempt.Properties.Resources.Abstract_Blue_Water_Backgrounds_800x600;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1056, 713);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1088, 716);
+            this.Controls.Add(this.hideChatButton);
+            this.Controls.Add(this.muteButton);
+            this.Controls.Add(this.exitButton);
+            this.Controls.Add(this.tieButton);
+            this.Controls.Add(this.chatToSend);
+            this.Controls.Add(this.sendButton);
+            this.Controls.Add(this.chatWindow);
+            this.Controls.Add(this.settingsIcon);
             this.Controls.Add(this.square07);
             this.Controls.Add(this.square06);
             this.Controls.Add(this.square05);
@@ -1042,10 +1046,11 @@
             this.Controls.Add(this.square72);
             this.Controls.Add(this.square71);
             this.Controls.Add(this.square70);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GameSession";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1115,15 +1120,15 @@
         private System.Windows.Forms.Button square30;
         private System.Windows.Forms.Button square71;
         private System.Windows.Forms.Button square52;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button settingsIcon;
+        private System.Windows.Forms.RichTextBox chatWindow;
+        private System.Windows.Forms.Button sendButton;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TextBox chatToSend;
+        private System.Windows.Forms.Button tieButton;
+        private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.Button muteButton;
+        private System.Windows.Forms.Button hideChatButton;
     }
 }
 
