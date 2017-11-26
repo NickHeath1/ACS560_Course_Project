@@ -36,7 +36,7 @@ func GetSessions(client *Client) {
 		fmt.Println("Error: ", err.Error())
 		return
 	}
-	client.WriteData(string(jsonBytes))
+	client.WriteDataString(string(jsonBytes))
 }
 
 func CreateSession(client *Client, session *Session) {
@@ -46,12 +46,19 @@ func CreateSession(client *Client, session *Session) {
 }
 
 func JoinSession(client *Client, sessionID int) {
+	found := false
 	for _, session := range activeSessions {
 		if session.SessionID == sessionID {
 			client.session = &session
+			found = true;
 			break
 		}
 	}
+	if found == false {
+		client.connection.WriteDataInt(0)
+		return;
+	}
+	client.connection.WriteDataInt(1)
 
 	for clientList, _ := range allClients {
 		if clientList.session.SessionID == sessionID {
@@ -61,6 +68,7 @@ func JoinSession(client *Client, sessionID int) {
 			break
 		}
 	}
+
 }
 
 func MakeMove(client *Client, move ChessData.Move) {
@@ -153,8 +161,13 @@ func (client *Client) Read() {
 	client = nil
 }
 
-func (client *Client) WriteData(data string) {
+func (client *Client) WriteDataString(data string) {
 	client.writer.WriteString(data)
+	client.writer.Flush()
+}
+
+func (client *Client) WriteDataInt(data int) {
+	client.writer.WriteByte(byte(data))
 	client.writer.Flush()
 }
 
