@@ -76,6 +76,15 @@ func SendMessage(client *Client, message string) {
 	client.connection.outgoing <- sentMessage
 }
 
+func DeleteSession(client *Client, sessionID int) {
+	for i := 0; i < len(activeSessions); i++  {
+		if activeSessions[i].SessionID == sessionID {
+			activeSessions = append(activeSessions[:i], activeSessions[i+1:]...)
+			return
+		}
+	}
+}
+
 func ListenOnTCP() {
 	allClients = make(map[*Client]int)
 	listener, err := net.Listen("tcp", "localhost:2346")
@@ -128,6 +137,8 @@ func (client *Client) Read() {
 				SendMessage(client, tcpSignal.PlayerMessage)
 			} else if tcpSignal.SignalType == 5 {
 				JoinSession(client, tcpSignal.SessionID)
+			} else if tcpSignal.SignalType == 6 {
+				DeleteSession(client, tcpSignal.SessionID)
 			}
 		} else {
 			break
