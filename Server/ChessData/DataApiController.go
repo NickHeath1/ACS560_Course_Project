@@ -239,7 +239,7 @@ func DeleteCustomGame(w http.ResponseWriter, r *http.Request) {
 // Custom piece images
 func AddCustomPieceImages(w http.ResponseWriter, r *http.Request) {
 	var customPieceImages []CustomImage
-	json.NewDecoder(r.Body).Decode(customPieceImages)
+	json.NewDecoder(r.Body).Decode(&customPieceImages)
 	conn, err := sql.Open("sqlserver", Datasource)
 	if err != nil {
 		http.Error(w, "An error occurred on the server!", 500)
@@ -267,7 +267,7 @@ func GetCustomPieceImagesForUser(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 	var customPieceImages []CustomImage
-	query := "SELECT * FROM UserCustomPieceImages WHERE User = @Username"
+	query := "SELECT * FROM UserCustomPieceImages WHERE [User] = @Username"
 	results, err := conn.Query(query, sql.Named("Username", params["username"]));
 	for results.Next() {
 		var customPieceImage CustomImage
@@ -346,7 +346,7 @@ func AwardAchievementToUser(w http.ResponseWriter, r *http.Request) {
 // Custom chessboard data
 func EditCustomChessboard(w http.ResponseWriter, r *http.Request) {
 	var customChessBoard CustomChessboard
-	json.NewDecoder(r.Body).Decode(customChessBoard)
+	json.NewDecoder(r.Body).Decode(&customChessBoard)
 	conn, err := sql.Open("sqlserver", Datasource)
 	if err != nil {
 		http.Error(w, "An error occurred on the server!", 500)
@@ -354,14 +354,14 @@ func EditCustomChessboard(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer conn.Close()
-	query := "SELECT * FROM UserCustomChessboard WHERE User = @Username"
+	query := "SELECT * FROM UserCustomChessboard WHERE [User] = @Username"
 	result, err := conn.Exec(query, sql.Named("Username", customChessBoard.User))
 	if rowsAffected, _ := result.RowsAffected(); rowsAffected == 0 {
 		query = "INSERT INTO UserCustomChessboard VALUES (@Username, @Color1Red, @Color1Green, @Color1Blue, @Color2Red, @Color2Green, @Color2Blue)"
 		conn.Exec(query, sql.Named("Username", customChessBoard.User), sql.Named("Color1Red", customChessBoard.Red1), sql.Named("Color1Green", customChessBoard.Green1), sql.Named("Color1Blue", customChessBoard.Blue1), sql.Named("Color2Red", customChessBoard.Red2), sql.Named("Color2Green", customChessBoard.Green2), sql.Named("Color2Blue", customChessBoard.Blue2))
 	} else {
-		query = "UPDATE UserCustomChessboard SET Color1Red = @Color1Red, Color1Green = @Color1Green, Color1Blue = @Color1Blue, Color2Red = @Color2Red, Color2Green = @Color2Green, Color2Blue = @Color2Blue"
-		conn.Exec(query, sql.Named("Color1Red", customChessBoard.Red1), sql.Named("Color1Green", customChessBoard.Green1), sql.Named("Color1Blue", customChessBoard.Blue1), sql.Named("Color2Red", customChessBoard.Red2), sql.Named("Color2Green", customChessBoard.Green2), sql.Named("Color2Blue", customChessBoard.Blue2))
+		query = "UPDATE UserCustomChessboard SET Color1Red = @Color1Red, Color1Green = @Color1Green, Color1Blue = @Color1Blue, Color2Red = @Color2Red, Color2Green = @Color2Green, Color2Blue = @Color2Blue WHERE [User] = @Username"
+		conn.Exec(query, sql.Named("Color1Red", customChessBoard.Red1), sql.Named("Color1Green", customChessBoard.Green1), sql.Named("Color1Blue", customChessBoard.Blue1), sql.Named("Color2Red", customChessBoard.Red2), sql.Named("Color2Green", customChessBoard.Green2), sql.Named("Color2Blue", customChessBoard.Blue2), sql.Named("Username", customChessBoard.User))
 	}
 }
 
@@ -374,10 +374,22 @@ func GetCustomChessboardForUser(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 	params := mux.Vars(r)
-	query := "SELECT * FROM UserCustomChessboard WHERE User = @Username"
+	query := "SELECT * FROM UserCustomChessboard WHERE [User] = @Username"
 	result, err := conn.Query(query, sql.Named("Username", params["username"]))
-	var customChessBoard CustomChessboard
-	result.Scan(&customChessBoard.User, &customChessBoard.Red1, &customChessBoard.Green1, &customChessBoard.Blue1, &customChessBoard.Red2, &customChessBoard.Green2, &customChessBoard.Blue2)
+	customChessBoard := new(CustomChessboard)
+	if result.Next() {
+		result.Scan(&customChessBoard.User, &customChessBoard.Red1, &customChessBoard.Green1, &customChessBoard.Blue1, &customChessBoard.Red2, &customChessBoard.Green2, &customChessBoard.Blue2)
+	} else {
+
+		customChessBoard.User = params["username"]
+		customChessBoard.Red1 = 127
+		customChessBoard.Green1 = 127
+		customChessBoard.Blue1 = 127
+		customChessBoard.Red2 = 255
+		customChessBoard.Green2 = 255
+		customChessBoard.Blue2 = 255
+	}
+
 	json.NewEncoder(w).Encode(customChessBoard)
 }
 

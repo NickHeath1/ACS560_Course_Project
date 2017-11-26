@@ -68,7 +68,7 @@ type Move struct {
 }
 
 type CustomChessboard struct {
-	User string `json:"User,omitempty"`
+	User string `json:"Username,omitempty"`
 	Red1 int `json:"Red1,omitempty"`
 	Green1 int `json:"Green1,omitempty"`
 	Blue1 int `json:Blue1,omitempty"`
