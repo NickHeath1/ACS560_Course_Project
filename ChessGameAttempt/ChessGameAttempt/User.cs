@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessGameAttempt
 {
-    class User
+    public class User
     {
         public User(string username, string password)
         {

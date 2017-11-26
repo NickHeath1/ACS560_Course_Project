@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static ChessGameAttempt.GameSession;
+using static ChessGameAttempt.MoveLogic;
 
 namespace ChessGameAttempt
 {
@@ -13,7 +13,8 @@ namespace ChessGameAttempt
         MakeAMove = 2,
         GetSessions = 3,
         SendMessage = 4,
-        JoinSession = 5
+        JoinSession = 5,
+        DeleteSession = 6
     }
 
     class Move

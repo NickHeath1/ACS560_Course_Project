@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using static ChessGameAttempt.MoveLogic;
 
 namespace ChessGameAttempt
 {
@@ -105,9 +105,8 @@ namespace ChessGameAttempt
 
     public partial class GameSession : Form
     {
-        // bool to determine which player's turn it is
-        public bool whiteTurn = true;
-        public bool myTurn;
+        MoveLogic moves = new MoveLogic();
+        string myName, opponentName;
 
         // The following are used for the castling conditions
         bool whiteKingMoved = false;
@@ -129,9 +128,6 @@ namespace ChessGameAttempt
         public List<Piece> blackPieces = new List<Piece>();
 
         Button selectedButton, previousButton;
-        Color colorHighlight1 = Color.LimeGreen;
-        Color colorHighlight2 = Color.Green;
-        Color currentHighlight = Color.Blue;
 
         // List of buttons (squares) that white and black are attacking currently
         List<Button> whiteAttacks = new List<Button>();
@@ -139,69 +135,22 @@ namespace ChessGameAttempt
         List<Button> selectedPieceAttacks = new List<Button>();
 
         // All of the squares on the board
-        public static Button[,] buttons;
+        static Button[,] board;
 
         // enum for all kinds of pieces
-        public enum pieceColor
-        {
-            noColor = 0,
-            white = 1,
-            black = 2
-        }
-        public enum BoardPiece
-        {
-            King = 0,
-            Queen = 1,
-            Rook = 2,
-            Bishop = 3,
-            Knight = 4,
-            Pawn = 5,
-            NoPiece = 6
-        }
 
-        public enum CheckCondition
-        {
-            NoCheck = 0,
-            Check = 1,
-            Checkmate = 2,
-            Stalemate = 4
-        }
 
-        // corresponding strings for enums
-        public string[] pieceString = new string[] 
+        public GameSession(User me, User them)
         {
-            "King",
-            "Queen",
-            "Rook",
-            "Bishop",
-            "Knight",
-            "Pawn",
-            ""
-        };
+            myName = me.Username;
+            opponentName = them.Username;
 
-        // Coordinate struct used for passing coordinates of a piece
-        public struct Coordinates
-        {
-            public int X;
-            public int Y;
-        }
-
-        public struct Piece
-        {
-            public pieceColor color;
-            public string piece;
-            public Button button;
-            public Coordinates coords;
-        }
-
-        public GameSession()
-        {
             int squareSize = 65;
             int offset = 50;
             InitializeComponent();
 
             // set up the array of buttons (chess grid) into an array
-            buttons = new Button[,]
+            board = new Button[,]
             {
                 { square00, square01, square02, square03, square04, square05, square06, square07},
                 { square10, square11, square12, square13, square14, square15, square16, square17},
@@ -221,16 +170,16 @@ namespace ChessGameAttempt
                     Point p = new Point(j * squareSize + offset, i * squareSize + offset);
                     Size s = new Size(squareSize, squareSize);
 
-                    buttons[i, j].Size = s;
-                    buttons[i, j].Location = p;
+                    board[i, j].Size = s;
+                    board[i, j].Location = p;
                 }
             }
 
             UpdatePlayerPieces(whitePieces, blackPieces);
-            UpdateAttackedSquares();
+            moves.UpdateAttackedSquares(board);
 
             SetUpButtons();
-            ClearChessBoardColors();
+            moves.ClearChessBoardColors(board);
         }
 
         private void SetUpButtons()
@@ -239,18 +188,7 @@ namespace ChessGameAttempt
             {
                 for (int j = 0; j < 8; ++j)
                 {
-                    buttons[i, j].Click += ButtonClicked;
-                }
-            }
-        }
-
-        private void ClearChessBoardColors()
-        {
-            for (int i = 0; i < 8; ++i)
-            {
-                for (int j = 0; j < 8; ++j)
-                {
-                    buttons[i, j].BackColor = (i + j) % 2 == 0 ? Color.White : Color.Gray;
+                    board[i, j].Click += ButtonClicked;
                 }
             }
         }
@@ -264,10 +202,10 @@ namespace ChessGameAttempt
             {
                 for (int j = 0; j < 8; ++j)
                 {
-                    Button button = buttons[i, j];
-                    if (IsPieceOn(i, j))
+                    Button button = board[i, j];
+                    if (moves.IsPieceOn(i, j, board))
                     {
-                        Piece piece = GetPieceOnSquare(i, j);
+                        Piece piece = moves.GetPieceOnSquare(i, j, board);
 
                         if (piece.color == pieceColor.white)
                         {
@@ -282,71 +220,18 @@ namespace ChessGameAttempt
             }
         }
 
-        private void UpdateAttackedSquares()
-        {
-            for (int i = 0; i < 8; ++i)
-            {
-                for (int j = 0; j < 8; ++j)
-                {
-                    Piece piece = GetPieceOnSquare(i, j);
-                    List<Button> attackedSquares = new List<Button>();
-
-                    switch (piece.piece)
-                    {
-                        case "Pawn":
-                            PawnMoveLogic(piece, attackedSquares);
-                            break;
-
-                        case "Knight":
-                            KnightMoveLogic(piece, attackedSquares);
-                            break;
-
-                        case "Bishop":
-                            BishopMoveLogic(piece, attackedSquares);
-                            break;
-
-                        case "Rook":
-                            RookMoveLogic(piece, attackedSquares);
-                            break;
-
-                        case "Queen":
-                            QueenMoveLogic(piece, attackedSquares);
-                            break;
-
-                        case "King":
-                            KingMoveLogic(piece, attackedSquares);
-                            break;
-                    }
-                }
-            }
-        }
-
-        private void HighlightButtons(List<Button> buttons)
-        {
-            foreach (Button button in buttons)
-            {
-                Coordinates c = GetCoordinatesOfButton(button);
-                button.BackColor = (c.X + c.Y) % 2 == 0 ? colorHighlight1 : colorHighlight2;
-            }
-        }
-
-        private void HighlightSelectedButton(Button button)
-        {
-            button.BackColor = currentHighlight;
-        }
-
         private void ButtonClicked(object sender, EventArgs args)
         {
             Button currentButton = sender as Button;
             selectedButton = currentButton;
-            Coordinates c = GetCoordinatesOfButton(currentButton);
-            Piece piece = GetPieceOnSquare(c.X, c.Y);
+            Coordinates c = moves.GetCoordinatesOfButton(currentButton);
+            Piece piece = moves.GetPieceOnSquare(c.X, c.Y, board);
 
             // If there is a piece on the selected square that is current player's color
-            if (IsMyPiece(piece))
+            if (moves.IsMyPiece(piece))
             {
-                List<Button> moves = GetPossibleMovesForPiece(currentButton);
-                HighlightButtons(moves);
+                List<Button> possibleMoves = moves.GetPossibleMovesForPiece(currentButton, board);
+                moves.HighlightButtons(possibleMoves);
             }
 
             // Potential square to move to from a selected piece
@@ -354,10 +239,10 @@ namespace ChessGameAttempt
             {
                 if (SelectedPieceCanMoveTo(currentButton))
                 {
-                    Coordinates pc = GetCoordinatesOfButton(previousButton);
-                    Coordinates cc = GetCoordinatesOfButton(currentButton);
-                    Piece thisPiece = GetPieceOnSquare(pc.X, pc.Y);
-                    if (IsMyPiece(thisPiece))
+                    Coordinates pc = moves.GetCoordinatesOfButton(previousButton);
+                    Coordinates cc = moves.GetCoordinatesOfButton(currentButton);
+                    Piece thisPiece = moves.GetPieceOnSquare(pc.X, pc.Y, board);
+                    if (moves.IsMyPiece(thisPiece))
                     {
                         // Move piece to new square
                         currentButton.Tag = previousButton.Tag;
@@ -444,139 +329,24 @@ namespace ChessGameAttempt
                         }
 
                         // switch turns
-                        whiteTurn = !whiteTurn;
+                        moves.whiteTurn = !moves.whiteTurn;
 
                         // Clear highlights
-                        ClearChessBoardColors();
+                        moves.ClearChessBoardColors(board);
                     }
                 }
                 else
                 {
-                    ClearChessBoardColors();
+                    moves.ClearChessBoardColors(board);
                 }
             }
 
             previousButton = currentButton;
         }
 
-        private List<Button> GetPossibleMovesForPiece(Button button)
-        {
-            // Clear potential moves from before
-            ClearChessBoardColors();
-
-            // Highlight new locations
-            List<Button> locations = new List<Button>();
-            Coordinates c = GetCoordinatesOfButton(button);
-            Piece piece = GetPieceOnSquare(c.X, c.Y);
-
-            // If there is a piece on the selected square that is the color of the current player...
-            if (piece.piece != pieceString[(int)BoardPiece.NoPiece] && IsMyPiece(piece))
-            {
-                // Highlight the clicked button
-                HighlightSelectedButton(button);
-
-                string stringOfPiece = GetPieceStringOn(c.X, c.Y);
-
-                switch (stringOfPiece.Substring(1))
-                {
-                    case "Pawn":
-                        PawnMoveLogic(piece, locations);
-                        break;
-
-                    case "Bishop":
-                        BishopMoveLogic(piece, locations);
-                        break;
-
-                    case "Rook":
-                        RookMoveLogic(piece, locations);
-                        break;
-
-                    case "Queen":
-                        QueenMoveLogic(piece, locations);
-                        break;
-
-                    case "Knight":
-                        KnightMoveLogic(piece, locations);
-                        break;
-
-                    case "King":
-                        KingMoveLogic(piece, locations);
-                        break;
-                }
-            }
-
-            return locations;
-        }
-
-        private Button GetButtonOn(int x, int y)
-        {
-            if (x >= 0 && x <= 7 && y >= 0 && y <= 7) // On the board
-            {
-                return buttons[x, y];
-            }
-
-            return null;
-        }
-
-        private Piece GetPieceOnSquare(int x, int y)
-        {
-            Piece piece = new Piece();
-            if (IsPieceOn(x, y))
-            {
-                piece.button = buttons[x, y];
-                piece.color = buttons[x, y].Tag.ToString()[0] == 'w' ? pieceColor.white : pieceColor.black;
-                piece.coords.X = x;
-                piece.coords.Y = y;
-                piece.piece = buttons[x, y].Tag.ToString().Substring(1);
-            }
-            else
-            {
-                piece.piece = pieceString[(int)BoardPiece.NoPiece];
-            }
-            return piece;
-        }
-
-        private Coordinates GetCoordinatesOfButton(Button button)
-        {
-            Coordinates c;
-            string buttonName = button.Name;
-            int x = Convert.ToInt16(buttonName[buttonName.Length - 2].ToString());
-            int y = Convert.ToInt16(buttonName[buttonName.Length - 1].ToString());
-
-            c.X = x;
-            c.Y = y;
-
-            return c;
-        }
-        
-        private string GetPieceStringOn(int x, int y)
-        {
-            if (x > 7 || y > 7 || x < 0 || y < 0)
-            {
-                return pieceString[(int)BoardPiece.NoPiece]; // No piece
-            }
-
-            else
-            {
-                if (buttons[x, y].Tag != null)
-                {
-                    return buttons[x, y].Tag.ToString();
-                }
-
-                else return "";
-            }
-        }
-
         private bool SelectedPieceCanMoveTo(Button button)
         {
-            return (button.BackColor == colorHighlight1 || button.BackColor == colorHighlight2);
-        }
-
-        private bool IsMyPiece(Piece piece)
-        {
-            return
-                (piece.color == pieceColor.white && whiteTurn) ||
-                (piece.color == pieceColor.black && !whiteTurn);
+            return (button.BackColor == moves.colorHighlight1 || button.BackColor == moves.colorHighlight2);
         }
 
         private void settingsIcon_Click(object sender, EventArgs e)
@@ -629,8 +399,14 @@ namespace ChessGameAttempt
                     chatWindow.Text += "\n";
                 }
 
-                //chatWindow += me
+                chatWindow.Text += myName + ": " + chatToSend.Text;
+                chatToSend.Text = "";
             }
+        }
+
+        public Button[,] GetBoard()
+        {
+            return board;
         }
 
         private void chatToSend_KeyDown(object sender, KeyEventArgs e)
@@ -640,11 +416,6 @@ namespace ChessGameAttempt
                 sendButton_Click(sender, e);
                 e.SuppressKeyPress = true;
             }
-        }
-
-        private bool IsPieceOn(int x, int y)
-        {
-            return GetPieceStringOn(x, y) != "";
         }
     }
 }

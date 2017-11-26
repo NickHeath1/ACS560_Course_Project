@@ -57,7 +57,7 @@ namespace ChessGameAttempt
                 if (Verify_Login(usernameText.Text, passwordText.Text))
                 {
                     Hide();
-                    LobbyForm lobby = new LobbyForm(usernameText.Text);
+                    LobbyForm lobby = new LobbyForm(new User(usernameText.Text, passwordText.Text));
                     lobby.ShowDialog();
                     Show();
                 }

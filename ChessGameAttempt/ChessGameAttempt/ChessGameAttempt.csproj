@@ -49,17 +49,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckConditions.cs" />
+    <Compile Include="CheckLogic.cs" />
+    <Compile Include="CreateCustomGameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateCustomGameForm.Designer.cs">
+      <DependentUpon>CreateCustomGameForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateUserForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CreateUserForm.Designer.cs">
       <DependentUpon>CreateUserForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CustomGameSetupForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CustomGameSetupForm.Designer.cs">
-      <DependentUpon>CustomGameSetupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GameSession.cs">
       <SubType>Form</SubType>
@@ -85,9 +86,7 @@
     <Compile Include="LogInForm.Designer.cs">
       <DependentUpon>LogInForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MoveAttackLogic.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MoveLogic.cs" />
     <Compile Include="PawnPromotionFormBlack.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,11 +105,17 @@
     <Compile Include="SquareColorSettings.cs" />
     <Compile Include="TCPSignal.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="ViewGameDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewGameDetailsForm.Designer.cs">
+      <DependentUpon>ViewGameDetailsForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CreateCustomGameForm.resx">
+      <DependentUpon>CreateCustomGameForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateUserForm.resx">
       <DependentUpon>CreateUserForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CustomGameSetupForm.resx">
-      <DependentUpon>CustomGameSetupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameSession.resx">
       <DependentUpon>GameSession.cs</DependentUpon>
@@ -140,6 +145,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ViewGameDetailsForm.resx">
+      <DependentUpon>ViewGameDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

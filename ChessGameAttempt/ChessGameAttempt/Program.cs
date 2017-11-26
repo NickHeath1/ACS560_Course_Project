@@ -8,6 +8,10 @@ namespace ChessGameAttempt
 {
     static class Program
     {
+        // Settings
+        //public PieceImageSettings;
+        //public SquareColorSettings = new SquareColorSettings();
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,7 +20,8 @@ namespace ChessGameAttempt
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LobbyForm("user123"));
+            Application.Run(new LobbyForm(new User("Me", "password")));
+
         }
     }
 }
