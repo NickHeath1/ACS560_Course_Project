@@ -205,12 +205,12 @@ func GetCustomGamesForUser(w http.ResponseWriter, r *http.Request) {
 	defer conn.Close()
 	query := "SELECT * FROM UserCustomGames WHERE [User] = @Username"
 	gameResults, err := conn.Query(query, sql.Named("Username", params["username"]))
-	query = "SELECT * FROM UserCustomGamePieces WHERE GameID = @GameID"
+	query = "SELECT Piece, XCoordinate, YCoordinate FROM UserCustomGamePieces WHERE GameID = @GameID"
 	var games []CustomGame
 
 	for gameResults.Next() {
 		var currentCustomGame CustomGame
-		gameResults.Scan(&currentCustomGame.GameID, &currentCustomGame.Username)
+		gameResults.Scan(&currentCustomGame.GameID, &currentCustomGame.Username, &currentCustomGame.GameTimer, &currentCustomGame.MoveTimer, &currentCustomGame.WhiteMovesFirst, &currentCustomGame.CustomGameName)
 		gamePiecesResults, _ := conn.Query(query, sql.Named("GameID", currentCustomGame.GameID))
 		for gamePiecesResults.Next() {
 			var piece Piece
