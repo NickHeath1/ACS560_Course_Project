@@ -176,8 +176,8 @@ func AddCustomGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer conn.Close()
-	query := "INSERT INTO UserCustomGames VALUES(@Username, @GameTimer, @MoveTimer, @HostMovesFirst, @CustomGameName)"
-	result, err := conn.Exec(query, sql.Named("Username", game.Username), sql.Named("GameTimer", game.GameTimer), sql.Named("MoveTimer", game.MoveTimer), sql.Named("HostMovesFirst", game.HostMovesFirst), sql.Named("CustomGameName", game.CustomGameName))
+	query := "INSERT INTO UserCustomGames VALUES(@Username, @GameTimer, @MoveTimer, @WhiteMovesFirst, @CustomGameName)"
+	result, err := conn.Exec(query, sql.Named("Username", game.Username), sql.Named("GameTimer", game.GameTimer), sql.Named("MoveTimer", game.MoveTimer), sql.Named("WhiteMovesFirst", game.WhiteMovesFirst), sql.Named("CustomGameName", game.CustomGameName))
 	if err != nil {
 		http.Error(w, "An error occurred on the server!", 500)
 		fmt.Println(err.Error())

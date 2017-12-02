@@ -21,7 +21,7 @@ type CustomGame struct {
 	Username string `json:"Username,omitempty"`
 	GameTimer int `json:"GameTimer",omitempty"`
 	MoveTimer int `json:"MoveTimer,omitempty"`
-	HostMovesFirst bool `json:"HostMovesFirst,omitempty"`
+	WhiteMovesFirst bool `json:"WhiteMovesFirst,omitempty"`
 	CustomGameName string `json:"CustomGameName,omitempty"`
 	Pieces []Piece `json:"Pieces,omitempty"`
 }
