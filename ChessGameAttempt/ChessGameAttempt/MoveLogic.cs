@@ -66,10 +66,10 @@ namespace ChessGameAttempt
 
         public struct Piece
         {
-            public pieceColor color;
-            public string piece;
-            public Button button;
-            public Coordinates coords;
+            public pieceColor Color;
+            public string Name;
+            public Button Button;
+            public Coordinates Coordinates;
         }
 
         public Color colorHighlight1 = Color.LimeGreen;
@@ -90,8 +90,8 @@ namespace ChessGameAttempt
         public bool IsMyPiece(Piece piece)
         {
             return
-                (piece.color == pieceColor.white && whiteTurn) ||
-                (piece.color == pieceColor.black && !whiteTurn);
+                (piece.Color == pieceColor.white && whiteTurn) ||
+                (piece.Color == pieceColor.black && !whiteTurn);
         }
 
         public bool IsPieceOn(int x, int y, Button[,] board)
@@ -122,15 +122,15 @@ namespace ChessGameAttempt
             Piece piece = new Piece();
             if (IsPieceOn(x, y, board))
             {
-                piece.button = board[x, y];
-                piece.color = board[x, y].Tag.ToString()[0] == 'w' ? pieceColor.white : pieceColor.black;
-                piece.coords.X = x;
-                piece.coords.Y = y;
-                piece.piece = board[x, y].Tag.ToString().Substring(1);
+                piece.Button = board[x, y];
+                piece.Color = board[x, y].Tag.ToString()[0] == 'w' ? pieceColor.white : pieceColor.black;
+                piece.Coordinates.X = x;
+                piece.Coordinates.Y = y;
+                piece.Name = board[x, y].Tag.ToString().Substring(1);
             }
             else
             {
-                piece.piece = pieceString[(int)BoardPiece.NoPiece];
+                piece.Name = pieceString[(int)BoardPiece.NoPiece];
             }
             return piece;
         }
@@ -140,7 +140,7 @@ namespace ChessGameAttempt
         {
             int newX, newY;
             Button square;
-            Coordinates c = piece.coords;
+            Coordinates c = piece.Coordinates;
 
             newX = c.X + xInc;
             newY = c.Y + yInc;
@@ -200,7 +200,7 @@ namespace ChessGameAttempt
             Piece piece = GetPieceOnSquare(c.X, c.Y, board);
 
             // If there is a piece on the selected square that is the color of the current player...
-            if (piece.piece != pieceString[(int)BoardPiece.NoPiece] && IsMyPiece(piece))
+            if (piece.Name != pieceString[(int)BoardPiece.NoPiece] && IsMyPiece(piece))
             {
                 // Highlight the clicked button
                 HighlightSelectedButton(button);
@@ -247,7 +247,7 @@ namespace ChessGameAttempt
                 {
                     Piece piece = GetPieceOnSquare(i, j, board);
 
-                    switch (piece.piece)
+                    switch (piece.Name)
                     {
                         case "Pawn":
                             PawnMoveLogic(piece, attackedSquares, board);
@@ -324,7 +324,7 @@ namespace ChessGameAttempt
 
         public void RookMoveLogic(Piece piece, List<Button> moveLocations, Button[,] board)
         {
-            Coordinates c = piece.coords;
+            Coordinates c = piece.Coordinates;
             int i, j, newX, newY;
 
             // DRY cannot be applied here
@@ -335,7 +335,7 @@ namespace ChessGameAttempt
                 if (GetButtonOn(i, newY, board) != null)
                 {
                     // Piece on square is black = add to attacks, but cannot go past that piece
-                    if (GetPieceOnSquare(i, newY, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(i, newY, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[i, newY]);
                         break;
@@ -360,7 +360,7 @@ namespace ChessGameAttempt
             {
                 if (GetButtonOn(i, newY, board) != null)
                 {
-                    if (GetPieceOnSquare(i, newY, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(i, newY, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[i, newY]);
                         break;
@@ -384,7 +384,7 @@ namespace ChessGameAttempt
             {
                 if (GetButtonOn(newX, j, board) != null)
                 {
-                    if (GetPieceOnSquare(newX, j, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(newX, j, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[newX, j]);
                         break;
@@ -407,7 +407,7 @@ namespace ChessGameAttempt
             {
                 if (GetButtonOn(newX, j, board) != null)
                 {
-                    if (GetPieceOnSquare(newX, j, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(newX, j, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[newX, j]);
                         break;
@@ -432,7 +432,7 @@ namespace ChessGameAttempt
             {
                 if (GetButtonOn(i, newY, board) != null)
                 {
-                    if (GetPieceOnSquare(i, newY, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(i, newY, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[i, newY]);
                         break;
@@ -450,7 +450,7 @@ namespace ChessGameAttempt
             {
                 if (GetButtonOn(i, newY, board) != null)
                 {
-                    if (GetPieceOnSquare(i, newY, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(i, newY, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[i, newY]);
                         break;
@@ -469,7 +469,7 @@ namespace ChessGameAttempt
             {
                 if (GetButtonOn(newX, j, board) != null)
                 {
-                    if (GetPieceOnSquare(newX, j, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(newX, j, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[newX, j]);
                         break;
@@ -487,7 +487,7 @@ namespace ChessGameAttempt
             {
                 if (GetButtonOn(newX, j, board) != null)
                 {
-                    if (GetPieceOnSquare(newX, j, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(newX, j, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[newX, j]);
                         break;
@@ -503,7 +503,7 @@ namespace ChessGameAttempt
 
         public void BishopMoveLogic(Piece piece, List<Button> moveLocations, Button[,] board)
         {
-            Coordinates c = piece.coords;
+            Coordinates c = piece.Coordinates;
             int i, j, newX, newY;
             // Move logic...
             // Bishops move diagonally
@@ -512,7 +512,7 @@ namespace ChessGameAttempt
             for (i = newX, j = newY; i < 8 && j < 8; ++i, ++j)
             {
                 if (GetButtonOn(i, j, board) != null &&
-                    GetPieceOnSquare(i, j, board).piece == pieceString[(int)BoardPiece.NoPiece])
+                    GetPieceOnSquare(i, j, board).Name == pieceString[(int)BoardPiece.NoPiece])
                 {
                     moveLocations.Add(board[i, j]);
                 }
@@ -523,7 +523,7 @@ namespace ChessGameAttempt
             for (i = newX, j = newY; i >= 0 && j >= 0; --i, --j)
             {
                 if (GetButtonOn(i, j, board) != null &&
-                    GetPieceOnSquare(i, j, board).piece == pieceString[(int)BoardPiece.NoPiece])
+                    GetPieceOnSquare(i, j, board).Name == pieceString[(int)BoardPiece.NoPiece])
                 {
                     moveLocations.Add(board[i, j]);
                 }
@@ -534,7 +534,7 @@ namespace ChessGameAttempt
             for (i = newX, j = newY; i < 8 && j >= 0; ++i, --j)
             {
                 if (GetButtonOn(i, j, board) != null &&
-                    GetPieceOnSquare(i, j, board).piece == pieceString[(int)BoardPiece.NoPiece])
+                    GetPieceOnSquare(i, j, board).Name == pieceString[(int)BoardPiece.NoPiece])
                 {
                     moveLocations.Add(board[i, j]);
                 }
@@ -545,7 +545,7 @@ namespace ChessGameAttempt
             for (i = newX, j = newY; i >= 0 && j < 8; --i, ++j)
             {
                 if (GetButtonOn(i, j, board) != null &&
-                    GetPieceOnSquare(i, j, board).piece == pieceString[(int)BoardPiece.NoPiece])
+                    GetPieceOnSquare(i, j, board).Name == pieceString[(int)BoardPiece.NoPiece])
                 {
                     moveLocations.Add(board[i, j]);
                 }
@@ -559,7 +559,7 @@ namespace ChessGameAttempt
             {
                 if (GetButtonOn(i, j, board) != null)
                 {
-                    if (GetPieceOnSquare(i, j, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(i, j, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[i, j]);
                         break;
@@ -578,7 +578,7 @@ namespace ChessGameAttempt
             {
                 if (GetButtonOn(i, j, board) != null)
                 {
-                    if (GetPieceOnSquare(i, j, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(i, j, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[i, j]);
                         break;
@@ -597,7 +597,7 @@ namespace ChessGameAttempt
             {
                 if (GetButtonOn(i, j, board) != null)
                 {
-                    if (GetPieceOnSquare(i, j, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(i, j, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[i, j]);
                         break;
@@ -616,7 +616,7 @@ namespace ChessGameAttempt
             {
                 if (GetButtonOn(i, j, board) != null)
                 {
-                    if (GetPieceOnSquare(i, j, board).color == (whiteTurn ? pieceColor.black : pieceColor.white))
+                    if (GetPieceOnSquare(i, j, board).Color == (whiteTurn ? pieceColor.black : pieceColor.white))
                     {
                         moveLocations.Add(board[i, j]);
                         break;
@@ -633,20 +633,20 @@ namespace ChessGameAttempt
         // TODO : Add En Passant
         public void PawnMoveLogic(Piece piece, List<Button> moveLocations, Button[,] board)
         {
-            Coordinates c = piece.coords;
+            Coordinates c = piece.Coordinates;
             // First move for pawn
-            if (piece.color == pieceColor.white && whiteTurn)
+            if (piece.Color == pieceColor.white && whiteTurn)
             {
                 // Move logic...
                 if (GetButtonOn(c.X - 1, c.Y, board) != null &&
-                    GetPieceOnSquare(c.X - 1, c.Y, board).piece == pieceString[(int)BoardPiece.NoPiece])
+                    GetPieceOnSquare(c.X - 1, c.Y, board).Name == pieceString[(int)BoardPiece.NoPiece])
                 {
                     moveLocations.Add(board[c.X - 1, c.Y]);
 
                     // First position only
                     if (c.X == 6 &&
                     GetButtonOn(c.X - 2, c.Y, board) != null &&
-                    GetPieceOnSquare(c.X - 2, c.Y, board).piece == pieceString[(int)BoardPiece.NoPiece])
+                    GetPieceOnSquare(c.X - 2, c.Y, board).Name == pieceString[(int)BoardPiece.NoPiece])
                     {
                         moveLocations.Add(board[c.X - 2, c.Y]);
                     }
@@ -654,29 +654,29 @@ namespace ChessGameAttempt
 
                 // Capture logic
                 if (GetButtonOn(c.X - 1, c.Y - 1, board) != null &&
-                    GetPieceOnSquare(c.X - 1, c.Y - 1, board).color == pieceColor.black)
+                    GetPieceOnSquare(c.X - 1, c.Y - 1, board).Color == pieceColor.black)
                 {
                     moveLocations.Add(board[c.X - 1, c.Y - 1]);
                 }
                 if (GetButtonOn(c.X - 1, c.Y + 1, board) != null &&
-                    GetPieceOnSquare(c.X - 1, c.Y + 1, board).color == pieceColor.black)
+                    GetPieceOnSquare(c.X - 1, c.Y + 1, board).Color == pieceColor.black)
                 {
                     moveLocations.Add(board[c.X - 1, c.Y + 1]);
                 }
 
             }
 
-            else if (piece.color == pieceColor.black && !whiteTurn)
+            else if (piece.Color == pieceColor.black && !whiteTurn)
             {
                 // Move logic
                 if (GetButtonOn(c.X + 1, c.Y, board) != null &&
-                    GetPieceOnSquare(c.X + 1, c.Y, board).piece == pieceString[(int)BoardPiece.NoPiece])
+                    GetPieceOnSquare(c.X + 1, c.Y, board).Name == pieceString[(int)BoardPiece.NoPiece])
                 {
                     moveLocations.Add(board[c.X + 1, c.Y]);
 
                     if (c.X == 1 &&
                     GetButtonOn(c.X + 2, c.Y, board) != null &&
-                    GetPieceOnSquare(c.X + 2, c.Y, board).piece == pieceString[(int)BoardPiece.NoPiece])
+                    GetPieceOnSquare(c.X + 2, c.Y, board).Name == pieceString[(int)BoardPiece.NoPiece])
                     {
                         moveLocations.Add(board[c.X + 2, c.Y]);
                     }
@@ -684,12 +684,12 @@ namespace ChessGameAttempt
 
                 // Capture logic
                 if (GetButtonOn(c.X + 1, c.Y - 1, board) != null &&
-                    GetPieceOnSquare(c.X + 1, c.Y - 1, board).color == pieceColor.white)
+                    GetPieceOnSquare(c.X + 1, c.Y - 1, board).Color == pieceColor.white)
                 {
                     moveLocations.Add(board[c.X + 1, c.Y - 1]);
                 }
                 if (GetButtonOn(c.X + 1, c.Y + 1, board) != null &&
-                    GetPieceOnSquare(c.X + 1, c.Y + 1, board).color == pieceColor.white)
+                    GetPieceOnSquare(c.X + 1, c.Y + 1, board).Color == pieceColor.white)
                 {
                     moveLocations.Add(board[c.X + 1, c.Y + 1]);
                 }

@@ -20,7 +20,6 @@ C:\Users\TwiDashOTP\source\repos\ChessGameAttempt\ChessGameAttempt\obj\Debug\Che
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.csprojResolveAssemblyReference.cache
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.CreateUserForm.resources
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.GameSession.resources
-C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.GameDetailsForm.resources
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.LobbyForm.resources
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.LogInForm.resources
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.PawnPromotionFormBlack.resources
@@ -37,3 +36,5 @@ C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\bin\Debug\Newtons
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\bin\Debug\Newtonsoft.Json.xml
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.CreateCustomGameForm.resources
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.ViewGameDetailsForm.resources
+C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.AddCustomGameForm.resources
+C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.SettingsForm.resources

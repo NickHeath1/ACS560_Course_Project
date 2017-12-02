@@ -15,7 +15,7 @@ namespace ChessGameAttempt
 {
     public partial class LobbyForm : Form
     {
-        public string me;
+        public User me;
         TcpClient client;
         NetworkStream stream;
 
@@ -32,7 +32,7 @@ namespace ChessGameAttempt
 
         public LobbyForm(User user)
         {
-            me = user.Username;
+            me = user;
 
             InitializeComponent();
             client = new TcpClient("localhost", 2346);
@@ -45,7 +45,7 @@ namespace ChessGameAttempt
             // Prevent first row from being deletable by non-owners
             if (lobbyTable.Rows.Count > 0)
             {
-                if ((string)lobbyTable.Rows[0].Cells[2].Value != me)
+                if ((string)lobbyTable.Rows[0].Cells[2].Value != me.Username)
                 {
                     remove.Enabled = false;
                 }
@@ -69,7 +69,7 @@ namespace ChessGameAttempt
             lobbyTable.Rows.RemoveAt(rowIndex);
             if (lobbyTable.SelectedRows.Count > 0)
             {
-                if ((string)lobbyTable.Rows[lobbyTable.SelectedRows[0].Index].Cells[2].Value != me)
+                if ((string)lobbyTable.Rows[lobbyTable.SelectedRows[0].Index].Cells[2].Value != me.Username)
                 {
                     remove.Enabled = false;
                     join.Enabled = true;
@@ -91,7 +91,7 @@ namespace ChessGameAttempt
 
                 if (lobbyTable.SelectedRows.Count > 0)
                 {
-                    if ((string)lobbyTable.Rows[lobbyTable.SelectedRows[0].Index].Cells[2].Value != me)
+                    if ((string)lobbyTable.Rows[lobbyTable.SelectedRows[0].Index].Cells[2].Value != me.Username)
                     {
                         remove.Enabled = false;
                     }
@@ -107,7 +107,7 @@ namespace ChessGameAttempt
                 return;
             }
 
-            if ((string)lobbyTable.Rows[index].Cells[2].Value == me)
+            if ((string)lobbyTable.Rows[index].Cells[2].Value == me.Username)
             {
                 remove.Enabled = true;
                 join.Enabled = false;
@@ -124,7 +124,7 @@ namespace ChessGameAttempt
             // Remove my games from the lobby
             for (int i = 0; i < lobbyTable.Rows.Count; ++i)
             {
-                if ((string)lobbyTable.Rows[i].Cells[2].Value == me)
+                if ((string)lobbyTable.Rows[i].Cells[2].Value == me.Username)
                 {
 
                 }
@@ -137,7 +137,7 @@ namespace ChessGameAttempt
             // Ensure this user does not already have an active session
             for (int i = 0; i < lobbyTable.Rows.Count; ++i)
             {
-                if ((string)lobbyTable.Rows[i].Cells[2].Value == me)
+                if ((string)lobbyTable.Rows[i].Cells[2].Value == me.Username)
                 {
                     MessageBox.Show("Error: You already have a game queued in the lobby table!\nDelete this game and try again.");
                     return;
@@ -147,7 +147,7 @@ namespace ChessGameAttempt
             // Create the new session to add to the lobby table
             Session mySession = new Session()
             {
-                HostPlayer = me,
+                HostPlayer = me.Username,
                 GuestPlayer = "",
                 GameTimerSeconds = 1200,
                 MoveTimerSeconds = 120,
@@ -177,7 +177,7 @@ namespace ChessGameAttempt
             int sessionID = -1;
             for (int i = 0; i < lobbyTable.Rows.Count; ++i)
             {
-                if ((string)lobbyTable.Rows[i].Cells[2].Value == me)
+                if ((string)lobbyTable.Rows[i].Cells[2].Value == me.Username)
                 {
                     sessionID = (int)lobbyTable.Rows[i].Cells[0].Value;
                     break;
@@ -328,6 +328,31 @@ namespace ChessGameAttempt
                     vgdf.Show();
                 }
             }
+        }
+
+        private void createCustomGameButton_Click(object sender, EventArgs e)
+        {
+            CreateCustomGameForm ccgf = new CreateCustomGameForm(me);
+            ccgf.ShowDialog();
+        }
+
+        private void addCustomButton_Click(object sender, EventArgs e)
+        {
+            AddCustomGameForm form = new AddCustomGameForm(me);
+            form.ShowDialog();
+        }
+
+        private void logout_Click(object sender, EventArgs e)
+        {
+            // Log out just closes this form.
+            client.Close();
+            Close(); 
+        }
+
+        private void settingsButton_Click(object sender, EventArgs e)
+        {
+            SettingsForm settings = new SettingsForm(me);
+
         }
     }
 }

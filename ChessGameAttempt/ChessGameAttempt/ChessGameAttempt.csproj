@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddCustomGameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddCustomGameForm.Designer.cs">
+      <DependentUpon>AddCustomGameForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CheckConditions.cs" />
     <Compile Include="CheckLogic.cs" />
     <Compile Include="CreateCustomGameForm.cs">
@@ -62,17 +68,18 @@
     <Compile Include="CreateUserForm.Designer.cs">
       <DependentUpon>CreateUserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomGame.cs" />
     <Compile Include="GameSession.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GameSession.Designer.cs">
       <DependentUpon>GameSession.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameDetailsForm.cs">
+    <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameDetailsForm.Designer.cs">
-      <DependentUpon>GameDetailsForm.cs</DependentUpon>
+    <Compile Include="SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LobbyForm.cs">
       <SubType>Form</SubType>
@@ -111,6 +118,9 @@
     <Compile Include="ViewGameDetailsForm.Designer.cs">
       <DependentUpon>ViewGameDetailsForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AddCustomGameForm.resx">
+      <DependentUpon>AddCustomGameForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateCustomGameForm.resx">
       <DependentUpon>CreateCustomGameForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -120,8 +130,8 @@
     <EmbeddedResource Include="GameSession.resx">
       <DependentUpon>GameSession.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GameDetailsForm.resx">
-      <DependentUpon>GameDetailsForm.cs</DependentUpon>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LobbyForm.resx">
       <DependentUpon>LobbyForm.cs</DependentUpon>

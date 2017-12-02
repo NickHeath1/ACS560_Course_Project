@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LobbyForm));
             this.details = new System.Windows.Forms.Button();
             this.lobbyTable = new System.Windows.Forms.DataGridView();
@@ -43,10 +43,10 @@
             this.join = new System.Windows.Forms.Button();
             this.remove = new System.Windows.Forms.Button();
             this.addStandardGame = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.addCustomButton = new System.Windows.Forms.Button();
+            this.createCustomGameButton = new System.Windows.Forms.Button();
             this.oneMinBlitz = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.viewAchievementsButton = new System.Windows.Forms.Button();
             this.twoMinBlitz = new System.Windows.Forms.Button();
             this.settingsButton = new System.Windows.Forms.Button();
             this.logout = new System.Windows.Forms.Button();
@@ -73,14 +73,14 @@
             this.lobbyTable.AllowUserToOrderColumns = true;
             this.lobbyTable.AllowUserToResizeRows = false;
             this.lobbyTable.BackgroundColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.lobbyTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.lobbyTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.lobbyTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lobbyTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.SessionID,
@@ -94,8 +94,8 @@
             this.lobbyTable.Name = "lobbyTable";
             this.lobbyTable.ReadOnly = true;
             this.lobbyTable.RowHeadersVisible = false;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lobbyTable.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lobbyTable.RowsDefaultCellStyle = dataGridViewCellStyle16;
             this.lobbyTable.RowTemplate.Height = 24;
             this.lobbyTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.lobbyTable.Size = new System.Drawing.Size(740, 458);
@@ -111,10 +111,10 @@
             // 
             // custom
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.NullValue = false;
-            this.custom.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.NullValue = false;
+            this.custom.DefaultCellStyle = dataGridViewCellStyle14;
             this.custom.HeaderText = "Custom?";
             this.custom.Name = "custom";
             this.custom.ReadOnly = true;
@@ -122,8 +122,8 @@
             // 
             // username
             // 
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.username.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.username.DefaultCellStyle = dataGridViewCellStyle15;
             this.username.HeaderText = "UserName";
             this.username.Name = "username";
             this.username.ReadOnly = true;
@@ -179,27 +179,29 @@
             this.addStandardGame.UseVisualStyleBackColor = true;
             this.addStandardGame.Click += new System.EventHandler(this.addStandardGame_Click);
             // 
-            // button2
+            // addCustomButton
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(29, 225);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(92, 50);
-            this.button2.TabIndex = 12;
-            this.button2.Text = "Add Custom";
-            this.button2.UseVisualStyleBackColor = true;
+            this.addCustomButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addCustomButton.Location = new System.Drawing.Point(29, 225);
+            this.addCustomButton.Margin = new System.Windows.Forms.Padding(2);
+            this.addCustomButton.Name = "addCustomButton";
+            this.addCustomButton.Size = new System.Drawing.Size(92, 50);
+            this.addCustomButton.TabIndex = 12;
+            this.addCustomButton.Text = "Add Custom";
+            this.addCustomButton.UseVisualStyleBackColor = true;
+            this.addCustomButton.Click += new System.EventHandler(this.addCustomButton_Click);
             // 
-            // button3
+            // createCustomGameButton
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(29, 171);
-            this.button3.Margin = new System.Windows.Forms.Padding(2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(92, 50);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "Create Custom";
-            this.button3.UseVisualStyleBackColor = true;
+            this.createCustomGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.createCustomGameButton.Location = new System.Drawing.Point(29, 171);
+            this.createCustomGameButton.Margin = new System.Windows.Forms.Padding(2);
+            this.createCustomGameButton.Name = "createCustomGameButton";
+            this.createCustomGameButton.Size = new System.Drawing.Size(92, 50);
+            this.createCustomGameButton.TabIndex = 11;
+            this.createCustomGameButton.Text = "Create Custom";
+            this.createCustomGameButton.UseVisualStyleBackColor = true;
+            this.createCustomGameButton.Click += new System.EventHandler(this.createCustomGameButton_Click);
             // 
             // oneMinBlitz
             // 
@@ -212,16 +214,16 @@
             this.oneMinBlitz.Text = "1\' Blitz";
             this.oneMinBlitz.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // viewAchievementsButton
             // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(152, 520);
-            this.button5.Margin = new System.Windows.Forms.Padding(2);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(153, 50);
-            this.button5.TabIndex = 15;
-            this.button5.Text = "View Achievements";
-            this.button5.UseVisualStyleBackColor = true;
+            this.viewAchievementsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.viewAchievementsButton.Location = new System.Drawing.Point(152, 520);
+            this.viewAchievementsButton.Margin = new System.Windows.Forms.Padding(2);
+            this.viewAchievementsButton.Name = "viewAchievementsButton";
+            this.viewAchievementsButton.Size = new System.Drawing.Size(153, 50);
+            this.viewAchievementsButton.TabIndex = 15;
+            this.viewAchievementsButton.Text = "View Achievements";
+            this.viewAchievementsButton.UseVisualStyleBackColor = true;
             // 
             // twoMinBlitz
             // 
@@ -244,6 +246,7 @@
             this.settingsButton.TabIndex = 17;
             this.settingsButton.Text = "Change Settings";
             this.settingsButton.UseVisualStyleBackColor = true;
+            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
             // 
             // logout
             // 
@@ -255,6 +258,7 @@
             this.logout.TabIndex = 18;
             this.logout.Text = "Logout";
             this.logout.UseVisualStyleBackColor = true;
+            this.logout.Click += new System.EventHandler(this.logout_Click);
             // 
             // refreshButton
             // 
@@ -280,11 +284,11 @@
             this.Controls.Add(this.logout);
             this.Controls.Add(this.settingsButton);
             this.Controls.Add(this.twoMinBlitz);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.viewAchievementsButton);
             this.Controls.Add(this.oneMinBlitz);
             this.Controls.Add(this.addStandardGame);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.addCustomButton);
+            this.Controls.Add(this.createCustomGameButton);
             this.Controls.Add(this.remove);
             this.Controls.Add(this.join);
             this.Controls.Add(this.lobbyTable);
@@ -304,10 +308,10 @@
         private System.Windows.Forms.Button join;
         private System.Windows.Forms.Button remove;
         private System.Windows.Forms.Button addStandardGame;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button addCustomButton;
+        private System.Windows.Forms.Button createCustomGameButton;
         private System.Windows.Forms.Button oneMinBlitz;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button viewAchievementsButton;
         private System.Windows.Forms.Button twoMinBlitz;
         private System.Windows.Forms.Button settingsButton;
         private System.Windows.Forms.Button logout;

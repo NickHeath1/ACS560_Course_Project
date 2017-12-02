@@ -207,7 +207,7 @@ namespace ChessGameAttempt
                     {
                         Piece piece = moves.GetPieceOnSquare(i, j, board);
 
-                        if (piece.color == pieceColor.white)
+                        if (piece.Color == pieceColor.white)
                         {
                             whitePieces.Add(piece);
                         }
@@ -256,7 +256,7 @@ namespace ChessGameAttempt
                         if (cc.X % 7 == 0 && currentButton.Tag.ToString().Contains("Pawn"))
                         {
                             // White promotion
-                            if (thisPiece.color == pieceColor.white)
+                            if (thisPiece.Color == pieceColor.white)
                             {
                                 var whiteForm = new PawnPromotionFormWhite();
                                 // Pick based off of button

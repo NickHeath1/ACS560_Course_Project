@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,7 +31,7 @@ namespace ChessGameAttempt
         MoveLogic moves = new MoveLogic();
         CheckLogic check = new CheckLogic();
 
-        static string username;
+        static User me;
 
         // DEBUG
         static Image WhiteKing = ChessGameAttempt.Properties.Resources.wKing;
@@ -112,7 +115,7 @@ namespace ChessGameAttempt
 
         public CreateCustomGameForm(User user)
         {
-            username = user.Username;
+            me = user;
             InitializeComponent();
 
             // Set up images to the piece replace buttons
@@ -345,7 +348,7 @@ namespace ChessGameAttempt
 
         private void changeSettings_Click(object sender, EventArgs e)
         {
-            GameDetailsForm gdf = new GameDetailsForm();
+            SettingsForm gdf = new SettingsForm(me);
             gdf.Show();
         }
 
@@ -376,7 +379,7 @@ namespace ChessGameAttempt
             bool hasWhiteKing = false, hasBlackKing = false;
             foreach (Button square in board)
             {
-                if((string)square.Tag == TagStrings[(int)PieceEnum.WhiteKing])
+                if ((string)square.Tag == TagStrings[(int)PieceEnum.WhiteKing])
                 {
                     hasWhiteKing = true;
                     if (hasBlackKing)
@@ -403,7 +406,7 @@ namespace ChessGameAttempt
                 {
                     missingKings += "You are missing the black king";
                     // Both kings missing
-                    if(!hasWhiteKing)
+                    if (!hasWhiteKing)
                     {
                         missingKings += " and the white king";
                     }
@@ -418,16 +421,74 @@ namespace ChessGameAttempt
             }
 
             //Verify no kings are in check
-            List<Button> attackedSquares = moves.UpdateAttackedSquares(board);
-            moves.HighlightButtons(attackedSquares);
-            foreach (Button square in attackedSquares)
-            {
-            }
+            // TODO
 
             // Add the settings to the database
+            List<Piece> pieces = new List<Piece>();
+            foreach (Button square in board)
+            {
+                Piece piece = new Piece();
+                Coordinates c = GetCoordinates(square);
+                string name = square.Tag.ToString();
+                piece.Coordinates = c;
+                piece.Name = name;
 
-            // Close the form
-            //Close();
+                pieces.Add(piece);
+            }
+
+            int gameTimerSeconds = IsPlayerTotalTime.Checked ?
+                ((int)totalMins.Value * 60) + ((int)totalSecs.Value) : 0;
+
+            int moveTimerSeconds = IsPlayerTurnTime.Checked ?
+                ((int)turnMins.Value * 60) + ((int)turnSecs.Value) : 0;
+
+            CustomGame game = new CustomGame
+            {
+                Username = me.Username,
+                GameTimer = gameTimerSeconds,
+                MoveTimer = moveTimerSeconds,
+                WhiteMovesFirst = whiteToMove.Checked,
+                CustomGameName = gameNameBox.Text,
+                Pieces = pieces
+            };
+
+            string json = JsonConvert.SerializeObject(game);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:2345/AddCustomGame");
+            request.SendChunked = true;
+            request.Method = "POST";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(json);
+
+            request.ContentLength = byteArray.Length;
+            request.ContentType = @"application/json";
+
+            try
+            {
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                }
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                }
+
+                // Close the form
+                Close();
+            }
+            catch (WebException ex)
+            {
+                var response = (HttpWebResponse)ex.Response;
+                if (response == null)
+                {
+                    MessageBox.Show("An error occurred while attempting to save your custom game.");
+                }
+                else
+                {
+                    MessageBox.Show("Error communicating with server. Please try again later.", "Server error");
+                }
+            }
         }
 
         private void closeWithoutSaving_Click(object sender, EventArgs e)
@@ -538,6 +599,19 @@ namespace ChessGameAttempt
                 turnMins.Value = mins;
                 turnSecs.Value = secs;
             }
+        }
+
+        public Coordinates GetCoordinates(Button square)
+        {
+            Coordinates c;
+            string buttonName = square.Name;
+            int x = Convert.ToInt16(buttonName[buttonName.Length - 2].ToString());
+            int y = Convert.ToInt16(buttonName[buttonName.Length - 1].ToString());
+
+            c.X = x;
+            c.Y = y;
+
+            return c;
         }
     }
 }
