@@ -33,7 +33,9 @@ namespace ChessGameAttempt
         public LobbyForm(User user)
         {
             me = user;
-
+            SquareColorSettings colors = DataApiController<SquareColorSettings>.GetData("http://localhost:2345/GetCustomChessboardForUser/" + me.Username);
+            ChessUtils.Settings.Color.darkSquareColor = Color.FromArgb(colors.Red1, colors.Green1, colors.Blue1);
+            ChessUtils.Settings.Color.lightSquareColor = Color.FromArgb(colors.Red2, colors.Green2, colors.Blue2);
             InitializeComponent();
             client = new TcpClient("localhost", 2346);
             stream = client.GetStream();
