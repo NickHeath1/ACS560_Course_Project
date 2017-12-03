@@ -29,7 +29,7 @@ namespace ChessGameAttempt
         List<Button> selectionButtons;
 
         MoveLogic moves = new MoveLogic();
-        CheckLogic check = new CheckLogic();
+        //CheckLogic check = new CheckLogic(board);
 
         static User me;
 
@@ -452,42 +452,14 @@ namespace ChessGameAttempt
                 Pieces = pieces
             };
 
-            string json = JsonConvert.SerializeObject(game);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:2345/AddCustomGame");
-            request.SendChunked = true;
-            request.Method = "POST";
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(json);
-
-            request.ContentLength = byteArray.Length;
-            request.ContentType = @"application/json";
-
-            try
+            bool success = DataApiController<CustomGame>.PostData("http://localhost:2345/AddCustomGame", game);
+            if (!success)
             {
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                }
-
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                }
-
-                // Close the form
-                Close();
+                MessageBox.Show("Error while adding custom game to database.", "Error");
             }
-            catch (WebException ex)
+            else
             {
-                var response = (HttpWebResponse)ex.Response;
-                if (response == null)
-                {
-                    MessageBox.Show("An error occurred while attempting to save your custom game.");
-                }
-                else
-                {
-                    MessageBox.Show("Error communicating with server. Please try again later.", "Server error");
-                }
+                Close();
             }
         }
 

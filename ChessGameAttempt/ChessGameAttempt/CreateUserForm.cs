@@ -38,7 +38,7 @@ namespace ChessGameAttempt
             {
                 noUsernameErrorLabel.Hide();
 
-                if (!IsUserInDb(usernameText.Text))
+                if (IsUserInDb(new User(usernameText.Text, "")))
                 {
                     isUsernameValid = true;
                     usernameTakenLabel.Hide();
@@ -105,96 +105,27 @@ namespace ChessGameAttempt
         }
 
         // Add user request
-        bool AddUser(string jsonContent)
+        bool AddUser(User user)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:2345/AddUser");
-            request.Method = "POST";
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonContent);
-
-            request.ContentLength = byteArray.Length;
-            request.ContentType = @"application/json";
-
-            try
+            bool success = DataApiController<User>.PostData("http://localhost:2345/AddUser", user);
+            if (!success)
             {
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                }
-
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        return true;
-                    }
-
-                    else
-                    {
-                        MessageBox.Show("Error creating user. Server may be down.", "Server error");
-                        return false;
-                    }
-                }
+                MessageBox.Show("Error while adding user to database.", "Error");
             }
-            catch
-            {
-                MessageBox.Show("Error creating user. Server may be down.", "Server error");
-                return false;
-            }
+
+            return success;
         }
 
-        bool IsUserInDb(string jsonContent)
+        bool IsUserInDb(User user)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:2345/CheckUserAvailability/" + jsonContent);
-            request.Method = "GET";
-
-            try
-            {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        return false;
-                    }
-
-                    else
-                    {
-                        MessageBox.Show("Unable to determine username availability.\nServer may be down.", "Username not available");
-                        return true;
-                    }
-                }
-            }
-            catch (WebException ex)
-            {
-                var response = (HttpWebResponse)ex.Response;
-                if (response != null)
-                {
-                    if (response.StatusCode == HttpStatusCode.Conflict)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Error creating user. Server may be down.", "Server error");
-                        return false;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Error communicating with server. Please try again later.", "Server error");
-                    Close();
-                    return false;
-                }
-            }
+            bool success = DataApiController<User>.PostData("http://localhost:2345/CheckUserAvailability/" + user.Username, null);
+            return success;
         }
 
         private void createButton_Click(object sender, EventArgs e)
         {
             User user = new User(usernameText.Text, passwordText.Text);
-            string json = JsonConvert.SerializeObject(user);
-
-            if(AddUser(json))
+            if(AddUser(user))
             {
                 Close();
             }

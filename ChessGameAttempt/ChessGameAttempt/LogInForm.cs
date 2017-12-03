@@ -71,51 +71,7 @@ namespace ChessGameAttempt
         private bool Verify_Login(string username, string password)
         {
             User user = new User(username, password);
-            string json = JsonConvert.SerializeObject(user);
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:2345/AuthenticateUser");
-            request.Method = "POST";
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(json);
-
-            request.ContentLength = byteArray.Length;
-            request.ContentType = @"application/json";
-
-            try
-            {
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                }
-
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        return true;
-                    }
-
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
-            catch (WebException ex)
-            {
-                var response = (HttpWebResponse)ex.Response;
-                if (response != null)
-                {
-                    return false;
-                }
-                else
-                {
-                    MessageBox.Show("Error communicating with server. Please try again later.", "Server error");
-                    Close();
-                    return false;
-                }
-            }
+            return DataApiController<User>.PostData("http://localhost:2345/AuthenticateUser", user);
         }
 
         private void CloseButton_Click(object sender, EventArgs e)

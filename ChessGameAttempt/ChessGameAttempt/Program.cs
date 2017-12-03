@@ -20,8 +20,8 @@ namespace ChessGameAttempt
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LobbyForm(new User("mouthymouth", "password")));
-
+            //Application.Run(new LobbyForm(new User("mouthymouth", "")));
+            Application.Run(new LogInForm());
         }
     }
 }

@@ -28,18 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LobbyForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.details = new System.Windows.Forms.Button();
             this.lobbyTable = new System.Windows.Forms.DataGridView();
-            this.SessionID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.custom = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.username = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.turnTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gameTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.join = new System.Windows.Forms.Button();
             this.remove = new System.Windows.Forms.Button();
             this.addStandardGame = new System.Windows.Forms.Button();
@@ -51,6 +46,12 @@
             this.settingsButton = new System.Windows.Forms.Button();
             this.logout = new System.Windows.Forms.Button();
             this.refreshButton = new System.Windows.Forms.Button();
+            this.SessionID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.custom = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.turnTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gameTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GameID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.lobbyTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,75 +74,35 @@
             this.lobbyTable.AllowUserToOrderColumns = true;
             this.lobbyTable.AllowUserToResizeRows = false;
             this.lobbyTable.BackgroundColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.lobbyTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.lobbyTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.lobbyTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lobbyTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.SessionID,
             this.custom,
             this.username,
             this.turnTime,
-            this.gameTime});
+            this.gameTime,
+            this.GameID});
             this.lobbyTable.Location = new System.Drawing.Point(152, 33);
             this.lobbyTable.Margin = new System.Windows.Forms.Padding(2);
             this.lobbyTable.MultiSelect = false;
             this.lobbyTable.Name = "lobbyTable";
             this.lobbyTable.ReadOnly = true;
             this.lobbyTable.RowHeadersVisible = false;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lobbyTable.RowsDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lobbyTable.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.lobbyTable.RowTemplate.Height = 24;
             this.lobbyTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.lobbyTable.Size = new System.Drawing.Size(740, 458);
             this.lobbyTable.TabIndex = 8;
             this.lobbyTable.SelectionChanged += new System.EventHandler(this.lobbyTable_SelectionChanged);
-            // 
-            // SessionID
-            // 
-            this.SessionID.HeaderText = "SessionID";
-            this.SessionID.Name = "SessionID";
-            this.SessionID.ReadOnly = true;
-            this.SessionID.Visible = false;
-            // 
-            // custom
-            // 
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle14.NullValue = false;
-            this.custom.DefaultCellStyle = dataGridViewCellStyle14;
-            this.custom.HeaderText = "Custom?";
-            this.custom.Name = "custom";
-            this.custom.ReadOnly = true;
-            this.custom.Width = 90;
-            // 
-            // username
-            // 
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.username.DefaultCellStyle = dataGridViewCellStyle15;
-            this.username.HeaderText = "UserName";
-            this.username.Name = "username";
-            this.username.ReadOnly = true;
-            this.username.Width = 380;
-            // 
-            // turnTime
-            // 
-            this.turnTime.HeaderText = "Turn Time";
-            this.turnTime.Name = "turnTime";
-            this.turnTime.ReadOnly = true;
-            this.turnTime.Width = 125;
-            // 
-            // gameTime
-            // 
-            this.gameTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.gameTime.HeaderText = "Game Time";
-            this.gameTime.Name = "gameTime";
-            this.gameTime.ReadOnly = true;
             // 
             // join
             // 
@@ -213,6 +174,7 @@
             this.oneMinBlitz.TabIndex = 14;
             this.oneMinBlitz.Text = "1\' Blitz";
             this.oneMinBlitz.UseVisualStyleBackColor = true;
+            this.oneMinBlitz.Click += new System.EventHandler(this.oneMinBlitz_Click);
             // 
             // viewAchievementsButton
             // 
@@ -235,6 +197,7 @@
             this.twoMinBlitz.TabIndex = 16;
             this.twoMinBlitz.Text = "2\' Blitz";
             this.twoMinBlitz.UseVisualStyleBackColor = true;
+            this.twoMinBlitz.Click += new System.EventHandler(this.twoMinBlitz_Click);
             // 
             // settingsButton
             // 
@@ -272,6 +235,54 @@
             this.refreshButton.TabIndex = 19;
             this.refreshButton.UseVisualStyleBackColor = true;
             this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
+            // 
+            // SessionID
+            // 
+            this.SessionID.HeaderText = "SessionID";
+            this.SessionID.Name = "SessionID";
+            this.SessionID.ReadOnly = true;
+            this.SessionID.Visible = false;
+            // 
+            // custom
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.NullValue = false;
+            this.custom.DefaultCellStyle = dataGridViewCellStyle2;
+            this.custom.HeaderText = "Custom?";
+            this.custom.Name = "custom";
+            this.custom.ReadOnly = true;
+            this.custom.Width = 90;
+            // 
+            // username
+            // 
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.username.DefaultCellStyle = dataGridViewCellStyle3;
+            this.username.HeaderText = "UserName";
+            this.username.Name = "username";
+            this.username.ReadOnly = true;
+            this.username.Width = 380;
+            // 
+            // turnTime
+            // 
+            this.turnTime.HeaderText = "Turn Time";
+            this.turnTime.Name = "turnTime";
+            this.turnTime.ReadOnly = true;
+            this.turnTime.Width = 125;
+            // 
+            // gameTime
+            // 
+            this.gameTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.gameTime.HeaderText = "Game Time";
+            this.gameTime.Name = "gameTime";
+            this.gameTime.ReadOnly = true;
+            // 
+            // GameID
+            // 
+            this.GameID.HeaderText = "GameID";
+            this.GameID.Name = "GameID";
+            this.GameID.ReadOnly = true;
+            this.GameID.Visible = false;
             // 
             // LobbyForm
             // 
@@ -315,11 +326,12 @@
         private System.Windows.Forms.Button twoMinBlitz;
         private System.Windows.Forms.Button settingsButton;
         private System.Windows.Forms.Button logout;
+        private System.Windows.Forms.Button refreshButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn SessionID;
         private System.Windows.Forms.DataGridViewCheckBoxColumn custom;
         private System.Windows.Forms.DataGridViewTextBoxColumn username;
         private System.Windows.Forms.DataGridViewTextBoxColumn turnTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn gameTime;
-        private System.Windows.Forms.Button refreshButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GameID;
     }
 }

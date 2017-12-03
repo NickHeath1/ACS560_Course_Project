@@ -17,6 +17,7 @@ type Session struct {
 	MoveTimerSeconds int `json:"MoveTimerSeconds,omitempty"`
 	BoardPieces [][]ChessData.Piece `json:"BoardPieces,omitempty"`
 	CustomGameMode int `json:"CustomGameMode,omitempty"`
+	GameID int `json:"GameID,omitempty"`
 }
 
 type TCPSignal struct {

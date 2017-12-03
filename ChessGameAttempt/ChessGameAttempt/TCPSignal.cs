@@ -34,6 +34,7 @@ namespace ChessGameAttempt
         public int MoveTimerSeconds;
         public Piece[][] BoardPieces;
         public int CustomGameMode;
+        public int GameID;
     }
 
     class TCPSignal

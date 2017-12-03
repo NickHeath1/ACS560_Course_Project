@@ -16,50 +16,32 @@ namespace ChessGameAttempt
     public partial class AddCustomGameForm : Form
     {
         public User me;
+        LobbyForm lobby;
         List<CustomGame> gameList;
 
-        public AddCustomGameForm(User user)
+        public AddCustomGameForm(User user, LobbyForm form)
         {
             me = user;
+            lobby = form;
             InitializeComponent();
             GetGames();
         }
 
         private void GetGames()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:2345/GetCustomGamesForUser/" + me.Username);
-            request.Method = "GET";
-
-            request.ContentType = @"application/json";
-
-            try
+            gameList = DataApiController<List<CustomGame>>.GetData("http://localhost:2345/GetCustomGamesForUser/" + me.Username);
+            if (gameList != null)
             {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                using (Stream stream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(stream))
+                foreach (CustomGame game in gameList)
                 {
-                    string json = reader.ReadToEnd();
-                    gameList = (List<CustomGame>)JsonConvert.DeserializeObject(json, typeof(List<CustomGame>));
-
-                    foreach (CustomGame game in gameList)
-                    {
-                        AddGameToList(game);
-                    }
+                    AddGameToList(game);
                 }
             }
-            catch (WebException ex)
+            else
             {
-                var response = (HttpWebResponse)ex.Response;
-                if (response != null)
-                {
-                    return;
-                }
-                else
-                {
-                    MessageBox.Show("Error communicating with server. Please try again later.", "Server error");
-                    Close();
-                    return;
-                }
+                totalTime.Text =
+                turnTime.Text = 
+                color.Text = "No data available";
             }
         }
 
@@ -72,7 +54,53 @@ namespace ChessGameAttempt
 
         private void addGameButton_Click(object sender, EventArgs e)
         {
+            if (gamesList.SelectedRows.Count > 0)
+            {
+                // Get the game ID from the row
+                int gameId = (int)gamesList.SelectedRows[0].Cells[0].Value;
 
+                // Match the game ID with the appropriate CustomGame in the list
+                CustomGame game = gameList.Single(x => x.GameID == gameId);
+
+                // Convert the list of pieces into a double array (board)
+                MoveLogic.Piece[][] pieces = new MoveLogic.Piece[8][];
+                for (int i = 0; i < 8; ++i) pieces[i] = new MoveLogic.Piece[8];
+                foreach (MoveLogic.Piece piece in game.Pieces)
+                {
+                    MoveLogic.Coordinates c = piece.Coordinates;
+                    pieces[c.X][c.Y] = new MoveLogic.Piece();
+                    pieces[c.X][c.Y] = piece;
+                }
+
+                // Create the new session to add to the lobby table
+                Session mySession = new Session()
+                {
+                    HostPlayer = game.Username,
+                    GuestPlayer = "",
+                    GameTimerSeconds = game.GameTimer,
+                    MoveTimerSeconds = game.MoveTimer,
+                    CustomGameMode = 3 /* Custom game */,
+                    BoardPieces = pieces,
+                    GameID = gameId
+                };
+
+                // Create the signal to send
+                TCPSignal signal = new TCPSignal()
+                {
+                    SignalType = Signal.CreateSession,
+                    NewSession = mySession
+                };
+
+                // Send the json over to the server
+                string json = JsonConvert.SerializeObject(signal) + "\r";
+                byte[] jsonBytes = ASCIIEncoding.ASCII.GetBytes(json);
+                byte[] readBuffer = new byte[65536];
+                lobby.stream.Write(jsonBytes, 0, jsonBytes.Length);
+
+                lobby.RefreshTable();
+
+                Close();
+            }
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
@@ -87,34 +115,10 @@ namespace ChessGameAttempt
                 // The user has selected to delete the custom game, continue...
                 int gameId = (int)gamesList.SelectedRows[0].Cells[0].Value;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:2345/DeleteCustomGame/" + gameId.ToString());
-                request.Method = "POST";
+                DataApiController<List<CustomGame>>.PostData("http://localhost:2345/DeleteCustomGame/" + gameId.ToString(), null);
 
-                try
-                {
-                    using (Stream dataStream = request.GetRequestStream())
-                    {
-                    }
-
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                    {
-                        // Catch will be called if this is the case
-                    }
-                }
-                catch (WebException ex)
-                {
-                    var response = (HttpWebResponse)ex.Response;
-                    if (response != null)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Error communicating with server. Please try again later.", "Server error");
-                        Close();
-                        return;
-                    }
-                }
+                // Delete the game from the data grid view
+                gamesList.Rows.RemoveAt(gamesList.SelectedRows[0].Index);
             }
         }
 
@@ -126,6 +130,25 @@ namespace ChessGameAttempt
         private void exitButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void gamesList_SelectionChanged(object sender, EventArgs e)
+        {
+            // Update the stuff on the right of the form
+            if (gamesList.SelectedRows.Count > 0)
+            {
+                // Get the game ID from the row
+                int gameId = (int)gamesList.SelectedRows[0].Cells[0].Value;
+
+                // Match the game ID with the appropriate CustomGame in the list
+                CustomGame game = gameList.Single(x => x.GameID == gameId);
+
+                totalTime.Text = ChessUtils.ConvertSecondsToTimeString(game.GameTimer);
+                turnTime.Text = ChessUtils.ConvertSecondsToTimeString(game.MoveTimer);
+                color.Text = game.WhiteMovesFirst ?
+                    "White" :
+                    "Black";
+            }
         }
     }
 }

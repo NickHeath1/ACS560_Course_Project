@@ -158,6 +158,9 @@
             // 
             // gamesList
             // 
+            this.gamesList.AccessibleRole = System.Windows.Forms.AccessibleRole.ScrollBar;
+            this.gamesList.AllowUserToAddRows = false;
+            this.gamesList.AllowUserToResizeRows = false;
             this.gamesList.BackgroundColor = System.Drawing.Color.Gainsboro;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -174,11 +177,13 @@
             this.gamesList.Location = new System.Drawing.Point(12, 12);
             this.gamesList.Name = "gamesList";
             this.gamesList.RowHeadersVisible = false;
+            this.gamesList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gamesList.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.gamesList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gamesList.Size = new System.Drawing.Size(378, 456);
             this.gamesList.TabIndex = 11;
+            this.gamesList.SelectionChanged += new System.EventHandler(this.gamesList_SelectionChanged);
             // 
             // ID
             // 

@@ -20,7 +20,7 @@ func RegisterRoutes() {
 	// User data
 	router.HandleFunc("/AddUser", AddUser).Methods("POST")
 	router.HandleFunc("/AuthenticateUser", AuthenticateUser).Methods("POST")
-	router.HandleFunc("/CheckUserAvailability/{username}", CheckUserAvailability).Methods("GET")
+	router.HandleFunc("/CheckUserAvailability/{username}", CheckUserAvailability).Methods("POST")
 	router.HandleFunc("/ChangePassword", ChangePassword).Methods("POST")
 	router.HandleFunc("/UpdateGamesWon", UpdateGamesWon).Methods("POST")
 	router.HandleFunc("/UpdateGamesLost", UpdateGamesLost).Methods("POST")

@@ -11,98 +11,6 @@ using static ChessGameAttempt.MoveLogic;
 
 namespace ChessGameAttempt
 {
-
-    /*      *************FUNCTIONS*************
-     *      
-     *      void ClearChessBoardColors()
-     *          Desc: Gets rid of any highlighting on the board
-     *          
-     *      void HighlightButtons(List<Button> buttons)
-     *          In: Array of buttons (squares) to highlight on the board
-     *          Desc: Highlights buttons on the board to display available moves
-     *          
-     *      void HighlightSelectedButton(Button button)
-     *          In: The button on the board to be highlighted
-     *          Desc: Highlights the button that is clicked (if there is a piece on that button)
-     *          
-     *      bool SelectedPieceCanMoveTo(Button button)
-     *          In: The button in question to move to
-     *          Out: True if the piece is logically able to move to that button, otherwise false
-     *          Desc: Verifies that a piece is logically able to move to a specific button on the board
-     *          
-     *      void UpdatePlayerPieces()
-     *          Desc: Updates the whitePieces and blackPieces lists with the current layout
-     *          
-     *      void UpdateAttackedSquares()
-     *          Desc: Updates the attackedSquares list with the squares under attack by both colored pieces
-     *          
-     *      void KingLogicForSquare(pieceColor color, int x, int y)
-     *          In: The piece's color, and the coordinates of the square that it is on
-     *          Desc: Applies king move and attack logic to that square
-     *          
-     *      void QueenLogicForSquare(pieceColor color, int x, int y)
-     *          In: The piece's color, and the coordinates of the square that it is on
-     *          Desc: Applies queen move and attack logic to that square
-     *          
-     *      void RookLogicForSquare(pieceColor color, int x, int y)
-     *          In: The piece's color, and the coordinates of the square that it is on
-     *          Desc: Applies rook move and attack logic to that square
-     *          
-     *      void KnightLogicForSquare(pieceColor color, int x, int y)
-     *          In: The piece's color, and the coordinates of the square that it is on
-     *          Desc: Applies knight move and attack logic to that square
-     *          
-     *      void BishopLogicForSquare(pieceColor color, int x, int y)
-     *          In: The piece's color, and the coordinates of the square that it is on
-     *          Desc: Applies bishop move and attack logic to that square
-     *          
-     *      void PawnLogicForSquare(pieceColor color, int x, int y)
-     *          In: The piece's color, and the coordinates of the square that it is on
-     *          Desc: Applies pawn move and attack logic to that square
-     *          
-     *      void AddAttacks(pieceColor color, List<Button> attacks)
-     *          In: The piece's color and the list of buttons that that piece currently attacks
-     *          Desc: Adds attacks to whiteAttacks or blackAttacks based on piece color
-     *          
-     *      void SetUpButtons()
-     *          Desc: Adds the ButtonClicked functionality to all of the chess board buttons
-     *          
-     *      Button GetButtonOn(int x, int y)
-     *          In: Coordinates of a button
-     *          Out: Button that is at coordinates x, y
-     *          Desc: Gets a button based on the coordinates of the button or NULL
-     *          
-     *      PlayerPiece GetPieceOnSquare(int x, int y)
-     *          In: Coordinates of a button
-     *          Out: a play piece on the coordinates x, y or playerpiece "NoPiece"
-     *          
-     *      void ButtonClicked(object sender, EventArgs args)
-     *          In: Function called when a button is clicked
-     *          Desc: Highlights a piece and potential moves for that piece if there is a piece
-     *                OR moves a piece to a highlighted square, if there is a piece already selected
-     *                
-     *      string GetPieceStringOn(int x, int y)
-     *          In: Coordinates of a button
-     *          Out: string of a piece or NoString. (i.e. Pawn for white or black pawn)
-     *          Desc: Returns a string for the piece on a button at x, y OR ""
-     *          
-     *      List<Button> GetPossibleMovesForPiece(Button button)
-     *          In: A button to determine the possible moves if there is a piece on that button
-     *          Out: The list of attackable buttons for that piece
-     *          Desc: Gets all possible moves for a selected button at coordinates x, y
-     *          NOTE: applies check logic
-     *          
-     *      bool IsPieceOn(int x, int y)
-     *          In: Coordinates of a button
-     *          Out: True if there is a piece on the button, otherwise false
-     *          Desc: Determines if there is a piece on a selected tile
-     *          
-     *      Coordinates GetCoordinatesOfButton(Button button)
-     *          In: A selected button
-     *          Out: The x, y coordinates of that button
-     *          Desc: Returns a coordinate object c with the x, y coordinates (c.x, c.y)
-     */
-
     public partial class GameSession : Form
     {
         MoveLogic moves = new MoveLogic();
@@ -364,7 +272,6 @@ namespace ChessGameAttempt
         private void exitButton_Click(object sender, EventArgs e)
         {
             // Forfeit
-            
         }
 
         private void muteButton_Click(object sender, EventArgs e)

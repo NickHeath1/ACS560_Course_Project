@@ -16,8 +16,8 @@ namespace ChessGameAttempt
     public partial class LobbyForm : Form
     {
         public User me;
-        TcpClient client;
-        NetworkStream stream;
+        public TcpClient client;
+        public NetworkStream stream;
 
         public string[] pieceString = new string[]
         {
@@ -52,14 +52,22 @@ namespace ChessGameAttempt
             }
         }
 
+        public DataGridView GetLobbyTable()
+        {
+            return lobbyTable;
+        }
+
         private void clearTable()
         {
             lobbyTable.Rows.Clear();
         }
 
-        private void AddGameToLobbyTable(int sessionId, bool customCheck, string username, int turnTime, int gameTime)
+        private void AddGameToLobbyTable(int sessionId, bool customCheck, string username, int turnTime, int gameTime, int gameId)
         {
-            lobbyTable.Rows.Add(sessionId, customCheck, username, turnTime, gameTime);
+            string turnString, gameString;
+            turnString = ChessUtils.ConvertSecondsToTimeString(turnTime);
+            gameString = ChessUtils.ConvertSecondsToTimeString(gameTime);
+            lobbyTable.Rows.Add(sessionId, customCheck, username, turnString, gameString, gameId);
 
             // Send a signal to other clients to add this game to the list
         }
@@ -126,7 +134,7 @@ namespace ChessGameAttempt
             {
                 if ((string)lobbyTable.Rows[i].Cells[2].Value == me.Username)
                 {
-
+                    RemoveSessionFromTable();
                 }
             }
 
@@ -134,14 +142,10 @@ namespace ChessGameAttempt
 
         private void addStandardGame_Click(object sender, EventArgs e)
         {
-            // Ensure this user does not already have an active session
-            for (int i = 0; i < lobbyTable.Rows.Count; ++i)
+            if (UserHasActiveGame())
             {
-                if ((string)lobbyTable.Rows[i].Cells[2].Value == me.Username)
-                {
-                    MessageBox.Show("Error: You already have a game queued in the lobby table!\nDelete this game and try again.");
-                    return;
-                }
+                MessageBox.Show("Error: You already have a game queued in the lobby table!\nDelete this game and try again.");
+                return;
             }
 
             // Create the new session to add to the lobby table
@@ -200,7 +204,7 @@ namespace ChessGameAttempt
             stream.Write(jsonBytes, 0, jsonBytes.Length);
         }
 
-        private void RefreshTable()
+        public void RefreshTable()
         {
             // When the lobby form first comes up, we want to fill the table with the active sessions from the server
             // Create the signal to send
@@ -237,9 +241,10 @@ namespace ChessGameAttempt
                     int gameTime = session.GameTimerSeconds;
                     int moveTime = session.MoveTimerSeconds;
                     int sessionID = session.SessionID;
+                    int gameID = session.GameID;
 
                     // Create the row in the table
-                    AddGameToLobbyTable(sessionID, isCustomGame, un, moveTime, gameTime);
+                    AddGameToLobbyTable(sessionID, isCustomGame, un, moveTime, gameTime, gameID);
                 }
             }
         }
@@ -269,62 +274,20 @@ namespace ChessGameAttempt
         {
             if (lobbyTable.SelectedRows.Count > 0)
             {
-                string opptName, gameTime, turnTime, color2Move;
-                int gTime, tTime, gTimeMins, gTimeSecs, tTimeMins, tTimeSecs;
+                ViewGameDetailsForm vgdf = new ViewGameDetailsForm();
 
-                // Is this a custom game? Change the board to match
-                if ((bool)lobbyTable.SelectedRows[0].Cells[1].Value)
+                string hostUsername = (string)lobbyTable.SelectedRows[0].Cells[2].Value;
+                int gameId = (int)lobbyTable.SelectedRows[0].Cells[5].Value;
+
+                List<CustomGame> games = DataApiController<List<CustomGame>>.GetData("http://localhost:2345/GetCustomGamesForUser/" + hostUsername);
+                CustomGame game = games.Single(x => x.GameID == gameId);
+                if (game != null)
                 {
-                    // TODO: Change the board
-                }
-
-                // Not a custom game, the board is already set up for normal mode
-                else
-                {
-                    opptName = (string)lobbyTable.SelectedRows[0].Cells[2].Value;
-                    color2Move = "White";
-                    tTime = (int)lobbyTable.SelectedRows[0].Cells[3].Value;
-                    gTime = (int)lobbyTable.SelectedRows[0].Cells[4].Value;
-
-                    if (gTime != 0)
-                    {
-                        gTimeMins = (int)((float)gTime / 60.0);
-                        gTimeSecs = gTime % 60;
-
-                        gameTime = (gTimeSecs < 0) ?
-                            gTimeMins.ToString() + ":0" + gTimeSecs.ToString() :
-                            gTimeMins.ToString() + ":" + gTimeSecs.ToString();
-
-                        gameTime += gTimeSecs == 0 ? "0" : "";
-                    }
-                    else
-                    {
-                        gameTime = "Infinite";
-                    }
-
-                    if (tTime != 0)
-                    {
-                        tTimeMins = (int)((float)tTime / 60.0);
-                        tTimeSecs = tTime % 60;
-
-                        turnTime = (tTimeSecs < 0) ?
-                            tTimeMins.ToString() + ":0" + tTimeSecs.ToString() :
-                            tTimeMins.ToString() + ":" + tTimeSecs.ToString();
-
-                        turnTime += tTimeSecs == 0 ? "0" : "";
-                    }
-                    else
-                    {
-                        turnTime = "Infinite";
-                    }
-
-                    // Set up the details form
-                    ViewGameDetailsForm vgdf = new ViewGameDetailsForm();
-                    vgdf.SetGameTime(gameTime);
-                    vgdf.SetTurnTime(turnTime);
-                    vgdf.SetToMove(color2Move);
-                    vgdf.SetOpponentName(opptName);
-
+                    vgdf.SetGameTime(ChessUtils.ConvertSecondsToTimeString(game.GameTimer));
+                    vgdf.SetTurnTime(ChessUtils.ConvertSecondsToTimeString(game.MoveTimer));
+                    vgdf.SetOpponentName(hostUsername);
+                    vgdf.SetToMove(game.WhiteMovesFirst ? "White" : "Black");
+                    vgdf.SetBoard(game.Pieces);
                     vgdf.Show();
                 }
             }
@@ -338,7 +301,13 @@ namespace ChessGameAttempt
 
         private void addCustomButton_Click(object sender, EventArgs e)
         {
-            AddCustomGameForm form = new AddCustomGameForm(me);
+            if (UserHasActiveGame())
+            {
+                MessageBox.Show("Error: You already have a game queued in the lobby table!\nDelete this game and try again.");
+                return;
+            }
+
+            AddCustomGameForm form = new AddCustomGameForm(me, this);
             form.ShowDialog();
         }
 
@@ -353,6 +322,88 @@ namespace ChessGameAttempt
         {
             SettingsForm settings = new SettingsForm(me);
 
+        }
+
+        private void oneMinBlitz_Click(object sender, EventArgs e)
+        {
+            if (UserHasActiveGame())
+            {
+                MessageBox.Show("Error: You already have a game queued in the lobby table!\nDelete this game and try again.");
+                return;
+            }
+
+            // Create the new session to add to the lobby table
+            Session mySession = new Session()
+            {
+                HostPlayer = me.Username,
+                GuestPlayer = "",
+                GameTimerSeconds = 60,
+                MoveTimerSeconds = 0,
+                CustomGameMode = 0
+            };
+
+            // Create the signal to send
+            TCPSignal signal = new TCPSignal()
+            {
+                SignalType = Signal.CreateSession,
+                NewSession = mySession
+            };
+
+            // Send the json over to the server
+            string json = JsonConvert.SerializeObject(signal) + "\r";
+            byte[] jsonBytes = ASCIIEncoding.ASCII.GetBytes(json);
+            byte[] readBuffer = new byte[65536];
+            stream.Write(jsonBytes, 0, jsonBytes.Length);
+
+            RefreshTable();
+        }
+
+        private void twoMinBlitz_Click(object sender, EventArgs e)
+        {
+            if (UserHasActiveGame())
+            {
+                MessageBox.Show("Error: You already have a game queued in the lobby table!\nDelete this game and try again.");
+                return;
+            }
+
+            // Create the new session to add to the lobby table
+            Session mySession = new Session()
+            {
+                HostPlayer = me.Username,
+                GuestPlayer = "",
+                GameTimerSeconds = 120,
+                MoveTimerSeconds = 0,
+                CustomGameMode = 0
+            };
+
+            // Create the signal to send
+            TCPSignal signal = new TCPSignal()
+            {
+                SignalType = Signal.CreateSession,
+                NewSession = mySession
+            };
+
+            // Send the json over to the server
+            string json = JsonConvert.SerializeObject(signal) + "\r";
+            byte[] jsonBytes = ASCIIEncoding.ASCII.GetBytes(json);
+            byte[] readBuffer = new byte[65536];
+            stream.Write(jsonBytes, 0, jsonBytes.Length);
+
+            RefreshTable();
+        }
+
+        private bool UserHasActiveGame()
+        {
+            // Ensure this user does not already have an active session
+            for (int i = 0; i < lobbyTable.Rows.Count; ++i)
+            {
+                if ((string)lobbyTable.Rows[i].Cells[2].Value == me.Username)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

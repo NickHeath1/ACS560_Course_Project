@@ -56,6 +56,7 @@
     </Compile>
     <Compile Include="CheckConditions.cs" />
     <Compile Include="CheckLogic.cs" />
+    <Compile Include="ChessUtils.cs" />
     <Compile Include="CreateCustomGameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +70,7 @@
       <DependentUpon>CreateUserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomGame.cs" />
+    <Compile Include="DataApiController.cs" />
     <Compile Include="GameSession.cs">
       <SubType>Form</SubType>
     </Compile>
