@@ -8,6 +8,14 @@ namespace ChessGameAttempt
 {
     public static class ChessUtils
     {
+        public enum CheckState
+        {
+            NoCheck = -1,
+            Check = 0,
+            Checkmate = 1,
+            Stalemate = 2
+        }
+
         public static class Settings
         {
             public class Color

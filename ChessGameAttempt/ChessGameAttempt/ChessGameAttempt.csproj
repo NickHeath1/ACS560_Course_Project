@@ -54,7 +54,6 @@
     <Compile Include="AddCustomGameForm.Designer.cs">
       <DependentUpon>AddCustomGameForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CheckConditions.cs" />
     <Compile Include="CheckLogic.cs" />
     <Compile Include="ChessUtils.cs" />
     <Compile Include="CreateCustomGameForm.cs">

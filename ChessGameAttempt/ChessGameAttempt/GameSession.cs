@@ -134,9 +134,10 @@ namespace ChessGameAttempt
             selectedButton = currentButton;
             Coordinates c = moves.GetCoordinatesOfButton(currentButton);
             Piece piece = moves.GetPieceOnSquare(c.X, c.Y, board);
+            bool isMyPiece = moves.whiteTurn ? piece.Color == pieceColor.white : piece.Color == pieceColor.black;
 
             // If there is a piece on the selected square that is current player's color
-            if (moves.IsMyPiece(piece))
+            if (isMyPiece)
             {
                 List<Button> possibleMoves = moves.GetPossibleMovesForPiece(currentButton, board);
                 moves.HighlightButtons(possibleMoves);
@@ -150,7 +151,11 @@ namespace ChessGameAttempt
                     Coordinates pc = moves.GetCoordinatesOfButton(previousButton);
                     Coordinates cc = moves.GetCoordinatesOfButton(currentButton);
                     Piece thisPiece = moves.GetPieceOnSquare(pc.X, pc.Y, board);
-                    if (moves.IsMyPiece(thisPiece))
+                    isMyPiece = moves.whiteTurn ? 
+                        thisPiece.Color == pieceColor.white : 
+                        thisPiece.Color == pieceColor.black;
+
+                    if (isMyPiece)
                     {
                         // Move piece to new square
                         currentButton.Tag = previousButton.Tag;

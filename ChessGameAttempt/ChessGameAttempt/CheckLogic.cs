@@ -12,6 +12,8 @@ namespace ChessGameAttempt
     public class CheckLogic
     {
         Button[,] checkBoard;
+        Button[,] originalBoard;
+        MoveLogic logic = new MoveLogic();
 
         public CheckLogic(Button[,] board)
         {
@@ -20,13 +22,38 @@ namespace ChessGameAttempt
             {
                 for (int j = 0; j < 8; ++j)
                 {
-                    // Instantiate the new button on the board
+                    // Instantiate the new button on the board, and copy to the board
+                    originalBoard = board;
                     checkBoard[i, j] = new Button();
-
-                    // Copy the board
                     CopyControl(board[i,j], checkBoard[i,j]);
                 }
             }
+        }
+
+        public ChessUtils.CheckState GetCustomGameCheckState()
+        {
+            List<Button> attackedSquares = logic.UpdateAttackedSquares(originalBoard);
+            // Will only return check or noCheck, as that is all we care about in this case
+            // Iterate through the attacked squares, and see if a king is on one of the squares
+            foreach (Button square in attackedSquares)
+            {
+                if (square.Tag.ToString().Contains("King"))
+                {
+                    return ChessUtils.CheckState.Check;
+                }
+            }
+
+            // No king was found, board appears to be good
+            return ChessUtils.CheckState.NoCheck;
+        }
+
+        public List<Button> GetCheckedMoves(List<Button> moves)
+        {
+            foreach (Button move in moves)
+            {
+
+            }
+            return new List<Button>();
         }
 
         private void CopyControl(Control sourceControl, Control targetControl)
@@ -47,16 +74,6 @@ namespace ChessGameAttempt
                     sourceProperty.SetValue(targetControl, newValue, null);
                 }
             }
-        }
-
-        public List<Button> GetCheckedMoves(List<Button> moves)
-        {
-            return new List<Button>();
-        }
-
-        public Button GetTheTopLeftButton()
-        {
-            return checkBoard[0, 0];
         }
     }
 }

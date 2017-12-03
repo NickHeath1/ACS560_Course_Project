@@ -33,20 +33,6 @@ namespace ChessGameAttempt
 
         static User me;
 
-        // DEBUG
-        static Image WhiteKing = ChessGameAttempt.Properties.Resources.wKing;
-        static Image WhiteQueen = ChessGameAttempt.Properties.Resources.wQueen;
-        static Image WhiteRook = ChessGameAttempt.Properties.Resources.wRook;
-        static Image WhiteKnight = ChessGameAttempt.Properties.Resources.wKnight;
-        static Image WhiteBishop = ChessGameAttempt.Properties.Resources.wBishop;
-        static Image WhitePawn = ChessGameAttempt.Properties.Resources.wPawn;
-        static Image BlackKing = ChessGameAttempt.Properties.Resources.bKing;
-        static Image BlackQueen = ChessGameAttempt.Properties.Resources.bQueen;
-        static Image BlackRook = ChessGameAttempt.Properties.Resources.bRook;
-        static Image BlackKnight = ChessGameAttempt.Properties.Resources.bKnight;
-        static Image BlackBishop = ChessGameAttempt.Properties.Resources.bBishop;
-        static Image BlackPawn = ChessGameAttempt.Properties.Resources.bPawn;
-
         enum PieceEnum
         {
             None = 0,
@@ -64,20 +50,20 @@ namespace ChessGameAttempt
             BlackPawn = 12
         }
 
-        Image[] Images =
+        static Image[] Images =
         {   null,
-            WhiteKing,
-            WhiteQueen,
-            WhiteRook,
-            WhiteKnight,
-            WhiteBishop,
-            WhitePawn,
-            BlackKing,
-            BlackQueen,
-            BlackRook,
-            BlackKnight,
-            BlackBishop,
-            BlackPawn
+            ChessUtils.Settings.Image.WhiteKing,
+            ChessUtils.Settings.Image.WhiteQueen,
+            ChessUtils.Settings.Image.WhiteRook,
+            ChessUtils.Settings.Image.WhiteKnight,
+            ChessUtils.Settings.Image.WhiteBishop,
+            ChessUtils.Settings.Image.WhitePawn,
+            ChessUtils.Settings.Image.BlackKing,
+            ChessUtils.Settings.Image.BlackQueen,
+            ChessUtils.Settings.Image.BlackRook,
+            ChessUtils.Settings.Image.BlackKnight,
+            ChessUtils.Settings.Image.BlackBishop,
+            ChessUtils.Settings.Image.BlackPawn
         };
 
         string[] TagStrings =
@@ -119,30 +105,30 @@ namespace ChessGameAttempt
             InitializeComponent();
 
             // Set up images to the piece replace buttons
-            whiteKingButton.Image =   WhiteKing;
-            whiteQueenButton.Image =  WhiteQueen;
-            whiteRookButton.Image =   WhiteRook;
-            whiteKnightButton.Image = WhiteKnight;
-            whiteBishopButton.Image = WhiteBishop;
-            whitePawnButton.Image =   WhitePawn;
-            blackKingButton.Image =   BlackKing;
-            blackQueenButton.Image =  BlackQueen;
-            blackRookButton.Image =   BlackRook;
-            blackKnightButton.Image = BlackKnight;
-            blackBishopButton.Image = BlackBishop;
-            blackPawnButton.Image =   BlackPawn;
+            whiteKingButton.Image =   Images[(int)PieceEnum.WhiteKing];
+            whiteQueenButton.Image =  Images[(int)PieceEnum.WhiteQueen];
+            whiteRookButton.Image =   Images[(int)PieceEnum.WhiteRook];
+            whiteKnightButton.Image = Images[(int)PieceEnum.WhiteKnight];
+            whiteBishopButton.Image = Images[(int)PieceEnum.WhiteBishop];
+            whitePawnButton.Image =   Images[(int)PieceEnum.WhitePawn];
+            blackKingButton.Image =   Images[(int)PieceEnum.BlackKing];
+            blackQueenButton.Image =  Images[(int)PieceEnum.BlackQueen];
+            blackRookButton.Image =   Images[(int)PieceEnum.BlackRook];
+            blackKnightButton.Image = Images[(int)PieceEnum.BlackKnight];
+            blackBishopButton.Image = Images[(int)PieceEnum.BlackBishop];
+            blackPawnButton.Image =   Images[(int)PieceEnum.BlackPawn];
 
             // Set up standard layout images
             Image[,] SLI = 
             {
-                { BlackRook, BlackKnight, BlackBishop, BlackQueen, BlackKing, BlackBishop, BlackKnight, BlackRook },
-                { BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn },
+                { Images[(int)PieceEnum.BlackRook], Images[(int)PieceEnum.BlackKnight], Images[(int)PieceEnum.BlackBishop], Images[(int)PieceEnum.BlackQueen], Images[(int)PieceEnum.BlackKing], Images[(int)PieceEnum.BlackBishop], Images[(int)PieceEnum.BlackKnight], Images[(int)PieceEnum.BlackRook] },
+                { Images[(int)PieceEnum.BlackPawn], Images[(int)PieceEnum.BlackPawn], Images[(int)PieceEnum.BlackPawn], Images[(int)PieceEnum.BlackPawn], Images[(int)PieceEnum.BlackPawn], Images[(int)PieceEnum.BlackPawn], Images[(int)PieceEnum.BlackPawn], Images[(int)PieceEnum.BlackPawn] },
                 { null, null, null, null, null, null, null, null },
                 { null, null, null, null, null, null, null, null },
                 { null, null, null, null, null, null, null, null },
                 { null, null, null, null, null, null, null, null },
-                { WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn },
-                { WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen, WhiteKing, WhiteBishop, WhiteKnight, WhiteRook },
+                { Images[(int)PieceEnum.WhitePawn], Images[(int)PieceEnum.WhitePawn], Images[(int)PieceEnum.WhitePawn], Images[(int)PieceEnum.WhitePawn], Images[(int)PieceEnum.WhitePawn], Images[(int)PieceEnum.WhitePawn], Images[(int)PieceEnum.WhitePawn], Images[(int)PieceEnum.WhitePawn] },
+                { Images[(int)PieceEnum.WhiteRook], Images[(int)PieceEnum.WhiteKnight], Images[(int)PieceEnum.WhiteBishop], Images[(int)PieceEnum.WhiteQueen], Images[(int)PieceEnum.WhiteKing], Images[(int)PieceEnum.WhiteBishop], Images[(int)PieceEnum.WhiteKnight], Images[(int)PieceEnum.WhiteRook] }
             };
             StandardLayoutImages = SLI;
 
@@ -188,6 +174,11 @@ namespace ChessGameAttempt
             }
 
             setNormalLayout(board);
+
+            // Set the no piece button to selected by default
+            SetSelectedBorderInvisible();
+            selectedButton = PieceEnum.None;
+            GetSelectedButtonBorder().Visible = true;
         }
 
         private void BoardButtonClicked(object sender, EventArgs e)
@@ -223,9 +214,7 @@ namespace ChessGameAttempt
             return selectionBorders[(int)selectedButton];
         }
 
-#pragma warning disable IDE1006 // Naming Styles
         private void whiteKingButton_Click(object sender, EventArgs e)
-#pragma warning restore IDE1006 // Naming Styles
         {
             SetSelectedBorderInvisible();
             selectedButton = PieceEnum.WhiteKing;
@@ -318,7 +307,10 @@ namespace ChessGameAttempt
 
         private void clearBoard_Click(object sender, EventArgs e)
         {
-            foreach(Button square in board)
+            MoveLogic logic = new MoveLogic();
+            logic.ClearChessBoardColors(board);
+
+            foreach (Button square in board)
             {
                 square.Image = null;
                 square.Tag = TagStrings[(int)PieceEnum.None];
@@ -357,13 +349,13 @@ namespace ChessGameAttempt
             bool isTurnSelected = false;
             bool isNameEmpty = true;
             bool hasBothKings = false;
-            bool areKingsNotInCheck = false;
+            bool areKingsInCheck = true;
             /// Verify form has all valid fields and no kings are in check (turn times are automatically taken care of)
             // Check if the custom game has a name
             isNameEmpty = gameNameBox.Text == "";
             if (isNameEmpty)
             {
-                MessageBox.Show("You must enter a name for this game mode.", "Incomplete", MessageBoxButtons.OK);
+                ShowErrorMessage("You must enter a name for this game mode.");
                 return;
             }
 
@@ -371,7 +363,7 @@ namespace ChessGameAttempt
             isTurnSelected = whiteToMove.Checked || blackToMove.Checked;
             if (!isTurnSelected)
             {
-                MessageBox.Show("You must first select which color moves first on game startup.", "Incomplete", MessageBoxButtons.OK);
+                ShowErrorMessage("You must first select which color moves first on game startup.");
                 return;
             }
 
@@ -416,12 +408,18 @@ namespace ChessGameAttempt
                     missingKings += "You are missing the white king";
                 }
                 missingKings += ".";
-                MessageBox.Show(missingKings, "Incomplete", MessageBoxButtons.OK);
+                ShowErrorMessage(missingKings);
                 return;
             }
 
             //Verify no kings are in check
-            // TODO
+            CheckLogic logic = new CheckLogic(board);
+            areKingsInCheck = logic.GetCustomGameCheckState() == ChessUtils.CheckState.Check;
+            if (areKingsInCheck)
+            {
+                ShowErrorMessage("One of your kings is in check!");
+                return;
+            }
 
             // Add the settings to the database
             List<Piece> pieces = new List<Piece>();
@@ -455,12 +453,21 @@ namespace ChessGameAttempt
             bool success = DataApiController<CustomGame>.PostData("http://localhost:2345/AddCustomGame", game);
             if (!success)
             {
-                MessageBox.Show("Error while adding custom game to database.", "Error");
+                ShowErrorMessage("Error while adding custom game to database.");
             }
             else
             {
                 Close();
             }
+        }
+
+        private void ShowErrorMessage(string message)
+        {
+            // This is a dirty fix for a bug that FOR SOME REASON the messagebox shows behind the form
+            // I blame Microsoft
+            Visible = false;
+            MessageBox.Show(this, message, "Incomplete", MessageBoxButtons.OK);
+            Visible = true;
         }
 
         private void closeWithoutSaving_Click(object sender, EventArgs e)
@@ -584,6 +591,19 @@ namespace ChessGameAttempt
             c.Y = y;
 
             return c;
+        }
+
+        private void updateAttacksButton_Click(object sender, EventArgs e)
+        {
+            MoveLogic logic = new MoveLogic();
+            logic.ClearChessBoardColors(board);
+            logic.HighlightAttackedSquares(board);
+        }
+
+        private void hideAttackButton_Click(object sender, EventArgs e)
+        {
+            MoveLogic logic = new MoveLogic();
+            logic.ClearChessBoardColors(board);
         }
     }
 }

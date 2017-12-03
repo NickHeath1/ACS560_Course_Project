@@ -124,7 +124,24 @@ namespace ChessGameAttempt
 
         private void viewDetailsButton_Click(object sender, EventArgs e)
         {
+            if (gamesList.SelectedRows.Count > 0)
+            {
+                ViewGameDetailsForm vgdf = new ViewGameDetailsForm();
 
+                int gameId = (int)gamesList.SelectedRows[0].Cells[0].Value;
+
+                List<CustomGame> games = DataApiController<List<CustomGame>>.GetData("http://localhost:2345/GetCustomGamesForUser/" + me.Username);
+                CustomGame game = games.Single(x => x.GameID == gameId);
+                if (game != null)
+                {
+                    vgdf.SetGameTime(ChessUtils.ConvertSecondsToTimeString(game.GameTimer));
+                    vgdf.SetTurnTime(ChessUtils.ConvertSecondsToTimeString(game.MoveTimer));
+                    vgdf.SetOpponentName(me.Username);
+                    vgdf.SetToMove(game.WhiteMovesFirst ? "White" : "Black");
+                    vgdf.SetBoard(game.Pieces);
+                    vgdf.Show();
+                }
+            }
         }
 
         private void exitButton_Click(object sender, EventArgs e)

@@ -138,6 +138,8 @@
             this.turnMins = new System.Windows.Forms.NumericUpDown();
             this.totalSecs = new System.Windows.Forms.NumericUpDown();
             this.totalMins = new System.Windows.Forms.NumericUpDown();
+            this.updateAttacksButton = new System.Windows.Forms.Button();
+            this.hideAttackButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.turnSecs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.turnMins)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.totalSecs)).BeginInit();
@@ -478,7 +480,7 @@
             // 
             this.square51.BackColor = System.Drawing.Color.White;
             this.square51.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square51.Location = new System.Drawing.Point(95, 361);
+            this.square51.Location = new System.Drawing.Point(95, 360);
             this.square51.Margin = new System.Windows.Forms.Padding(0);
             this.square51.Name = "square51";
             this.square51.Size = new System.Drawing.Size(65, 65);
@@ -949,7 +951,7 @@
             // changeSettings
             // 
             this.changeSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.changeSettings.Location = new System.Drawing.Point(1037, 481);
+            this.changeSettings.Location = new System.Drawing.Point(1037, 559);
             this.changeSettings.Name = "changeSettings";
             this.changeSettings.Size = new System.Drawing.Size(133, 64);
             this.changeSettings.TabIndex = 147;
@@ -960,7 +962,7 @@
             // saveAndClose
             // 
             this.saveAndClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveAndClose.Location = new System.Drawing.Point(898, 552);
+            this.saveAndClose.Location = new System.Drawing.Point(898, 630);
             this.saveAndClose.Name = "saveAndClose";
             this.saveAndClose.Size = new System.Drawing.Size(133, 65);
             this.saveAndClose.TabIndex = 3;
@@ -971,7 +973,7 @@
             // closeWithoutSaving
             // 
             this.closeWithoutSaving.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.closeWithoutSaving.Location = new System.Drawing.Point(1037, 551);
+            this.closeWithoutSaving.Location = new System.Drawing.Point(1037, 629);
             this.closeWithoutSaving.Name = "closeWithoutSaving";
             this.closeWithoutSaving.Size = new System.Drawing.Size(133, 65);
             this.closeWithoutSaving.TabIndex = 149;
@@ -1307,7 +1309,9 @@
             // IsPlayerTurnTime
             // 
             this.IsPlayerTurnTime.AutoSize = true;
-            this.IsPlayerTurnTime.Location = new System.Drawing.Point(822, 594);
+            this.IsPlayerTurnTime.Checked = true;
+            this.IsPlayerTurnTime.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.IsPlayerTurnTime.Location = new System.Drawing.Point(822, 671);
             this.IsPlayerTurnTime.Name = "IsPlayerTurnTime";
             this.IsPlayerTurnTime.Size = new System.Drawing.Size(15, 14);
             this.IsPlayerTurnTime.TabIndex = 189;
@@ -1316,7 +1320,9 @@
             // IsPlayerTotalTime
             // 
             this.IsPlayerTotalTime.AutoSize = true;
-            this.IsPlayerTotalTime.Location = new System.Drawing.Point(821, 514);
+            this.IsPlayerTotalTime.Checked = true;
+            this.IsPlayerTotalTime.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.IsPlayerTotalTime.Location = new System.Drawing.Point(821, 592);
             this.IsPlayerTotalTime.Name = "IsPlayerTotalTime";
             this.IsPlayerTotalTime.Size = new System.Drawing.Size(15, 14);
             this.IsPlayerTotalTime.TabIndex = 188;
@@ -1326,7 +1332,7 @@
             // 
             this.blackToMove.AutoSize = true;
             this.blackToMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.blackToMove.Location = new System.Drawing.Point(899, 509);
+            this.blackToMove.Location = new System.Drawing.Point(899, 587);
             this.blackToMove.Name = "blackToMove";
             this.blackToMove.Size = new System.Drawing.Size(126, 24);
             this.blackToMove.TabIndex = 2;
@@ -1337,8 +1343,9 @@
             // whiteToMove
             // 
             this.whiteToMove.AutoSize = true;
+            this.whiteToMove.Checked = true;
             this.whiteToMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.whiteToMove.Location = new System.Drawing.Point(898, 481);
+            this.whiteToMove.Location = new System.Drawing.Point(898, 559);
             this.whiteToMove.Name = "whiteToMove";
             this.whiteToMove.Size = new System.Drawing.Size(128, 24);
             this.whiteToMove.TabIndex = 1;
@@ -1350,7 +1357,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(622, 551);
+            this.label16.Location = new System.Drawing.Point(622, 629);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(155, 24);
             this.label16.TabIndex = 184;
@@ -1360,7 +1367,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(621, 471);
+            this.label15.Location = new System.Drawing.Point(621, 549);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(156, 24);
             this.label15.TabIndex = 183;
@@ -1369,7 +1376,7 @@
             // turnSecs
             // 
             this.turnSecs.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.turnSecs.Location = new System.Drawing.Point(730, 583);
+            this.turnSecs.Location = new System.Drawing.Point(730, 661);
             this.turnSecs.Maximum = new decimal(new int[] {
             59,
             0,
@@ -1383,7 +1390,7 @@
             // turnMins
             // 
             this.turnMins.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.turnMins.Location = new System.Drawing.Point(627, 583);
+            this.turnMins.Location = new System.Drawing.Point(627, 661);
             this.turnMins.Maximum = new decimal(new int[] {
             20,
             0,
@@ -1402,7 +1409,7 @@
             // totalSecs
             // 
             this.totalSecs.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totalSecs.Location = new System.Drawing.Point(729, 503);
+            this.totalSecs.Location = new System.Drawing.Point(729, 581);
             this.totalSecs.Maximum = new decimal(new int[] {
             59,
             0,
@@ -1416,7 +1423,7 @@
             // totalMins
             // 
             this.totalMins.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totalMins.Location = new System.Drawing.Point(626, 503);
+            this.totalMins.Location = new System.Drawing.Point(626, 581);
             this.totalMins.Maximum = new decimal(new int[] {
             60,
             0,
@@ -1437,11 +1444,35 @@
             0});
             this.totalMins.ValueChanged += new System.EventHandler(this.totalMins_ValueChanged);
             // 
+            // updateAttacksButton
+            // 
+            this.updateAttacksButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateAttacksButton.Location = new System.Drawing.Point(824, 491);
+            this.updateAttacksButton.Name = "updateAttacksButton";
+            this.updateAttacksButton.Size = new System.Drawing.Size(170, 42);
+            this.updateAttacksButton.TabIndex = 190;
+            this.updateAttacksButton.Text = "Update Attacks";
+            this.updateAttacksButton.UseVisualStyleBackColor = true;
+            this.updateAttacksButton.Click += new System.EventHandler(this.updateAttacksButton_Click);
+            // 
+            // hideAttackButton
+            // 
+            this.hideAttackButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hideAttackButton.Location = new System.Drawing.Point(1000, 491);
+            this.hideAttackButton.Name = "hideAttackButton";
+            this.hideAttackButton.Size = new System.Drawing.Size(170, 42);
+            this.hideAttackButton.TabIndex = 191;
+            this.hideAttackButton.Text = "Hide Attacks";
+            this.hideAttackButton.UseVisualStyleBackColor = true;
+            this.hideAttackButton.Click += new System.EventHandler(this.hideAttackButton_Click);
+            // 
             // CreateCustomGameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1206, 642);
+            this.ClientSize = new System.Drawing.Size(1206, 706);
+            this.Controls.Add(this.hideAttackButton);
+            this.Controls.Add(this.updateAttacksButton);
             this.Controls.Add(this.IsPlayerTurnTime);
             this.Controls.Add(this.IsPlayerTotalTime);
             this.Controls.Add(this.blackToMove);
@@ -1673,5 +1704,7 @@
         private System.Windows.Forms.NumericUpDown turnMins;
         private System.Windows.Forms.NumericUpDown totalSecs;
         private System.Windows.Forms.NumericUpDown totalMins;
+        private System.Windows.Forms.Button updateAttacksButton;
+        private System.Windows.Forms.Button hideAttackButton;
     }
 }
