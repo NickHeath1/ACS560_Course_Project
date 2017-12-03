@@ -405,5 +405,11 @@ namespace ChessGameAttempt
 
             return false;
         }
+
+        private void viewAchievementsButton_Click(object sender, EventArgs e)
+        {
+            AchievementsForm form = new AchievementsForm(me);
+            form.Show();
+        }
     }
 }
