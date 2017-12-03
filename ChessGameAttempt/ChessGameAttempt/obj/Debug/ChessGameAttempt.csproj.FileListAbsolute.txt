@@ -38,3 +38,4 @@ C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGa
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.ViewGameDetailsForm.resources
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.AddCustomGameForm.resources
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.SettingsForm.resources
+C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.AchievementsForm.resources

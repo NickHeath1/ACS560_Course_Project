@@ -48,6 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Achievement.cs" />
+    <Compile Include="AchievementsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AchievementsForm.Designer.cs">
+      <DependentUpon>AchievementsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddCustomGameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +126,9 @@
     <Compile Include="ViewGameDetailsForm.Designer.cs">
       <DependentUpon>ViewGameDetailsForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AchievementsForm.resx">
+      <DependentUpon>AchievementsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddCustomGameForm.resx">
       <DependentUpon>AddCustomGameForm.cs</DependentUpon>
     </EmbeddedResource>

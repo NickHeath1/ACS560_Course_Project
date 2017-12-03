@@ -20,14 +20,28 @@ namespace ChessGameAttempt
             me = user;
             InitializeComponent();
             AllAchievements = DataApiController<List<Achievement>>.GetData("http://localhost:2345/GetAllAchievements");
+
+            // At least 1 achievement earned
             UsersAchievements = DataApiController<List<Achievement>>.GetData("http://localhost:2345/GetAchievementsForUser/" + me.Username);
-            foreach (Achievement achievement in AllAchievements)
+            if (UsersAchievements != null)
             {
-                bool achieved = UsersAchievements.Where(x => x.AchievementID == achievement.AchievementID).Any();
-                dgvAchievements.Rows.Add(achievement.AchievementID, achievement.Title, achievement.Difficulty, achieved);
-                if (achieved)
+                foreach (Achievement achievement in AllAchievements)
                 {
-                    dgvAchievements.Rows[dgvAchievements.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightGreen;
+                    bool achieved = UsersAchievements.Where(x => x.AchievementID == achievement.AchievementID).Any();
+                    dgvAchievements.Rows.Add(achievement.AchievementID, achievement.Title, achievement.Difficulty, achieved);
+                    if (achieved)
+                    {
+                        dgvAchievements.Rows[dgvAchievements.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightGreen;
+                    }
+                }
+            }
+
+            // No achievements
+            else
+            {
+                foreach (Achievement achievement in AllAchievements)
+                {
+                    dgvAchievements.Rows.Add(achievement.AchievementID, achievement.Title, achievement.Difficulty, false);
                 }
             }
         }
