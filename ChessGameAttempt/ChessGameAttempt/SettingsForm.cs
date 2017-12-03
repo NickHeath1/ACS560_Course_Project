@@ -18,8 +18,22 @@ namespace ChessGameAttempt
         {
             me = user;
             InitializeComponent();
-            darkColor.BackColor = Color.FromArgb((int)DR.Value, (int)DG.Value, (int)DB.Value);
-            lightColor.BackColor = Color.FromArgb((int)LR.Value, (int)LG.Value, (int)LB.Value);
+            darkColor.BackColor = ChessUtils.Settings.Color.darkSquareColor;
+            lightColor.BackColor = ChessUtils.Settings.Color.lightSquareColor;
+
+            int redLightComponent = lightColor.BackColor.R;
+            int greenLightComponent = lightColor.BackColor.G;
+            int blueLightComponent = lightColor.BackColor.B;
+            int redDarkComponent = darkColor.BackColor.R;
+            int greenDarkComponent = darkColor.BackColor.G;
+            int blueDarkComponent = darkColor.BackColor.B;
+
+            DR.Value = redDarkComponent;
+            DG.Value = greenDarkComponent;
+            DB.Value = blueDarkComponent;
+            LR.Value = redLightComponent;
+            LG.Value = greenLightComponent;
+            LB.Value = blueLightComponent;
         }
 
         private void DR_ValueChanged(object sender, EventArgs e)
@@ -55,6 +69,16 @@ namespace ChessGameAttempt
         private void whiteKingButton_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            // Update the local settings
+            ChessUtils.Settings.Color.darkSquareColor = darkColor.BackColor;
+            ChessUtils.Settings.Color.lightSquareColor = lightColor.BackColor;
+
+            // Send the settings to the database
+            //TODO
         }
     }
 }

@@ -321,7 +321,7 @@ namespace ChessGameAttempt
         private void settingsButton_Click(object sender, EventArgs e)
         {
             SettingsForm settings = new SettingsForm(me);
-
+            settings.ShowDialog();
         }
 
         private void oneMinBlitz_Click(object sender, EventArgs e)

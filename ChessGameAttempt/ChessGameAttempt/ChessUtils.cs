@@ -26,8 +26,8 @@ namespace ChessGameAttempt
                 public static System.Drawing.Color lightSquareHighlight = System.Drawing.Color.LimeGreen;
 
                 // Square colors
-                public static System.Drawing.Color darkSquareColor = System.Drawing.Color.White;
-                public static System.Drawing.Color lightSquareColor = System.Drawing.Color.Gray;
+                public static System.Drawing.Color darkSquareColor;
+                public static System.Drawing.Color lightSquareColor;
             }         
                       
             public class Image
