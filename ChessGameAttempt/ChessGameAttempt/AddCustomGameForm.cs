@@ -20,9 +20,11 @@ namespace ChessGameAttempt
         LobbyForm lobby;
         List<CustomGame> gameList;
         NetworkStream stream;
+        MoveLogic moveLogic;
 
-        public AddCustomGameForm(User user, LobbyForm form, NetworkStream stream)
+        public AddCustomGameForm(User user, LobbyForm form, NetworkStream stream, MoveLogic ml)
         {
+            moveLogic = ml;
             me = user;
             lobby = form;
             this.stream = stream;
@@ -75,6 +77,19 @@ namespace ChessGameAttempt
                     pieces[c.X][c.Y] = piece;
                 }
 
+                Random rand = new Random(Guid.NewGuid().GetHashCode());
+                double randNum = rand.NextDouble();
+                bool hostTurn = true;// (randNum < 0.5);
+
+                moveLogic.myTurn = hostTurn;
+                moveLogic.myColor = moveLogic.myTurn ?
+                    moveLogic.myColor = MoveLogic.pieceColor.white :
+                    moveLogic.myColor = MoveLogic.pieceColor.black;
+
+                MoveLogic.pieceColor guestColor = (moveLogic.myColor == MoveLogic.pieceColor.white) ?
+                    MoveLogic.pieceColor.black :
+                    MoveLogic.pieceColor.white;
+
                 // Create the new session to add to the lobby table
                 Session mySession = new Session()
                 {
@@ -84,7 +99,8 @@ namespace ChessGameAttempt
                     MoveTimerSeconds = game.MoveTimer,
                     CustomGameMode = 3 /* Custom game */,
                     BoardPieces = pieces,
-                    GameID = gameId
+                    GameID = gameId,
+                    GuestColor = (int)guestColor
                 };
 
                 // Create the signal to send
@@ -97,12 +113,13 @@ namespace ChessGameAttempt
                 // Send the json over to the server
                 string json = JsonConvert.SerializeObject(signal) + "\r";
                 byte[] jsonBytes = ASCIIEncoding.ASCII.GetBytes(json);
-                byte[] readBuffer = new byte[65536];
+                byte[] readBuffer = new byte[65535];
                 lobby.stream.Write(jsonBytes, 0, jsonBytes.Length);
 
                 lobby.RefreshTable();
+                mySession.SessionID = (int)lobby.GetLobbyTable().Rows[lobby.GetLobbyTable().Rows.Count - 1].Cells[0].Value;
 
-                GameSession session = new GameSession(me, new User("", ""), stream);
+                GameSession session = new GameSession(me, new User("", ""), stream, mySession, lobby, moveLogic, game);
                 session.ShowDialog();
                 Hide();
                 Close();

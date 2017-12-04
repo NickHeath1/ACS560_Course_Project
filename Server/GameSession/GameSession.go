@@ -18,6 +18,7 @@ type Session struct {
 	BoardPieces [][]ChessData.Piece `json:"BoardPieces,omitempty"`
 	CustomGameMode int `json:"CustomGameMode,omitempty"`
 	GameID int `json:"GameID,omitempty"`
+	GuestColor int `json:"GuestColor,omitempty"`
 }
 
 type TCPSignal struct {
@@ -51,7 +52,7 @@ func CreateSession(client *Client, session *Session) {
 func JoinSession(client *Client, sessionID int, guestPlayerName string, hostPlayerName string) {
 	found := false
 	for clientList, _ := range allClients {
-		if clientList.session.SessionID == sessionID {
+		if clientList.session != nil && clientList.session.SessionID == sessionID {
 			found = true;
 			client.connection = clientList
 			clientList.connection = client
@@ -76,8 +77,11 @@ func JoinSession(client *Client, sessionID int, guestPlayerName string, hostPlay
 }
 
 func MakeMove(client *Client, move ChessData.Move) {
-	client.session.BoardPieces[move.Source.XYCoordinates.X - 1][move.Source.XYCoordinates.Y - 1].Name = "NoPiece"
-	client.session.BoardPieces[move.Destination.XYCoordinates.X - 1][move.Destination.XYCoordinates.Y - 1].Name = move.Destination.Name
+	signal := new(TCPSignal)
+	signal.SignalType = 2
+	signal.PlayerMove = move
+	jsonBytes, _ := json.Marshal(signal)
+	client.connection.WriteDataString(string(jsonBytes))
 }
 
 func SendMessage(client *Client, message string) {

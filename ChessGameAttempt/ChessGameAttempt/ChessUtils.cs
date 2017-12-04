@@ -18,6 +18,7 @@ namespace ChessGameAttempt
             Stalemate = 2
         }
 
+        // To connect to the server
         public static string IPAddress = "localhost";
         public static int Port = 2345;
         public static string IPAddressWithPort = "http://localhost:2345/";

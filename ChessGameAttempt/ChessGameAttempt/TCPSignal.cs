@@ -18,15 +18,15 @@ namespace ChessGameAttempt
         StartSession = 7
     }
 
-    class Move
+    public class Move
     {
-        int Player;
-        Piece Source;
-        Piece Destination;
-        bool CheckState;
+        public int Player;
+        public Piece Source;
+        public Coordinates Destination;
+        public bool CheckState;
     }
 
-    class Session
+    public class Session
     {
         public int SessionID;
         public string HostPlayer;
@@ -36,9 +36,10 @@ namespace ChessGameAttempt
         public Piece[][] BoardPieces;
         public int CustomGameMode;
         public int GameID;
+        public int GuestColor;
     }
 
-    class TCPSignal
+    public class TCPSignal
     {
         public Signal SignalType;
         public int SessionID;

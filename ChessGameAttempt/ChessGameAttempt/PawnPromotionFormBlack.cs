@@ -22,6 +22,7 @@ namespace ChessGameAttempt
         public PawnPromotionFormBlack()
         {
             InitializeComponent();
+            UpdateImages();
         }
 
         private void QueenButton_Click(object sender, EventArgs e)
@@ -49,6 +50,14 @@ namespace ChessGameAttempt
             returnString = "Bishop";
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        public void UpdateImages()
+        {
+            QueenButton.Image =  ChessUtils.Settings.Image.BlackQueen;
+            RookButton.Image =   ChessUtils.Settings.Image.BlackRook;
+            KnightButton.Image = ChessUtils.Settings.Image.BlackKnight;
+            BishopButton.Image = ChessUtils.Settings.Image.BlackBishop;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static ChessGameAttempt.MoveLogic;
@@ -14,8 +16,20 @@ namespace ChessGameAttempt
 {
     public partial class GameSession : Form
     {
-        MoveLogic moveLogic = new MoveLogic();
+        User me;
         string myName, opponentName;
+        NetworkStream stream;
+        LobbyForm lobby;
+        MoveLogic moveLogic;
+        CheckLogic checkLogic;
+
+        System.Timers.Timer timer;
+        int totalTimeRemaining;
+        int turnTimeRemaining;
+        int eTotalTimeRemaining;
+        int eTurnTimeRemaining;
+        int originalTimeRemaining;
+        int originalTotalTimeRemaining;
 
         // The following are used for the castling conditions
         bool whiteKingMoved = false;
@@ -24,10 +38,6 @@ namespace ChessGameAttempt
         bool blackRightRookMoved = false;
         bool whiteLeftRookMoved = false;
         bool whiteRightRookMoved = false;
-
-        // booleans for the chat window options
-        bool isMuted = false;
-        bool isChatVisible = true;
 
         // List of squares that will be highlighted and are possible for a given piece to move to
         List<Button> movePieceTo = new List<Button>();
@@ -46,15 +56,36 @@ namespace ChessGameAttempt
         // All of the squares on the board
         static Button[,] board;
 
-        public GameSession(User me, User them, NetworkStream stream)
+        Session sessionInfo;
+        CustomGame customGame;
+
+        public GameSession(User Me, User Them, NetworkStream networkStream, Session session, LobbyForm Lobby, MoveLogic ml, CustomGame game = null)
         {
+            me = Me;
             int squareSize = 65;
             int offset = 50;
             InitializeComponent();
+            lobby = Lobby;
+            moveLogic = ml;
+
+            // Create timers
+            timer = new System.Timers.Timer(1000);
+            timer.Elapsed += async (sender, e) => await Timer_Elapsed();
+
+            stream = networkStream;
+            sessionInfo = session;
+
+            originalTotalTimeRemaining = eTotalTimeRemaining = totalTimeRemaining = sessionInfo.GameTimerSeconds;
+            originalTimeRemaining = eTotalTimeRemaining = turnTimeRemaining = sessionInfo.MoveTimerSeconds;
+
+            myTotalTimeRemaining.Text = ChessUtils.ConvertSecondsToTimeString(totalTimeRemaining);
+            myTimeRemaining.Text = ChessUtils.ConvertSecondsToTimeString(turnTimeRemaining);
+            enemyTotalTimeRemaining.Text = ChessUtils.ConvertSecondsToTimeString(totalTimeRemaining);
+            enemyTimeRemaining.Text = ChessUtils.ConvertSecondsToTimeString(turnTimeRemaining);
 
             myName = myUsername.Text = me.Username;
-            opponentName = enemyUsername.Text = them.Username;
-
+            opponentName = enemyUsername.Text = Them.Username;
+            customGame = game;
             // set up the array of buttons (chess grid) into an array
             board = new Button[,]
             {
@@ -90,6 +121,41 @@ namespace ChessGameAttempt
 
             SetUpButtons();
             moveLogic.ClearChessBoardColors(board);
+
+            // I am the guest, both people are in the game, now set the game to started
+            if (Me.Username != "" && Them.Username != "")
+            {
+                moveLogic.gameStarted = true;
+            }
+
+            checkLabel.Hide();
+
+            gameWorker.RunWorkerAsync();
+        }
+
+        private Task Timer_Elapsed()
+        {
+            Action action;
+            Invoke(action = new Action(() =>
+            {
+                if (moveLogic.myTurn)
+                {
+                    totalTimeRemaining--;
+                    turnTimeRemaining--;
+
+                    myTotalTimeRemaining.Text = ChessUtils.ConvertSecondsToTimeString(totalTimeRemaining);
+                    myTimeRemaining.Text = ChessUtils.ConvertSecondsToTimeString(turnTimeRemaining);
+                }
+                else
+                {
+                    eTotalTimeRemaining--;
+                    eTurnTimeRemaining--;
+
+                    enemyTotalTimeRemaining.Text = ChessUtils.ConvertSecondsToTimeString(eTotalTimeRemaining);
+                    enemyTimeRemaining.Text = ChessUtils.ConvertSecondsToTimeString(eTurnTimeRemaining);
+                }
+            }));
+            return new Task(action);
         }
 
         private void SetUpButtons()
@@ -135,8 +201,10 @@ namespace ChessGameAttempt
             Button currentButton = sender as Button;
             selectedButton = currentButton;
             Coordinates c = ChessUtils.Settings.GetCoordinatesOfButton(currentButton);
+            Coordinates pc;
+            Coordinates cc;
             Piece piece = moveLogic.GetPieceOnSquare(c.X, c.Y, board);
-            bool isMyPiece = moveLogic.whiteTurn ? piece.Color == pieceColor.white : piece.Color == pieceColor.black;
+            bool isMyPiece = moveLogic.myColor == piece.Color;
 
             // If there is a piece on the selected square that is current player's color
             if (isMyPiece)
@@ -150,12 +218,10 @@ namespace ChessGameAttempt
             {
                 if (SelectedPieceCanMoveTo(currentButton))
                 {
-                    Coordinates pc = ChessUtils.Settings.GetCoordinatesOfButton(previousButton);
-                    Coordinates cc = ChessUtils.Settings.GetCoordinatesOfButton(currentButton);
+                    pc = ChessUtils.Settings.GetCoordinatesOfButton(previousButton);
+                    cc = ChessUtils.Settings.GetCoordinatesOfButton(currentButton);
                     Piece thisPiece = moveLogic.GetPieceOnSquare(pc.X, pc.Y, board);
-                    isMyPiece = moveLogic.whiteTurn ? 
-                        thisPiece.Color == pieceColor.white : 
-                        thisPiece.Color == pieceColor.black;
+                    isMyPiece = moveLogic.myColor == thisPiece.Color;
 
                     if (isMyPiece)
                     {
@@ -167,13 +233,17 @@ namespace ChessGameAttempt
                         previousButton.Tag = "";
                         previousButton.Image = null;
 
+                        bool promoted = false;
+
                         // Check for pawn promotion
                         if (cc.X % 7 == 0 && currentButton.Tag.ToString().Contains("Pawn"))
                         {
                             // White promotion
                             if (thisPiece.Color == pieceColor.white)
                             {
+                                promoted = true;
                                 var whiteForm = new PawnPromotionFormWhite();
+
                                 // Pick based off of button
                                 if (whiteForm.ShowDialog() == DialogResult.OK)
                                 {
@@ -181,19 +251,19 @@ namespace ChessGameAttempt
                                     {
                                         case "Queen":
                                             currentButton.Tag = "wQueen";
-                                            currentButton.Image = Properties.Resources.wQueen;
+                                            currentButton.Image = ChessUtils.Settings.Image.WhiteQueen;
                                             break;
                                         case "Rook":
                                             currentButton.Tag = "wRook";
-                                            currentButton.Image = Properties.Resources.wRook;
+                                            currentButton.Image = ChessUtils.Settings.Image.WhiteRook;
                                             break;
                                         case "Knight":
                                             currentButton.Tag = "wKnight";
-                                            currentButton.Image = Properties.Resources.wKnight;
+                                            currentButton.Image = ChessUtils.Settings.Image.WhiteKnight;
                                             break;
                                         case "Bishop":
                                             currentButton.Tag = "wBishop";
-                                            currentButton.Image = Properties.Resources.wBishop;
+                                            currentButton.Image = ChessUtils.Settings.Image.WhiteBishop;
                                             break;
                                     }
                                 }
@@ -202,13 +272,14 @@ namespace ChessGameAttempt
                                 else
                                 {
                                     currentButton.Tag = "wQueen";
-                                    currentButton.Image = Properties.Resources.wQueen;
+                                    currentButton.Image = ChessUtils.Settings.Image.WhiteQueen;
                                 }
                             }
 
                             // Black promotion
                             else
                             {
+                                promoted = true;
                                 var blackForm = new PawnPromotionFormBlack();
                                 // Pick based off of button
                                 if (blackForm.ShowDialog() == DialogResult.OK)
@@ -217,19 +288,19 @@ namespace ChessGameAttempt
                                     {
                                         case "Queen":
                                             currentButton.Tag = "bQueen";
-                                            currentButton.Image = Properties.Resources.bQueen;
+                                            currentButton.Image = ChessUtils.Settings.Image.BlackQueen;
                                             break;
                                         case "Rook":
                                             currentButton.Tag = "bRook";
-                                            currentButton.Image = Properties.Resources.bRook;
+                                            currentButton.Image = ChessUtils.Settings.Image.BlackRook;
                                             break;
                                         case "Knight":
                                             currentButton.Tag = "bKnight";
-                                            currentButton.Image = Properties.Resources.bKnight;
+                                            currentButton.Image = ChessUtils.Settings.Image.BlackKnight;
                                             break;
                                         case "Bishop":
                                             currentButton.Tag = "bBishop";
-                                            currentButton.Image = Properties.Resources.bBishop;
+                                            currentButton.Image = ChessUtils.Settings.Image.BlackBishop;
                                             break;
                                     }
                                 }
@@ -238,13 +309,47 @@ namespace ChessGameAttempt
                                 else
                                 {
                                     currentButton.Tag = "bQueen";
-                                    currentButton.Image = Properties.Resources.bQueen;
+                                    currentButton.Image = ChessUtils.Settings.Image.BlackQueen;
                                 }
                             }
                         }
 
                         // switch turns
-                        moveLogic.whiteTurn = !moveLogic.whiteTurn;
+                        moveLogic.myTurn = !moveLogic.myTurn;
+
+                        // Send the move to the server to send to the other client
+                        Piece sendPieceLimitedInfo = new Piece();
+                        sendPieceLimitedInfo.Coordinates = thisPiece.Coordinates;
+
+                        string pieceName;
+                        if (promoted)
+                        {
+                            pieceName = currentButton.Tag.ToString();
+                        }
+                        else
+                        {
+                            pieceName = (moveLogic.myColor == pieceColor.white) ?
+                                "w" : "b";
+                            pieceName += thisPiece.Name;
+                        }
+                        sendPieceLimitedInfo.Name = pieceName;
+
+                        Move move = new Move()
+                        {
+                            Source = sendPieceLimitedInfo,
+                            Destination = cc
+                        };
+
+                        TCPSignal signal = new TCPSignal()
+                        {
+                            SignalType = Signal.MakeAMove,
+                            PlayerMove = move
+                        };
+
+                        // Send the json over to the server
+                        string json = JsonConvert.SerializeObject(signal) + "\r";
+                        byte[] jsonBytes = ASCIIEncoding.ASCII.GetBytes(json);
+                        stream.Write(jsonBytes, 0, jsonBytes.Length);
 
                         // Clear highlights
                         moveLogic.ClearChessBoardColors(board);
@@ -267,7 +372,11 @@ namespace ChessGameAttempt
         private void settingsIcon_Click(object sender, EventArgs e)
         {
             // Open settings
-        
+            SettingsForm settings = new SettingsForm(me);
+            settings.ShowDialog();
+
+            ChessUtils.Settings.Color.UpdateChessBoardColors(board);
+            ChessUtils.Settings.Image.UpdateBoardImages(board);
         }
 
         private void tieButton_Click(object sender, EventArgs e)
@@ -279,11 +388,181 @@ namespace ChessGameAttempt
         private void exitButton_Click(object sender, EventArgs e)
         {
             // Forfeit
+            Close();
+        }
+
+        private void GameSession_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (opponentName != "")
+            {
+                DialogResult result = MessageBox.Show("Are you sure you wish to forfeit?", "Forfeit", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    // Cancel this background worker
+                    gameWorker.CancelAsync();
+                    timer.Stop();
+
+                    // Send loss info/win info
+
+                    RemoveGameFromLobby();
+                    lobby.RefreshTable();
+                }
+                else
+                {
+                    e.Cancel = false;
+                }
+            }
+            else
+            {
+                // Cancel this background worker
+                gameWorker.CancelAsync();
+
+                RemoveGameFromLobby();
+                lobby.RefreshTable();
+            }
+        }
+
+        private void RemoveGameFromLobby()
+        {
+            // Remove the game from the lobby table
+            int sessionID = sessionInfo.SessionID;
+
+            // Create the signal to send
+            TCPSignal signal = new TCPSignal()
+            {
+                SignalType = Signal.DeleteSession,
+                SessionID = sessionID
+            };
+
+            // Send the json over to the server
+            string json = JsonConvert.SerializeObject(signal) + "\r";
+            byte[] jsonBytes = ASCIIEncoding.ASCII.GetBytes(json);
+            stream.Write(jsonBytes, 0, jsonBytes.Length);
+            Thread.Sleep(1000);
         }
 
         public Button[,] GetBoard()
         {
             return board;
+        }
+
+        private void gameWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (!gameWorker.CancellationPending)
+            {
+                if (opponentName == "")
+                {
+                    byte[] data = new byte[65535];
+                    try
+                    {
+                        stream.Read(data, 0, data.Length);
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+
+                    string json = ASCIIEncoding.ASCII.GetString(data).Replace("\0", "");
+                    TCPSignal signal = (TCPSignal)JsonConvert.DeserializeObject(json, typeof(TCPSignal));
+                    if (signal.SignalType == Signal.StartSession)
+                    {
+                        // Host
+                        Invoke(new Action(() =>
+                        {
+                            moveLogic.gameStarted = true;
+                            //TODO add timers, etc
+                            opponentName = enemyUsername.Text = signal.NewSession.GuestPlayer;
+                        }));
+                    }
+                }
+                else
+                {
+                    // TODO: Perform server move logic, timers, etc.
+
+                    // Guest
+                    Invoke(new Action(() =>
+                    {
+                        enemyUsername.Text = opponentName;
+                        if (moveLogic.myTurn)
+                        {
+                            timer.Start();
+                        }
+                        
+                    }));
+                    byte[] data = new byte[65535];
+
+                    try
+                    {
+                        stream.Read(data, 0, data.Length);
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                    string json = ASCIIEncoding.ASCII.GetString(data).Replace("\0", "");
+                    TCPSignal signal = (TCPSignal)JsonConvert.DeserializeObject(json, typeof(TCPSignal));
+
+                    if (signal.SignalType == Signal.MakeAMove)
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            Coordinates destination = signal.PlayerMove.Destination;
+                            Piece pieceMoved = signal.PlayerMove.Source;
+
+                            string pieceTag = pieceMoved.Name;
+                            Coordinates c = pieceMoved.Coordinates;
+
+                            Button originSquare = moveLogic.GetButtonOn(c.X, c.Y, board);
+                            Button newSquare = moveLogic.GetButtonOn(destination.X, destination.Y, board);
+
+                            originSquare.Tag = "NoPiece";
+                            originSquare.Image = null;
+                            newSquare.Tag = pieceTag;
+                            newSquare.Image = ChessUtils.Settings.Image.GetImageForTag(pieceTag);
+
+                            // Update check logic...
+                            checkLogic = new CheckLogic(board);
+                            ChessUtils.CheckState checkState = checkLogic.CetCheckState();
+
+                            if (checkState == ChessUtils.CheckState.Check)
+                            {
+                                checkLabel.Show();
+                            }
+
+                            else if (checkState == ChessUtils.CheckState.NoCheck)
+                            {
+                                checkLabel.Hide();
+                            }
+
+                            else if (checkState == ChessUtils.CheckState.Checkmate)
+                            {
+                                // I lost, send the lose signal
+                                // They won, send the win signal
+                            }
+
+                            else if (checkState == ChessUtils.CheckState.Stalemate)
+                            {
+                                // We tied, send tie signal for both
+                            }
+
+                            // It is now my turn
+                            moveLogic.myTurn = !moveLogic.myTurn;
+
+                            if (totalTimeRemaining > originalTimeRemaining)
+                            {
+                                turnTimeRemaining = originalTimeRemaining;
+                                
+                            }
+                            else
+                            {
+                                turnTimeRemaining = totalTimeRemaining;
+                            }
+                            myTimeRemaining.Text = ChessUtils.ConvertSecondsToTimeString(turnTimeRemaining);
+                            myTotalTimeRemaining.Text = ChessUtils.ConvertSecondsToTimeString(totalTimeRemaining);
+                        }));
+                    }
+                }
+            }
         }
     }
 }

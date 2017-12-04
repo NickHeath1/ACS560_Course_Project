@@ -20,6 +20,7 @@ namespace ChessGameAttempt
         public User me;
         public TcpClient client;
         public NetworkStream stream;
+        public MoveLogic moveLogic;
 
         public string[] pieceString = new string[]
         {
@@ -40,6 +41,7 @@ namespace ChessGameAttempt
             SetupSettings();
             client = new TcpClient(ChessUtils.IPAddress, ChessUtils.Port + 1);
             stream = client.GetStream();
+            moveLogic = new MoveLogic();
 
             join.Enabled = remove.Enabled = false;
 
@@ -54,6 +56,7 @@ namespace ChessGameAttempt
                 }
             }
             //tcpClientWorker.RunWorkerAsync();
+            stream.ReadTimeout = 1000; // ms
         }
 
         private void SetupSettings()
@@ -212,6 +215,20 @@ namespace ChessGameAttempt
                 return;
             }
 
+            // Set mine and enemy's color...
+            Random rand = new Random(Guid.NewGuid().GetHashCode());
+            double randNum = rand.NextDouble();
+            bool hostTurn = true;// (randNum < 0.5);
+
+            moveLogic.myTurn = hostTurn;
+            moveLogic.myColor = moveLogic.myTurn ?
+                moveLogic.myColor = MoveLogic.pieceColor.white :
+                moveLogic.myColor = MoveLogic.pieceColor.black;
+
+            MoveLogic.pieceColor guestColor = (moveLogic.myColor == MoveLogic.pieceColor.white) ?
+                MoveLogic.pieceColor.black :
+                MoveLogic.pieceColor.white;
+
             // Create the new session to add to the lobby table
             Session mySession = new Session()
             {
@@ -219,7 +236,8 @@ namespace ChessGameAttempt
                 GuestPlayer = "",
                 GameTimerSeconds = 1200,
                 MoveTimerSeconds = 120,
-                CustomGameMode = 0
+                CustomGameMode = 0,
+                GuestColor = (int)guestColor
             };
 
             // Create the signal to send
@@ -236,12 +254,18 @@ namespace ChessGameAttempt
             stream.Write(jsonBytes, 0, jsonBytes.Length);
 
             RefreshTable();
+
+            // Set the session ID
+            mySession.SessionID = (int)lobbyTable.Rows[lobbyTable.Rows.Count - 1].Cells[0].Value;
+
+            GameSession session = new GameSession(me, new User("", ""), stream, mySession, this, moveLogic);
+            session.ShowDialog();
         }
 
         private void RemoveSessionFromTable()
         {
             // When the lobby form first comes up, we want to fill the table with the active sessions from the server
-            //Get the session id for my user
+            // Get the session id for my user
             int sessionID = -1;
             for (int i = 0; i < lobbyTable.Rows.Count; ++i)
             {
@@ -334,6 +358,7 @@ namespace ChessGameAttempt
                     {
                         SignalType = Signal.JoinSession,
                         GuestPlayerName = me.Username,
+                        HostPlayerName = (string)lobbyTable.SelectedRows[0].Cells[2].Value,
                         SessionID = (int)lobbyTable.SelectedRows[0].Cells[0].Value
                     };
                     string json = JsonConvert.SerializeObject(signal) + "\r";
@@ -351,16 +376,16 @@ namespace ChessGameAttempt
                         stream.Read(data2, 0, data2.Length);
                         json = ASCIIEncoding.ASCII.GetString(data2).Replace("\0", "");
                         TCPSignal signal2 = (TCPSignal)JsonConvert.DeserializeObject(json, typeof(TCPSignal));
-                        tcpClientWorker2.RunWorkerAsync(new object[] { signal2, stream });
-                        while (!tcpClientWorker2.CancellationPending)
-                        {
-                            Thread.Sleep(10);
-                        }
+
+                        moveLogic.myColor = (MoveLogic.pieceColor)signal2.NewSession.GuestColor;
+
+                        GameSession session = new GameSession(me, new User(signal2.NewSession.HostPlayer, ""), stream, signal2.NewSession, this, moveLogic);
+                        session.ShowDialog();
                     }
                 }
             }
         }
-
+        
         private void details_Click(object sender, EventArgs e)
         {
             if (lobbyTable.SelectedRows.Count > 0)
@@ -413,7 +438,7 @@ namespace ChessGameAttempt
                 return;
             }
 
-            AddCustomGameForm form = new AddCustomGameForm(me, this, stream);
+            AddCustomGameForm form = new AddCustomGameForm(me, this, stream, moveLogic);
             form.ShowDialog();
         }
 
@@ -438,6 +463,19 @@ namespace ChessGameAttempt
                 return;
             }
 
+            Random rand = new Random(Guid.NewGuid().GetHashCode());
+            double randNum = rand.NextDouble();
+            bool hostTurn = true;// (randNum < 0.5);
+
+            moveLogic.myTurn = hostTurn;
+            moveLogic.myColor = moveLogic.myTurn ?
+                moveLogic.myColor = MoveLogic.pieceColor.white :
+                moveLogic.myColor = MoveLogic.pieceColor.black;
+
+            MoveLogic.pieceColor guestColor = (moveLogic.myColor == MoveLogic.pieceColor.white) ?
+                MoveLogic.pieceColor.black :
+                MoveLogic.pieceColor.white;
+
             // Create the new session to add to the lobby table
             Session mySession = new Session()
             {
@@ -445,7 +483,8 @@ namespace ChessGameAttempt
                 GuestPlayer = "",
                 GameTimerSeconds = 60,
                 MoveTimerSeconds = 0,
-                CustomGameMode = 0
+                CustomGameMode = 0,
+                GuestColor = (int)guestColor
             };
 
             // Create the signal to send
@@ -462,6 +501,8 @@ namespace ChessGameAttempt
             stream.Write(jsonBytes, 0, jsonBytes.Length);
 
             RefreshTable();
+            GameSession session = new GameSession(me, new User("", ""), stream, mySession, this, moveLogic);
+            session.ShowDialog();
         }
 
         private void twoMinBlitz_Click(object sender, EventArgs e)
@@ -472,6 +513,19 @@ namespace ChessGameAttempt
                 return;
             }
 
+            Random rand = new Random(Guid.NewGuid().GetHashCode());
+            double randNum = rand.NextDouble();
+            bool hostTurn = true;// (randNum < 0.5);
+
+            moveLogic.myTurn = hostTurn;
+            moveLogic.myColor = moveLogic.myTurn ?
+                moveLogic.myColor = MoveLogic.pieceColor.white :
+                moveLogic.myColor = MoveLogic.pieceColor.black;
+
+            MoveLogic.pieceColor guestColor = (moveLogic.myColor == MoveLogic.pieceColor.white) ?
+                MoveLogic.pieceColor.black :
+                MoveLogic.pieceColor.white;
+
             // Create the new session to add to the lobby table
             Session mySession = new Session()
             {
@@ -479,7 +533,8 @@ namespace ChessGameAttempt
                 GuestPlayer = "",
                 GameTimerSeconds = 120,
                 MoveTimerSeconds = 0,
-                CustomGameMode = 0
+                CustomGameMode = 0,
+                GuestColor = (int)guestColor
             };
 
             // Create the signal to send
@@ -496,6 +551,8 @@ namespace ChessGameAttempt
             stream.Write(jsonBytes, 0, jsonBytes.Length);
 
             RefreshTable();
+            GameSession session = new GameSession(me, new User("", ""), stream, mySession, this, moveLogic);
+            session.ShowDialog();
         }
 
         private bool UserHasActiveGame()
@@ -549,8 +606,8 @@ namespace ChessGameAttempt
                 object[] parameters = (object[])e.Argument;
                 TCPSignal signal = (TCPSignal)parameters[0];
                 NetworkStream gameStream = (NetworkStream)parameters[1];
-                GameSession session = new GameSession(me, new User(signal.GuestPlayerName == me.Username ? signal.HostPlayerName : signal.GuestPlayerName, ""), gameStream);
-                session.ShowDialog();
+                //GameSession session = new GameSession(me, new User(signal.GuestPlayerName == me.Username ? signal.HostPlayerName : signal.GuestPlayerName, ""), gameStream);
+                //session.ShowDialog();
                 tcpClientWorker2.CancelAsync();
             }
         }

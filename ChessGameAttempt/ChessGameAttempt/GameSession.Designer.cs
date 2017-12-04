@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameSession));
             this.settingsIcon = new System.Windows.Forms.Button();
             this.myTotalTimer = new System.Windows.Forms.Timer(this.components);
-            this.tieButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
             this.square07 = new System.Windows.Forms.Button();
             this.square06 = new System.Windows.Forms.Button();
@@ -108,13 +107,14 @@
             this.myTurnTimer = new System.Windows.Forms.Timer(this.components);
             this.enemyTotalTimer = new System.Windows.Forms.Timer(this.components);
             this.enemyTurnTimer = new System.Windows.Forms.Timer(this.components);
+            this.gameWorker = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // settingsIcon
             // 
             this.settingsIcon.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("settingsIcon.BackgroundImage")));
             this.settingsIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.settingsIcon.Location = new System.Drawing.Point(50, 658);
+            this.settingsIcon.Location = new System.Drawing.Point(146, 658);
             this.settingsIcon.Margin = new System.Windows.Forms.Padding(2);
             this.settingsIcon.Name = "settingsIcon";
             this.settingsIcon.Size = new System.Drawing.Size(85, 75);
@@ -122,23 +122,11 @@
             this.settingsIcon.UseVisualStyleBackColor = true;
             this.settingsIcon.Click += new System.EventHandler(this.settingsIcon_Click);
             // 
-            // tieButton
-            // 
-            this.tieButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tieButton.BackgroundImage")));
-            this.tieButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.tieButton.Location = new System.Drawing.Point(265, 658);
-            this.tieButton.Margin = new System.Windows.Forms.Padding(2);
-            this.tieButton.Name = "tieButton";
-            this.tieButton.Size = new System.Drawing.Size(85, 75);
-            this.tieButton.TabIndex = 74;
-            this.tieButton.UseVisualStyleBackColor = true;
-            this.tieButton.Click += new System.EventHandler(this.tieButton_Click);
-            // 
             // exitButton
             // 
             this.exitButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitButton.BackgroundImage")));
             this.exitButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.exitButton.Location = new System.Drawing.Point(487, 658);
+            this.exitButton.Location = new System.Drawing.Point(402, 658);
             this.exitButton.Margin = new System.Windows.Forms.Padding(2);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(85, 75);
@@ -951,7 +939,7 @@
             this.myTimeRemaining.AutoSize = true;
             this.myTimeRemaining.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.myTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.myTimeRemaining.Location = new System.Drawing.Point(59, 70);
+            this.myTimeRemaining.Location = new System.Drawing.Point(52, 58);
             this.myTimeRemaining.Name = "myTimeRemaining";
             this.myTimeRemaining.Size = new System.Drawing.Size(81, 31);
             this.myTimeRemaining.TabIndex = 192;
@@ -959,45 +947,42 @@
             // 
             // myUsername
             // 
-            this.myUsername.AutoSize = true;
             this.myUsername.BackColor = System.Drawing.Color.Transparent;
             this.myUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.myUsername.Location = new System.Drawing.Point(54, 41);
+            this.myUsername.Location = new System.Drawing.Point(47, 29);
             this.myUsername.Name = "myUsername";
-            this.myUsername.Size = new System.Drawing.Size(79, 29);
+            this.myUsername.Size = new System.Drawing.Size(256, 29);
             this.myUsername.TabIndex = 193;
             this.myUsername.Text = "label1";
             // 
             // enemyUsername
             // 
-            this.enemyUsername.AutoSize = true;
             this.enemyUsername.BackColor = System.Drawing.Color.Transparent;
             this.enemyUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enemyUsername.Location = new System.Drawing.Point(484, 41);
+            this.enemyUsername.Location = new System.Drawing.Point(331, 29);
             this.enemyUsername.Name = "enemyUsername";
-            this.enemyUsername.Size = new System.Drawing.Size(79, 29);
+            this.enemyUsername.Size = new System.Drawing.Size(241, 29);
             this.enemyUsername.TabIndex = 195;
             this.enemyUsername.Text = "label1";
-            this.enemyUsername.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.enemyUsername.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // enemyTimeRemaining
             // 
-            this.enemyTimeRemaining.AutoSize = true;
             this.enemyTimeRemaining.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.enemyTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enemyTimeRemaining.Location = new System.Drawing.Point(482, 70);
+            this.enemyTimeRemaining.Location = new System.Drawing.Point(491, 58);
             this.enemyTimeRemaining.Name = "enemyTimeRemaining";
             this.enemyTimeRemaining.Size = new System.Drawing.Size(81, 31);
             this.enemyTimeRemaining.TabIndex = 194;
             this.enemyTimeRemaining.Text = "label1";
-            this.enemyTimeRemaining.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.enemyTimeRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // myTotalTimeRemaining
             // 
             this.myTotalTimeRemaining.AutoSize = true;
             this.myTotalTimeRemaining.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.myTotalTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.myTotalTimeRemaining.Location = new System.Drawing.Point(146, 70);
+            this.myTotalTimeRemaining.Location = new System.Drawing.Point(139, 58);
             this.myTotalTimeRemaining.Name = "myTotalTimeRemaining";
             this.myTotalTimeRemaining.Size = new System.Drawing.Size(81, 31);
             this.myTotalTimeRemaining.TabIndex = 196;
@@ -1006,15 +991,14 @@
             // 
             // enemyTotalTimeRemaining
             // 
-            this.enemyTotalTimeRemaining.AutoSize = true;
             this.enemyTotalTimeRemaining.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.enemyTotalTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enemyTotalTimeRemaining.Location = new System.Drawing.Point(395, 70);
+            this.enemyTotalTimeRemaining.Location = new System.Drawing.Point(404, 58);
             this.enemyTotalTimeRemaining.Name = "enemyTotalTimeRemaining";
             this.enemyTotalTimeRemaining.Size = new System.Drawing.Size(81, 31);
             this.enemyTotalTimeRemaining.TabIndex = 197;
             this.enemyTotalTimeRemaining.Text = "label1";
-            this.enemyTotalTimeRemaining.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.enemyTotalTimeRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // checkLabel
             // 
@@ -1028,6 +1012,11 @@
             this.checkLabel.TabIndex = 198;
             this.checkLabel.Text = "Check!";
             this.checkLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // gameWorker
+            // 
+            this.gameWorker.WorkerSupportsCancellation = true;
+            this.gameWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.gameWorker_DoWork);
             // 
             // GameSession
             // 
@@ -1109,11 +1098,11 @@
             this.Controls.Add(this.square71);
             this.Controls.Add(this.square70);
             this.Controls.Add(this.exitButton);
-            this.Controls.Add(this.tieButton);
             this.Controls.Add(this.settingsIcon);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GameSession";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameSession_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1122,7 +1111,6 @@
         #endregion
         private System.Windows.Forms.Button settingsIcon;
         private System.Windows.Forms.Timer myTotalTimer;
-        private System.Windows.Forms.Button tieButton;
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Button square07;
         private System.Windows.Forms.Button square06;
@@ -1198,6 +1186,7 @@
         private System.Windows.Forms.Timer myTurnTimer;
         private System.Windows.Forms.Timer enemyTotalTimer;
         private System.Windows.Forms.Timer enemyTurnTimer;
+        private System.ComponentModel.BackgroundWorker gameWorker;
     }
 }
 
