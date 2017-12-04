@@ -8,7 +8,7 @@ namespace ChessGameAttempt
 {
     class SquareColorSettings
     {
-        public string User;
+        public string Username;
         public int Red1;
         public int Green1;
         public int Blue1;

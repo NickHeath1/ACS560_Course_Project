@@ -50,18 +50,18 @@
             this.whiteQueenButton = new System.Windows.Forms.Button();
             this.whiteKnightButton = new System.Windows.Forms.Button();
             this.whitePawnButton = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.pictureBox10 = new System.Windows.Forms.PictureBox();
-            this.pictureBox11 = new System.Windows.Forms.PictureBox();
-            this.pictureBox12 = new System.Windows.Forms.PictureBox();
+            this.WhiteKingImage = new System.Windows.Forms.PictureBox();
+            this.WhiteQueenImage = new System.Windows.Forms.PictureBox();
+            this.WhiteRookImage = new System.Windows.Forms.PictureBox();
+            this.WhiteKnightImage = new System.Windows.Forms.PictureBox();
+            this.WhiteBishopImage = new System.Windows.Forms.PictureBox();
+            this.WhitePawnImage = new System.Windows.Forms.PictureBox();
+            this.BlackPawnImage = new System.Windows.Forms.PictureBox();
+            this.BlackBishopImage = new System.Windows.Forms.PictureBox();
+            this.BlackKnightImage = new System.Windows.Forms.PictureBox();
+            this.BlackRookImage = new System.Windows.Forms.PictureBox();
+            this.BlackQueenImage = new System.Windows.Forms.PictureBox();
+            this.BlackKingImage = new System.Windows.Forms.PictureBox();
             this.blackPawnButton = new System.Windows.Forms.Button();
             this.blackKnightButton = new System.Windows.Forms.Button();
             this.blackQueenButton = new System.Windows.Forms.Button();
@@ -80,18 +80,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.LR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.darkColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lightColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhiteKingImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhiteQueenImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhiteRookImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhiteKnightImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhiteBishopImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhitePawnImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackPawnImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackBishopImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackKnightImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackRookImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackQueenImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackKingImage)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -334,6 +334,7 @@
             this.whiteRookButton.TabIndex = 17;
             this.whiteRookButton.Text = "ROOK";
             this.whiteRookButton.UseVisualStyleBackColor = true;
+            this.whiteRookButton.Click += new System.EventHandler(this.whiteRookButton_Click);
             // 
             // whiteBishopButton
             // 
@@ -344,6 +345,7 @@
             this.whiteBishopButton.TabIndex = 18;
             this.whiteBishopButton.Text = "BISHOP";
             this.whiteBishopButton.UseVisualStyleBackColor = true;
+            this.whiteBishopButton.Click += new System.EventHandler(this.whiteBishopButton_Click);
             // 
             // whiteQueenButton
             // 
@@ -354,6 +356,7 @@
             this.whiteQueenButton.TabIndex = 19;
             this.whiteQueenButton.Text = "QUEEN";
             this.whiteQueenButton.UseVisualStyleBackColor = true;
+            this.whiteQueenButton.Click += new System.EventHandler(this.whiteQueenButton_Click);
             // 
             // whiteKnightButton
             // 
@@ -364,6 +367,7 @@
             this.whiteKnightButton.TabIndex = 20;
             this.whiteKnightButton.Text = "KNIGHT";
             this.whiteKnightButton.UseVisualStyleBackColor = true;
+            this.whiteKnightButton.Click += new System.EventHandler(this.whiteKnightButton_Click);
             // 
             // whitePawnButton
             // 
@@ -374,126 +378,127 @@
             this.whitePawnButton.TabIndex = 21;
             this.whitePawnButton.Text = "PAWN";
             this.whitePawnButton.UseVisualStyleBackColor = true;
+            this.whitePawnButton.Click += new System.EventHandler(this.whitePawnButton_Click);
             // 
-            // pictureBox1
+            // WhiteKingImage
             // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox1.Location = new System.Drawing.Point(22, 277);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox1.TabIndex = 22;
-            this.pictureBox1.TabStop = false;
+            this.WhiteKingImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.WhiteKingImage.Location = new System.Drawing.Point(22, 277);
+            this.WhiteKingImage.Margin = new System.Windows.Forms.Padding(2);
+            this.WhiteKingImage.Name = "WhiteKingImage";
+            this.WhiteKingImage.Size = new System.Drawing.Size(56, 61);
+            this.WhiteKingImage.TabIndex = 22;
+            this.WhiteKingImage.TabStop = false;
             // 
-            // pictureBox2
+            // WhiteQueenImage
             // 
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox2.Location = new System.Drawing.Point(83, 277);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox2.TabIndex = 23;
-            this.pictureBox2.TabStop = false;
+            this.WhiteQueenImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.WhiteQueenImage.Location = new System.Drawing.Point(83, 277);
+            this.WhiteQueenImage.Margin = new System.Windows.Forms.Padding(2);
+            this.WhiteQueenImage.Name = "WhiteQueenImage";
+            this.WhiteQueenImage.Size = new System.Drawing.Size(56, 61);
+            this.WhiteQueenImage.TabIndex = 23;
+            this.WhiteQueenImage.TabStop = false;
             // 
-            // pictureBox3
+            // WhiteRookImage
             // 
-            this.pictureBox3.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox3.Location = new System.Drawing.Point(144, 277);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox3.TabIndex = 24;
-            this.pictureBox3.TabStop = false;
+            this.WhiteRookImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.WhiteRookImage.Location = new System.Drawing.Point(144, 277);
+            this.WhiteRookImage.Margin = new System.Windows.Forms.Padding(2);
+            this.WhiteRookImage.Name = "WhiteRookImage";
+            this.WhiteRookImage.Size = new System.Drawing.Size(56, 61);
+            this.WhiteRookImage.TabIndex = 24;
+            this.WhiteRookImage.TabStop = false;
             // 
-            // pictureBox4
+            // WhiteKnightImage
             // 
-            this.pictureBox4.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox4.Location = new System.Drawing.Point(205, 277);
-            this.pictureBox4.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox4.TabIndex = 25;
-            this.pictureBox4.TabStop = false;
+            this.WhiteKnightImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.WhiteKnightImage.Location = new System.Drawing.Point(205, 277);
+            this.WhiteKnightImage.Margin = new System.Windows.Forms.Padding(2);
+            this.WhiteKnightImage.Name = "WhiteKnightImage";
+            this.WhiteKnightImage.Size = new System.Drawing.Size(56, 61);
+            this.WhiteKnightImage.TabIndex = 25;
+            this.WhiteKnightImage.TabStop = false;
             // 
-            // pictureBox5
+            // WhiteBishopImage
             // 
-            this.pictureBox5.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox5.Location = new System.Drawing.Point(266, 277);
-            this.pictureBox5.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox5.TabIndex = 26;
-            this.pictureBox5.TabStop = false;
+            this.WhiteBishopImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.WhiteBishopImage.Location = new System.Drawing.Point(266, 277);
+            this.WhiteBishopImage.Margin = new System.Windows.Forms.Padding(2);
+            this.WhiteBishopImage.Name = "WhiteBishopImage";
+            this.WhiteBishopImage.Size = new System.Drawing.Size(56, 61);
+            this.WhiteBishopImage.TabIndex = 26;
+            this.WhiteBishopImage.TabStop = false;
             // 
-            // pictureBox6
+            // WhitePawnImage
             // 
-            this.pictureBox6.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox6.Location = new System.Drawing.Point(326, 277);
-            this.pictureBox6.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox6.TabIndex = 27;
-            this.pictureBox6.TabStop = false;
+            this.WhitePawnImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.WhitePawnImage.Location = new System.Drawing.Point(326, 277);
+            this.WhitePawnImage.Margin = new System.Windows.Forms.Padding(2);
+            this.WhitePawnImage.Name = "WhitePawnImage";
+            this.WhitePawnImage.Size = new System.Drawing.Size(56, 61);
+            this.WhitePawnImage.TabIndex = 27;
+            this.WhitePawnImage.TabStop = false;
             // 
-            // pictureBox7
+            // BlackPawnImage
             // 
-            this.pictureBox7.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox7.Location = new System.Drawing.Point(326, 419);
-            this.pictureBox7.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox7.TabIndex = 39;
-            this.pictureBox7.TabStop = false;
+            this.BlackPawnImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.BlackPawnImage.Location = new System.Drawing.Point(326, 419);
+            this.BlackPawnImage.Margin = new System.Windows.Forms.Padding(2);
+            this.BlackPawnImage.Name = "BlackPawnImage";
+            this.BlackPawnImage.Size = new System.Drawing.Size(56, 61);
+            this.BlackPawnImage.TabIndex = 39;
+            this.BlackPawnImage.TabStop = false;
             // 
-            // pictureBox8
+            // BlackBishopImage
             // 
-            this.pictureBox8.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox8.Location = new System.Drawing.Point(266, 419);
-            this.pictureBox8.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox8.TabIndex = 38;
-            this.pictureBox8.TabStop = false;
+            this.BlackBishopImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.BlackBishopImage.Location = new System.Drawing.Point(266, 419);
+            this.BlackBishopImage.Margin = new System.Windows.Forms.Padding(2);
+            this.BlackBishopImage.Name = "BlackBishopImage";
+            this.BlackBishopImage.Size = new System.Drawing.Size(56, 61);
+            this.BlackBishopImage.TabIndex = 38;
+            this.BlackBishopImage.TabStop = false;
             // 
-            // pictureBox9
+            // BlackKnightImage
             // 
-            this.pictureBox9.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox9.Location = new System.Drawing.Point(205, 419);
-            this.pictureBox9.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox9.TabIndex = 37;
-            this.pictureBox9.TabStop = false;
+            this.BlackKnightImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.BlackKnightImage.Location = new System.Drawing.Point(205, 419);
+            this.BlackKnightImage.Margin = new System.Windows.Forms.Padding(2);
+            this.BlackKnightImage.Name = "BlackKnightImage";
+            this.BlackKnightImage.Size = new System.Drawing.Size(56, 61);
+            this.BlackKnightImage.TabIndex = 37;
+            this.BlackKnightImage.TabStop = false;
             // 
-            // pictureBox10
+            // BlackRookImage
             // 
-            this.pictureBox10.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox10.Location = new System.Drawing.Point(144, 419);
-            this.pictureBox10.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox10.TabIndex = 36;
-            this.pictureBox10.TabStop = false;
+            this.BlackRookImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.BlackRookImage.Location = new System.Drawing.Point(144, 419);
+            this.BlackRookImage.Margin = new System.Windows.Forms.Padding(2);
+            this.BlackRookImage.Name = "BlackRookImage";
+            this.BlackRookImage.Size = new System.Drawing.Size(56, 61);
+            this.BlackRookImage.TabIndex = 36;
+            this.BlackRookImage.TabStop = false;
             // 
-            // pictureBox11
+            // BlackQueenImage
             // 
-            this.pictureBox11.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox11.Location = new System.Drawing.Point(83, 419);
-            this.pictureBox11.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox11.Name = "pictureBox11";
-            this.pictureBox11.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox11.TabIndex = 35;
-            this.pictureBox11.TabStop = false;
+            this.BlackQueenImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.BlackQueenImage.Location = new System.Drawing.Point(83, 419);
+            this.BlackQueenImage.Margin = new System.Windows.Forms.Padding(2);
+            this.BlackQueenImage.Name = "BlackQueenImage";
+            this.BlackQueenImage.Size = new System.Drawing.Size(56, 61);
+            this.BlackQueenImage.TabIndex = 35;
+            this.BlackQueenImage.TabStop = false;
             // 
-            // pictureBox12
+            // BlackKingImage
             // 
-            this.pictureBox12.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox12.Location = new System.Drawing.Point(22, 419);
-            this.pictureBox12.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox12.Name = "pictureBox12";
-            this.pictureBox12.Size = new System.Drawing.Size(56, 61);
-            this.pictureBox12.TabIndex = 34;
-            this.pictureBox12.TabStop = false;
+            this.BlackKingImage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.BlackKingImage.Location = new System.Drawing.Point(22, 419);
+            this.BlackKingImage.Margin = new System.Windows.Forms.Padding(2);
+            this.BlackKingImage.Name = "BlackKingImage";
+            this.BlackKingImage.Size = new System.Drawing.Size(56, 61);
+            this.BlackKingImage.TabIndex = 34;
+            this.BlackKingImage.TabStop = false;
             // 
             // blackPawnButton
             // 
@@ -504,6 +509,7 @@
             this.blackPawnButton.TabIndex = 33;
             this.blackPawnButton.Text = "PAWN";
             this.blackPawnButton.UseVisualStyleBackColor = true;
+            this.blackPawnButton.Click += new System.EventHandler(this.blackPawnButton_Click);
             // 
             // blackKnightButton
             // 
@@ -514,6 +520,7 @@
             this.blackKnightButton.TabIndex = 32;
             this.blackKnightButton.Text = "KNIGHT";
             this.blackKnightButton.UseVisualStyleBackColor = true;
+            this.blackKnightButton.Click += new System.EventHandler(this.blackKnightButton_Click);
             // 
             // blackQueenButton
             // 
@@ -524,6 +531,7 @@
             this.blackQueenButton.TabIndex = 31;
             this.blackQueenButton.Text = "QUEEN";
             this.blackQueenButton.UseVisualStyleBackColor = true;
+            this.blackQueenButton.Click += new System.EventHandler(this.blackQueenButton_Click);
             // 
             // blackBishopButton
             // 
@@ -534,6 +542,7 @@
             this.blackBishopButton.TabIndex = 30;
             this.blackBishopButton.Text = "BISHOP";
             this.blackBishopButton.UseVisualStyleBackColor = true;
+            this.blackBishopButton.Click += new System.EventHandler(this.blackBishopButton_Click);
             // 
             // blackRookButton
             // 
@@ -544,6 +553,7 @@
             this.blackRookButton.TabIndex = 29;
             this.blackRookButton.Text = "ROOK";
             this.blackRookButton.UseVisualStyleBackColor = true;
+            this.blackRookButton.Click += new System.EventHandler(this.blackRookButton_Click);
             // 
             // blackKingButton
             // 
@@ -554,6 +564,7 @@
             this.blackKingButton.TabIndex = 28;
             this.blackKingButton.Text = "KING";
             this.blackKingButton.UseVisualStyleBackColor = true;
+            this.blackKingButton.Click += new System.EventHandler(this.blackKingButton_Click);
             // 
             // label9
             // 
@@ -607,24 +618,24 @@
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.pictureBox7);
-            this.Controls.Add(this.pictureBox8);
-            this.Controls.Add(this.pictureBox9);
-            this.Controls.Add(this.pictureBox10);
-            this.Controls.Add(this.pictureBox11);
-            this.Controls.Add(this.pictureBox12);
+            this.Controls.Add(this.BlackPawnImage);
+            this.Controls.Add(this.BlackBishopImage);
+            this.Controls.Add(this.BlackKnightImage);
+            this.Controls.Add(this.BlackRookImage);
+            this.Controls.Add(this.BlackQueenImage);
+            this.Controls.Add(this.BlackKingImage);
             this.Controls.Add(this.blackPawnButton);
             this.Controls.Add(this.blackKnightButton);
             this.Controls.Add(this.blackQueenButton);
             this.Controls.Add(this.blackBishopButton);
             this.Controls.Add(this.blackRookButton);
             this.Controls.Add(this.blackKingButton);
-            this.Controls.Add(this.pictureBox6);
-            this.Controls.Add(this.pictureBox5);
-            this.Controls.Add(this.pictureBox4);
-            this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.WhitePawnImage);
+            this.Controls.Add(this.WhiteBishopImage);
+            this.Controls.Add(this.WhiteKnightImage);
+            this.Controls.Add(this.WhiteRookImage);
+            this.Controls.Add(this.WhiteQueenImage);
+            this.Controls.Add(this.WhiteKingImage);
             this.Controls.Add(this.whitePawnButton);
             this.Controls.Add(this.whiteKnightButton);
             this.Controls.Add(this.whiteQueenButton);
@@ -658,18 +669,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.LR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.darkColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lightColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhiteKingImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhiteQueenImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhiteRookImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhiteKnightImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhiteBishopImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WhitePawnImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackPawnImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackBishopImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackKnightImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackRookImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackQueenImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlackKingImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -699,18 +710,18 @@
         private System.Windows.Forms.Button whiteQueenButton;
         private System.Windows.Forms.Button whiteKnightButton;
         private System.Windows.Forms.Button whitePawnButton;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.PictureBox pictureBox7;
-        private System.Windows.Forms.PictureBox pictureBox8;
-        private System.Windows.Forms.PictureBox pictureBox9;
-        private System.Windows.Forms.PictureBox pictureBox10;
-        private System.Windows.Forms.PictureBox pictureBox11;
-        private System.Windows.Forms.PictureBox pictureBox12;
+        private System.Windows.Forms.PictureBox WhiteKingImage;
+        private System.Windows.Forms.PictureBox WhiteQueenImage;
+        private System.Windows.Forms.PictureBox WhiteRookImage;
+        private System.Windows.Forms.PictureBox WhiteKnightImage;
+        private System.Windows.Forms.PictureBox WhiteBishopImage;
+        private System.Windows.Forms.PictureBox WhitePawnImage;
+        private System.Windows.Forms.PictureBox BlackPawnImage;
+        private System.Windows.Forms.PictureBox BlackBishopImage;
+        private System.Windows.Forms.PictureBox BlackKnightImage;
+        private System.Windows.Forms.PictureBox BlackRookImage;
+        private System.Windows.Forms.PictureBox BlackQueenImage;
+        private System.Windows.Forms.PictureBox BlackKingImage;
         private System.Windows.Forms.Button blackPawnButton;
         private System.Windows.Forms.Button blackKnightButton;
         private System.Windows.Forms.Button blackQueenButton;

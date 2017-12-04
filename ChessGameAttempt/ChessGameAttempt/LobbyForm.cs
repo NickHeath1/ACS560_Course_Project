@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -33,10 +34,9 @@ namespace ChessGameAttempt
         public LobbyForm(User user)
         {
             me = user;
-            SquareColorSettings colors = DataApiController<SquareColorSettings>.GetData("http://localhost:2345/GetCustomChessboardForUser/" + me.Username);
-            ChessUtils.Settings.Color.darkSquareColor = Color.FromArgb(colors.Red1, colors.Green1, colors.Blue1);
-            ChessUtils.Settings.Color.lightSquareColor = Color.FromArgb(colors.Red2, colors.Green2, colors.Blue2);
+
             InitializeComponent();
+            SetupSettings();
             client = new TcpClient("localhost", 2346);
             stream = client.GetStream();
 
@@ -52,6 +52,66 @@ namespace ChessGameAttempt
                     remove.Enabled = false;
                 }
             }
+        }
+
+        private void SetupSettings()
+        {
+            SquareColorSettings colors = DataApiController<SquareColorSettings>.GetData("http://localhost:2345/GetCustomChessboardForUser/" + me.Username);
+            ChessUtils.Settings.Color.darkSquareColor = Color.FromArgb(colors.Red1, colors.Green1, colors.Blue1);
+            ChessUtils.Settings.Color.lightSquareColor = Color.FromArgb(colors.Red2, colors.Green2, colors.Blue2);
+
+            List<PieceImageSettings> images = DataApiController<List<PieceImageSettings>>.GetData("http://localhost:2345/GetCustomPieceImagesForUser/" + me.Username);
+            if (images != null)
+            {
+                foreach (PieceImageSettings image in images)
+                {
+                    switch (image.PieceName)
+                    {
+                        case "wKing":
+                            ChessUtils.Settings.Image.WhiteKing = GetImageFromByteArray(image.Image);
+                            break;
+                        case "wQueen":
+                            ChessUtils.Settings.Image.WhiteQueen = GetImageFromByteArray(image.Image);
+                            break;
+                        case "wRook":
+                            ChessUtils.Settings.Image.WhiteRook = GetImageFromByteArray(image.Image);
+                            break;
+                        case "wBishop":
+                            ChessUtils.Settings.Image.WhiteBishop = GetImageFromByteArray(image.Image);
+                            break;
+                        case "wKnight":
+                            ChessUtils.Settings.Image.WhiteKnight = GetImageFromByteArray(image.Image);
+                            break;
+                        case "wPawn":
+                            ChessUtils.Settings.Image.WhitePawn = GetImageFromByteArray(image.Image);
+                            break;
+                        case "bKing":
+                            ChessUtils.Settings.Image.BlackKing = GetImageFromByteArray(image.Image);
+                            break;
+                        case "bQueen":
+                            ChessUtils.Settings.Image.BlackQueen = GetImageFromByteArray(image.Image);
+                            break;
+                        case "bRook":
+                            ChessUtils.Settings.Image.BlackRook = GetImageFromByteArray(image.Image);
+                            break;
+                        case "bBishop":
+                            ChessUtils.Settings.Image.BlackBishop = GetImageFromByteArray(image.Image);
+                            break;
+                        case "bKnight":
+                            ChessUtils.Settings.Image.BlackKnight = GetImageFromByteArray(image.Image);
+                            break;
+                        case "bPawn":
+                            ChessUtils.Settings.Image.BlackPawn = GetImageFromByteArray(image.Image);
+                            break;
+                    }
+                }
+            }
+        }
+
+        private Image GetImageFromByteArray(byte[] ba)
+        {
+            MemoryStream ms = new MemoryStream(ba);
+            return Image.FromStream(ms);
         }
 
         public DataGridView GetLobbyTable()
