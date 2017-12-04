@@ -34,7 +34,8 @@ func RegisterRoutes() {
 	// Custom piece images
 	router.HandleFunc("/AddCustomPieceImages", AddCustomPieceImages).Methods("POST")
 	router.HandleFunc("/GetCustomPieceImagesForUser/{username}", GetCustomPieceImagesForUser).Methods("GET")
-	router.HandleFunc("/DeleteCustomPieceImage/{id}", DeleteCustomPieceImages).Methods("POST")
+	router.HandleFunc("/DeleteUsersCustomPieceImages/{username}", DeleteUsersCustomPieceImages).Methods("POST")
+	router.HandleFunc("/DeleteCustomPieceImage/{id}", DeleteCustomPieceImage).Methods("POST")
 
 	// Achievement data
 	router.HandleFunc("/GetAllAchievements", GetAllAchievements).Methods("GET")
@@ -277,7 +278,20 @@ func GetCustomPieceImagesForUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(customPieceImages)
 }
 
-func DeleteCustomPieceImages(w http.ResponseWriter, r *http.Request) {
+func DeleteUsersCustomPieceImages(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	conn, err := sql.Open("sqlserver", Datasource)
+	if err != nil {
+		http.Error(w, "An error occurred on the server!", 500)
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+	query := "DELETE FROM UserCustomPieceImages WHERE [User] = @Username"
+	conn.Exec(query, sql.Named("Username", params["username"]))
+}
+
+func DeleteCustomPieceImage(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	conn, err := sql.Open("sqlserver", Datasource)
 	if err != nil {
