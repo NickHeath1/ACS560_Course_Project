@@ -143,19 +143,6 @@ namespace ChessGameAttempt
             greenDarkComponent = darkColor.BackColor.G;
             blueDarkComponent = darkColor.BackColor.B;
 
-            // Send the settings to the database
-            SquareColorSettings settings = new SquareColorSettings()
-            {
-                Username = me.Username,
-                Red1 = redDarkComponent,
-                Green1 = greenDarkComponent,
-                Blue1 = blueDarkComponent,
-                Red2 = redLightComponent,
-                Green2 = greenLightComponent,
-                Blue2 = blueLightComponent
-            };
-            DataApiController<SquareColorSettings>.PostData(ChessUtils.IPAddressWithPort + "EditCustomChessboard", settings);
-
             ChessUtils.Settings.Image.BlackKing   = BlackKing;
             ChessUtils.Settings.Image.BlackQueen  = BlackQueen;
             ChessUtils.Settings.Image.BlackRook   = BlackRook;
@@ -169,6 +156,20 @@ namespace ChessGameAttempt
             ChessUtils.Settings.Image.WhiteKnight = WhiteKnight;
             ChessUtils.Settings.Image.WhitePawn   = WhitePawn;
 
+            // Send the settings to the database
+            SquareColorSettings settings = new SquareColorSettings()
+            {
+                Username = me.Username,
+                Red1 = redDarkComponent,
+                Green1 = greenDarkComponent,
+                Blue1 = blueDarkComponent,
+                Red2 = redLightComponent,
+                Green2 = greenLightComponent,
+                Blue2 = blueLightComponent
+            };
+            DataApiController<SquareColorSettings>.PostData(ChessUtils.IPAddressWithPort + "EditCustomChessboard", settings);
+
+            // Send the piece images to the database
             List<PieceImageSettings> images = new List<PieceImageSettings>()
             {
                 new PieceImageSettings()
@@ -244,8 +245,7 @@ namespace ChessGameAttempt
                     Image = ImageToByteArray(BlackPawn)
                 }
             };
-
-            // Send the pictures to the database
+            
             DataApiController<object>.PostData(ChessUtils.IPAddressWithPort + "DeleteUsersCustomPieceImages/" + me.Username, null);
             DataApiController<List<PieceImageSettings>>.PostData(ChessUtils.IPAddressWithPort + "AddCustomPieceImages", images);
 

@@ -31,15 +31,8 @@ namespace ChessGameAttempt
             };
 
             // Set up the customizations of the board
-            foreach (Button square in board)
-            {
-                MoveLogic.Coordinates c = moveLogic.GetCoordinatesOfButton(square);
-                square.BackColor = (c.X + c.Y) % 2 == 0 ? 
-                    ChessUtils.Settings.Color.darkSquareColor : 
-                    ChessUtils.Settings.Color.lightSquareColor;
-
-
-            }
+            ChessUtils.Settings.Image.UpdateBoardImages(board);
+            ChessUtils.Settings.Color.UpdateChessBoardColors(board);
         }
 
         public void SetOpponentName(string name)

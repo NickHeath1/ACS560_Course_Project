@@ -53,7 +53,7 @@ namespace ChessGameAttempt
                     remove.Enabled = false;
                 }
             }
-            tcpClientWorker.RunWorkerAsync();
+            //tcpClientWorker.RunWorkerAsync();
         }
 
         private void SetupSettings()

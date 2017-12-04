@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ChessGameAttempt
 {
     public static class ChessUtils
     {
+
         public enum CheckState
         {
             NoCheck = -1,
@@ -22,6 +24,19 @@ namespace ChessGameAttempt
 
         public static class Settings
         {
+            public static MoveLogic.Coordinates GetCoordinatesOfButton(Button button)
+            {
+                MoveLogic.Coordinates c;
+                string buttonName = button.Name;
+                int x = Convert.ToInt16(buttonName[buttonName.Length - 2].ToString());
+                int y = Convert.ToInt16(buttonName[buttonName.Length - 1].ToString());
+
+                c.X = x;
+                c.Y = y;
+
+                return c;
+            }
+
             public class Color
             {
                 // Selection colors
@@ -32,6 +47,17 @@ namespace ChessGameAttempt
                 // Square colors
                 public static System.Drawing.Color darkSquareColor;
                 public static System.Drawing.Color lightSquareColor;
+
+                public static void UpdateChessBoardColors(Button[,] board)
+                {
+                    foreach (Button square in board)
+                    {
+                        MoveLogic.Coordinates c = GetCoordinatesOfButton(square);
+                        square.BackColor = (c.X + c.Y) % 2 == 0 ?
+                                ChessUtils.Settings.Color.darkSquareColor :
+                                ChessUtils.Settings.Color.lightSquareColor;
+                    }
+                }
             }         
                       
             public class Image
@@ -48,6 +74,47 @@ namespace ChessGameAttempt
                 public static System.Drawing.Image BlackKnight = ChessGameAttempt.Properties.Resources.bKnight;
                 public static System.Drawing.Image BlackBishop = ChessGameAttempt.Properties.Resources.bBishop;
                 public static System.Drawing.Image BlackPawn = ChessGameAttempt.Properties.Resources.bPawn;
+
+                public static void UpdateBoardImages(Button[,] board)
+                {
+                    foreach (Button square in board)
+                    {
+                        square.Image = GetImageForTag(square.Tag.ToString());
+                    }
+                }
+
+                public static System.Drawing.Image GetImageForTag(string tag)
+                {
+                    switch (tag)
+                    {
+                        case "wKing":
+                            return WhiteKing;
+                        case "wQueen":
+                            return WhiteQueen;
+                        case "wRook":
+                            return WhiteRook;
+                        case "wBishop":
+                            return WhiteBishop;
+                        case "wKnight":
+                            return WhiteKnight;
+                        case "wPawn":
+                            return WhitePawn;
+                        case "bKing":
+                            return BlackKing;
+                        case "bQueen":
+                            return BlackQueen;
+                        case "bRook":
+                            return BlackRook;
+                        case "bBishop":
+                            return BlackBishop;
+                        case "bKnight":
+                            return BlackKnight;
+                        case "bPawn":
+                            return BlackPawn;
+                        default:
+                            return null;
+                    }
+                }
             }
         }
 

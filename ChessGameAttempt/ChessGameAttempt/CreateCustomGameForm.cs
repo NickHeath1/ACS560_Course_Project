@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static ChessGameAttempt.MoveLogic;
@@ -28,7 +29,7 @@ namespace ChessGameAttempt
         List<Button> selectionBorders;
         List<Button> selectionButtons;
 
-        MoveLogic moves = new MoveLogic();
+        MoveLogic moveLogic = new MoveLogic();
         //CheckLogic check = new CheckLogic(board);
 
         static User me;
@@ -50,8 +51,9 @@ namespace ChessGameAttempt
             BlackPawn = 12
         }
 
-        static Image[] Images =
-        {   null,
+        Image[] Images =
+        {
+            null,
             ChessUtils.Settings.Image.WhiteKing,
             ChessUtils.Settings.Image.WhiteQueen,
             ChessUtils.Settings.Image.WhiteRook,
@@ -174,6 +176,7 @@ namespace ChessGameAttempt
             }
 
             setNormalLayout(board);
+            ChessUtils.Settings.Color.UpdateChessBoardColors(board);
 
             // Set the no piece button to selected by default
             SetSelectedBorderInvisible();
@@ -341,7 +344,19 @@ namespace ChessGameAttempt
         private void changeSettings_Click(object sender, EventArgs e)
         {
             SettingsForm gdf = new SettingsForm(me);
-            gdf.Show();
+            gdf.ShowDialog();
+
+            ChessUtils.Settings.Image.UpdateBoardImages(board);
+            UpdateSelectionButtonImages();
+            ChessUtils.Settings.Color.UpdateChessBoardColors(board);
+        }
+
+        private void UpdateSelectionButtonImages()
+        {
+            foreach (Button button in selectionButtons)
+            {
+                button.Image = ChessUtils.Settings.Image.GetImageForTag(button.Tag.ToString());
+            }
         }
 
         private void saveAndClose_Click(object sender, EventArgs e)
@@ -426,7 +441,7 @@ namespace ChessGameAttempt
             foreach (Button square in board)
             {
                 Piece piece = new Piece();
-                Coordinates c = GetCoordinates(square);
+                Coordinates c = ChessUtils.Settings.GetCoordinatesOfButton(square);
                 string name = square.Tag.ToString();
                 piece.Coordinates = c;
                 piece.Name = name;
@@ -578,19 +593,6 @@ namespace ChessGameAttempt
                 turnMins.Value = mins;
                 turnSecs.Value = secs;
             }
-        }
-
-        public Coordinates GetCoordinates(Button square)
-        {
-            Coordinates c;
-            string buttonName = square.Name;
-            int x = Convert.ToInt16(buttonName[buttonName.Length - 2].ToString());
-            int y = Convert.ToInt16(buttonName[buttonName.Length - 1].ToString());
-
-            c.X = x;
-            c.Y = y;
-
-            return c;
         }
 
         private void updateAttacksButton_Click(object sender, EventArgs e)

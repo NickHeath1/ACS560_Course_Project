@@ -75,14 +75,15 @@ namespace ChessGameAttempt
                 {
                     Point p = new Point(j * squareSize + offset, i * squareSize + (offset * 2));
                     Size s = new Size(squareSize, squareSize);
-                    Coordinates c = moveLogic.GetCoordinatesOfButton(board[i,j]);
-                    board[i,j].BackColor = (c.X + c.Y) % 2 == 0 ? 
-                        ChessUtils.Settings.Color.darkSquareColor : 
-                        ChessUtils.Settings.Color.lightSquareColor;
+                    Coordinates c = ChessUtils.Settings.GetCoordinatesOfButton(board[i,j]);
+                    
                     board[i, j].Size = s;
                     board[i, j].Location = p;
                 }
             }
+
+            ChessUtils.Settings.Image.UpdateBoardImages(board);
+            ChessUtils.Settings.Color.UpdateChessBoardColors(board);
 
             UpdatePlayerPieces(whitePieces, blackPieces);
             moveLogic.UpdateAttackedSquares(board);
@@ -133,7 +134,7 @@ namespace ChessGameAttempt
         {
             Button currentButton = sender as Button;
             selectedButton = currentButton;
-            Coordinates c = moveLogic.GetCoordinatesOfButton(currentButton);
+            Coordinates c = ChessUtils.Settings.GetCoordinatesOfButton(currentButton);
             Piece piece = moveLogic.GetPieceOnSquare(c.X, c.Y, board);
             bool isMyPiece = moveLogic.whiteTurn ? piece.Color == pieceColor.white : piece.Color == pieceColor.black;
 
@@ -149,8 +150,8 @@ namespace ChessGameAttempt
             {
                 if (SelectedPieceCanMoveTo(currentButton))
                 {
-                    Coordinates pc = moveLogic.GetCoordinatesOfButton(previousButton);
-                    Coordinates cc = moveLogic.GetCoordinatesOfButton(currentButton);
+                    Coordinates pc = ChessUtils.Settings.GetCoordinatesOfButton(previousButton);
+                    Coordinates cc = ChessUtils.Settings.GetCoordinatesOfButton(currentButton);
                     Piece thisPiece = moveLogic.GetPieceOnSquare(pc.X, pc.Y, board);
                     isMyPiece = moveLogic.whiteTurn ? 
                         thisPiece.Color == pieceColor.white : 

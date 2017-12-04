@@ -115,7 +115,7 @@
             this.settingsIcon.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("settingsIcon.BackgroundImage")));
             this.settingsIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.settingsIcon.Location = new System.Drawing.Point(50, 658);
-            this.settingsIcon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.settingsIcon.Margin = new System.Windows.Forms.Padding(2);
             this.settingsIcon.Name = "settingsIcon";
             this.settingsIcon.Size = new System.Drawing.Size(85, 75);
             this.settingsIcon.TabIndex = 64;
@@ -127,7 +127,7 @@
             this.tieButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tieButton.BackgroundImage")));
             this.tieButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.tieButton.Location = new System.Drawing.Point(265, 658);
-            this.tieButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tieButton.Margin = new System.Windows.Forms.Padding(2);
             this.tieButton.Name = "tieButton";
             this.tieButton.Size = new System.Drawing.Size(85, 75);
             this.tieButton.TabIndex = 74;
@@ -139,7 +139,7 @@
             this.exitButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitButton.BackgroundImage")));
             this.exitButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.exitButton.Location = new System.Drawing.Point(487, 658);
-            this.exitButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.exitButton.Margin = new System.Windows.Forms.Padding(2);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(85, 75);
             this.exitButton.TabIndex = 75;
@@ -363,6 +363,7 @@
             this.square27.Name = "square27";
             this.square27.Size = new System.Drawing.Size(65, 65);
             this.square27.TabIndex = 175;
+            this.square27.Tag = "NoPiece";
             this.square27.UseVisualStyleBackColor = false;
             // 
             // square26
@@ -374,6 +375,7 @@
             this.square26.Name = "square26";
             this.square26.Size = new System.Drawing.Size(65, 65);
             this.square26.TabIndex = 174;
+            this.square26.Tag = "NoPiece";
             this.square26.UseVisualStyleBackColor = false;
             // 
             // square25
@@ -385,6 +387,7 @@
             this.square25.Name = "square25";
             this.square25.Size = new System.Drawing.Size(65, 65);
             this.square25.TabIndex = 173;
+            this.square25.Tag = "NoPiece";
             this.square25.UseVisualStyleBackColor = false;
             // 
             // square24
@@ -396,6 +399,7 @@
             this.square24.Name = "square24";
             this.square24.Size = new System.Drawing.Size(65, 65);
             this.square24.TabIndex = 172;
+            this.square24.Tag = "NoPiece";
             this.square24.UseVisualStyleBackColor = false;
             // 
             // square23
@@ -407,6 +411,7 @@
             this.square23.Name = "square23";
             this.square23.Size = new System.Drawing.Size(65, 65);
             this.square23.TabIndex = 171;
+            this.square23.Tag = "NoPiece";
             this.square23.UseVisualStyleBackColor = false;
             // 
             // square22
@@ -418,6 +423,7 @@
             this.square22.Name = "square22";
             this.square22.Size = new System.Drawing.Size(65, 65);
             this.square22.TabIndex = 170;
+            this.square22.Tag = "NoPiece";
             this.square22.UseVisualStyleBackColor = false;
             // 
             // square21
@@ -429,6 +435,7 @@
             this.square21.Name = "square21";
             this.square21.Size = new System.Drawing.Size(65, 65);
             this.square21.TabIndex = 169;
+            this.square21.Tag = "NoPiece";
             this.square21.UseVisualStyleBackColor = false;
             // 
             // square20
@@ -440,6 +447,7 @@
             this.square20.Name = "square20";
             this.square20.Size = new System.Drawing.Size(65, 65);
             this.square20.TabIndex = 168;
+            this.square20.Tag = "NoPiece";
             this.square20.UseVisualStyleBackColor = false;
             // 
             // square37
@@ -451,6 +459,7 @@
             this.square37.Name = "square37";
             this.square37.Size = new System.Drawing.Size(65, 65);
             this.square37.TabIndex = 167;
+            this.square37.Tag = "NoPiece";
             this.square37.UseVisualStyleBackColor = false;
             // 
             // square36
@@ -462,6 +471,7 @@
             this.square36.Name = "square36";
             this.square36.Size = new System.Drawing.Size(65, 65);
             this.square36.TabIndex = 166;
+            this.square36.Tag = "NoPiece";
             this.square36.UseVisualStyleBackColor = false;
             // 
             // square35
@@ -473,6 +483,7 @@
             this.square35.Name = "square35";
             this.square35.Size = new System.Drawing.Size(65, 65);
             this.square35.TabIndex = 165;
+            this.square35.Tag = "NoPiece";
             this.square35.UseVisualStyleBackColor = false;
             // 
             // square34
@@ -484,6 +495,7 @@
             this.square34.Name = "square34";
             this.square34.Size = new System.Drawing.Size(65, 65);
             this.square34.TabIndex = 164;
+            this.square34.Tag = "NoPiece";
             this.square34.UseVisualStyleBackColor = false;
             // 
             // square33
@@ -495,6 +507,7 @@
             this.square33.Name = "square33";
             this.square33.Size = new System.Drawing.Size(65, 65);
             this.square33.TabIndex = 163;
+            this.square33.Tag = "NoPiece";
             this.square33.UseVisualStyleBackColor = false;
             // 
             // square32
@@ -506,6 +519,7 @@
             this.square32.Name = "square32";
             this.square32.Size = new System.Drawing.Size(65, 65);
             this.square32.TabIndex = 162;
+            this.square32.Tag = "NoPiece";
             this.square32.UseVisualStyleBackColor = false;
             // 
             // square31
@@ -517,6 +531,7 @@
             this.square31.Name = "square31";
             this.square31.Size = new System.Drawing.Size(65, 65);
             this.square31.TabIndex = 161;
+            this.square31.Tag = "NoPiece";
             this.square31.UseVisualStyleBackColor = false;
             // 
             // square30
@@ -528,6 +543,7 @@
             this.square30.Name = "square30";
             this.square30.Size = new System.Drawing.Size(65, 65);
             this.square30.TabIndex = 160;
+            this.square30.Tag = "NoPiece";
             this.square30.UseVisualStyleBackColor = false;
             // 
             // square47
@@ -539,6 +555,7 @@
             this.square47.Name = "square47";
             this.square47.Size = new System.Drawing.Size(65, 65);
             this.square47.TabIndex = 159;
+            this.square47.Tag = "NoPiece";
             this.square47.UseVisualStyleBackColor = false;
             // 
             // square46
@@ -550,6 +567,7 @@
             this.square46.Name = "square46";
             this.square46.Size = new System.Drawing.Size(65, 65);
             this.square46.TabIndex = 158;
+            this.square46.Tag = "NoPiece";
             this.square46.UseVisualStyleBackColor = false;
             // 
             // square45
@@ -561,6 +579,7 @@
             this.square45.Name = "square45";
             this.square45.Size = new System.Drawing.Size(65, 65);
             this.square45.TabIndex = 157;
+            this.square45.Tag = "NoPiece";
             this.square45.UseVisualStyleBackColor = false;
             // 
             // square44
@@ -572,6 +591,7 @@
             this.square44.Name = "square44";
             this.square44.Size = new System.Drawing.Size(65, 65);
             this.square44.TabIndex = 156;
+            this.square44.Tag = "NoPiece";
             this.square44.UseVisualStyleBackColor = false;
             // 
             // square43
@@ -583,6 +603,7 @@
             this.square43.Name = "square43";
             this.square43.Size = new System.Drawing.Size(65, 65);
             this.square43.TabIndex = 155;
+            this.square43.Tag = "NoPiece";
             this.square43.UseVisualStyleBackColor = false;
             // 
             // square42
@@ -594,6 +615,7 @@
             this.square42.Name = "square42";
             this.square42.Size = new System.Drawing.Size(65, 65);
             this.square42.TabIndex = 154;
+            this.square42.Tag = "NoPiece";
             this.square42.UseVisualStyleBackColor = false;
             // 
             // square41
@@ -605,6 +627,7 @@
             this.square41.Name = "square41";
             this.square41.Size = new System.Drawing.Size(65, 65);
             this.square41.TabIndex = 153;
+            this.square41.Tag = "NoPiece";
             this.square41.UseVisualStyleBackColor = false;
             // 
             // square40
@@ -616,6 +639,7 @@
             this.square40.Name = "square40";
             this.square40.Size = new System.Drawing.Size(65, 65);
             this.square40.TabIndex = 152;
+            this.square40.Tag = "NoPiece";
             this.square40.UseVisualStyleBackColor = false;
             // 
             // square57
@@ -627,6 +651,7 @@
             this.square57.Name = "square57";
             this.square57.Size = new System.Drawing.Size(65, 65);
             this.square57.TabIndex = 151;
+            this.square57.Tag = "NoPiece";
             this.square57.UseVisualStyleBackColor = false;
             // 
             // square56
@@ -638,6 +663,7 @@
             this.square56.Name = "square56";
             this.square56.Size = new System.Drawing.Size(65, 65);
             this.square56.TabIndex = 150;
+            this.square56.Tag = "NoPiece";
             this.square56.UseVisualStyleBackColor = false;
             // 
             // square55
@@ -649,6 +675,7 @@
             this.square55.Name = "square55";
             this.square55.Size = new System.Drawing.Size(65, 65);
             this.square55.TabIndex = 149;
+            this.square55.Tag = "NoPiece";
             this.square55.UseVisualStyleBackColor = false;
             // 
             // square54
@@ -660,6 +687,7 @@
             this.square54.Name = "square54";
             this.square54.Size = new System.Drawing.Size(65, 65);
             this.square54.TabIndex = 148;
+            this.square54.Tag = "NoPiece";
             this.square54.UseVisualStyleBackColor = false;
             // 
             // square53
@@ -671,6 +699,7 @@
             this.square53.Name = "square53";
             this.square53.Size = new System.Drawing.Size(65, 65);
             this.square53.TabIndex = 147;
+            this.square53.Tag = "NoPiece";
             this.square53.UseVisualStyleBackColor = false;
             // 
             // square52
@@ -682,6 +711,7 @@
             this.square52.Name = "square52";
             this.square52.Size = new System.Drawing.Size(65, 65);
             this.square52.TabIndex = 146;
+            this.square52.Tag = "NoPiece";
             this.square52.UseVisualStyleBackColor = false;
             // 
             // square51
@@ -693,6 +723,7 @@
             this.square51.Name = "square51";
             this.square51.Size = new System.Drawing.Size(65, 65);
             this.square51.TabIndex = 145;
+            this.square51.Tag = "NoPiece";
             this.square51.UseVisualStyleBackColor = false;
             // 
             // square50
@@ -704,6 +735,7 @@
             this.square50.Name = "square50";
             this.square50.Size = new System.Drawing.Size(65, 65);
             this.square50.TabIndex = 144;
+            this.square50.Tag = "NoPiece";
             this.square50.UseVisualStyleBackColor = false;
             // 
             // square67
@@ -1079,7 +1111,7 @@
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.tieButton);
             this.Controls.Add(this.settingsIcon);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GameSession";
             this.Text = "Form1";
             this.ResumeLayout(false);

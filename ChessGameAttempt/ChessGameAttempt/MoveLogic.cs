@@ -180,7 +180,7 @@ namespace ChessGameAttempt
         {
             foreach (Button button in buttons)
             {
-                Coordinates c = GetCoordinatesOfButton(button);
+                Coordinates c = ChessUtils.Settings.GetCoordinatesOfButton(button);
                 button.BackColor = (c.X + c.Y) % 2 == 0 ? colorHighlight1 : colorHighlight2;
             }
         }
@@ -190,19 +190,6 @@ namespace ChessGameAttempt
             button.BackColor = currentHighlight;
         }
 
-        public Coordinates GetCoordinatesOfButton(Button button)
-        {
-            Coordinates c;
-            string buttonName = button.Name;
-            int x = Convert.ToInt16(buttonName[buttonName.Length - 2].ToString());
-            int y = Convert.ToInt16(buttonName[buttonName.Length - 1].ToString());
-
-            c.X = x;
-            c.Y = y;
-
-            return c;
-        }
-
         public List<Button> GetPossibleMovesForPiece(Button button, Button[,] board)
         {
             // Clear potential moves from before
@@ -210,7 +197,7 @@ namespace ChessGameAttempt
 
             // Highlight new locations
             List<Button> locations = new List<Button>();
-            Coordinates c = GetCoordinatesOfButton(button);
+            Coordinates c = ChessUtils.Settings.GetCoordinatesOfButton(button);
             Piece piece = GetPieceOnSquare(c.X, c.Y, board);
 
             // If there is a piece on the selected square that is the color of the current player...

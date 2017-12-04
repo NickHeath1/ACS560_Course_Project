@@ -923,6 +923,7 @@
             this.whiteKingButton.Name = "whiteKingButton";
             this.whiteKingButton.Size = new System.Drawing.Size(65, 65);
             this.whiteKingButton.TabIndex = 134;
+            this.whiteKingButton.Tag = "wKing";
             this.whiteKingButton.UseVisualStyleBackColor = false;
             this.whiteKingButton.Click += new System.EventHandler(this.whiteKingButton_Click);
             // 
@@ -1032,6 +1033,7 @@
             this.whiteQueenButton.Name = "whiteQueenButton";
             this.whiteQueenButton.Size = new System.Drawing.Size(65, 65);
             this.whiteQueenButton.TabIndex = 153;
+            this.whiteQueenButton.Tag = "wQueen";
             this.whiteQueenButton.UseVisualStyleBackColor = false;
             this.whiteQueenButton.Click += new System.EventHandler(this.whiteQueenButton_Click);
             // 
@@ -1055,6 +1057,7 @@
             this.whiteRookButton.Name = "whiteRookButton";
             this.whiteRookButton.Size = new System.Drawing.Size(65, 65);
             this.whiteRookButton.TabIndex = 155;
+            this.whiteRookButton.Tag = "wRook";
             this.whiteRookButton.UseVisualStyleBackColor = false;
             this.whiteRookButton.Click += new System.EventHandler(this.whiteRookButton_Click);
             // 
@@ -1078,6 +1081,7 @@
             this.whiteKnightButton.Name = "whiteKnightButton";
             this.whiteKnightButton.Size = new System.Drawing.Size(65, 65);
             this.whiteKnightButton.TabIndex = 157;
+            this.whiteKnightButton.Tag = "wKnight";
             this.whiteKnightButton.UseVisualStyleBackColor = false;
             this.whiteKnightButton.Click += new System.EventHandler(this.whiteKnightButton_Click);
             // 
@@ -1101,6 +1105,7 @@
             this.whiteBishopButton.Name = "whiteBishopButton";
             this.whiteBishopButton.Size = new System.Drawing.Size(65, 65);
             this.whiteBishopButton.TabIndex = 159;
+            this.whiteBishopButton.Tag = "wBishop";
             this.whiteBishopButton.UseVisualStyleBackColor = false;
             this.whiteBishopButton.Click += new System.EventHandler(this.whiteBishopButton_Click);
             // 
@@ -1124,6 +1129,7 @@
             this.whitePawnButton.Name = "whitePawnButton";
             this.whitePawnButton.Size = new System.Drawing.Size(65, 65);
             this.whitePawnButton.TabIndex = 161;
+            this.whitePawnButton.Tag = "wPawn";
             this.whitePawnButton.UseVisualStyleBackColor = false;
             this.whitePawnButton.Click += new System.EventHandler(this.whitePawnButton_Click);
             // 
@@ -1147,6 +1153,7 @@
             this.blackPawnButton.Name = "blackPawnButton";
             this.blackPawnButton.Size = new System.Drawing.Size(65, 65);
             this.blackPawnButton.TabIndex = 173;
+            this.blackPawnButton.Tag = "bPawn";
             this.blackPawnButton.UseVisualStyleBackColor = false;
             this.blackPawnButton.Click += new System.EventHandler(this.blackPawnButton_Click);
             // 
@@ -1170,6 +1177,7 @@
             this.blackBishopButton.Name = "blackBishopButton";
             this.blackBishopButton.Size = new System.Drawing.Size(65, 65);
             this.blackBishopButton.TabIndex = 171;
+            this.blackBishopButton.Tag = "bBishop";
             this.blackBishopButton.UseVisualStyleBackColor = false;
             this.blackBishopButton.Click += new System.EventHandler(this.blackBishopButton_Click);
             // 
@@ -1193,6 +1201,7 @@
             this.blackKnightButton.Name = "blackKnightButton";
             this.blackKnightButton.Size = new System.Drawing.Size(65, 65);
             this.blackKnightButton.TabIndex = 169;
+            this.blackKnightButton.Tag = "bKnight";
             this.blackKnightButton.UseVisualStyleBackColor = false;
             this.blackKnightButton.Click += new System.EventHandler(this.blackKnightButton_Click);
             // 
@@ -1216,6 +1225,7 @@
             this.blackRookButton.Name = "blackRookButton";
             this.blackRookButton.Size = new System.Drawing.Size(65, 65);
             this.blackRookButton.TabIndex = 167;
+            this.blackRookButton.Tag = "bRook";
             this.blackRookButton.UseVisualStyleBackColor = false;
             this.blackRookButton.Click += new System.EventHandler(this.blackRookButton_Click);
             // 
@@ -1239,6 +1249,7 @@
             this.blackQueenButton.Name = "blackQueenButton";
             this.blackQueenButton.Size = new System.Drawing.Size(65, 65);
             this.blackQueenButton.TabIndex = 165;
+            this.blackQueenButton.Tag = "bQueen";
             this.blackQueenButton.UseVisualStyleBackColor = false;
             this.blackQueenButton.Click += new System.EventHandler(this.blackQueenButton_Click);
             // 
@@ -1262,6 +1273,7 @@
             this.blackKingButton.Name = "blackKingButton";
             this.blackKingButton.Size = new System.Drawing.Size(65, 65);
             this.blackKingButton.TabIndex = 163;
+            this.blackKingButton.Tag = "bKing";
             this.blackKingButton.UseVisualStyleBackColor = false;
             this.blackKingButton.Click += new System.EventHandler(this.blackKingButton_Click);
             // 
@@ -1292,6 +1304,7 @@
             this.noPieceButton.Name = "noPieceButton";
             this.noPieceButton.Size = new System.Drawing.Size(65, 65);
             this.noPieceButton.TabIndex = 177;
+            this.noPieceButton.Tag = "NoPiece";
             this.noPieceButton.UseVisualStyleBackColor = false;
             this.noPieceButton.Click += new System.EventHandler(this.noPieceButton_Click);
             // 
