@@ -57,6 +57,9 @@ namespace ChessGameAttempt
                 if (Verify_Login(usernameText.Text, passwordText.Text))
                 {
                     Hide();
+                    ChessUtils.IPAddress = hostText.Text;
+                    ChessUtils.Port = Convert.ToInt32(portText.Text);
+                    ChessUtils.IPAddressWithPort = "http://" + hostText.Text + ":" + portText.Text + "/";
                     LobbyForm lobby = new LobbyForm(new User(usernameText.Text, passwordText.Text));
                     lobby.ShowDialog();
                     Show();
@@ -71,7 +74,7 @@ namespace ChessGameAttempt
         private bool Verify_Login(string username, string password)
         {
             User user = new User(username, password);
-            return DataApiController<User>.PostData("http://localhost:2345/AuthenticateUser", user);
+            return DataApiController<User>.PostData(ChessUtils.IPAddressWithPort + "AuthenticateUser", user);
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
@@ -95,6 +98,11 @@ namespace ChessGameAttempt
         private void passwordText_TextChanged(object sender, EventArgs e)
         {
             error3.Hide();
+        }
+
+        private void portText_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
     }
 }

@@ -31,14 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameSession));
             this.settingsIcon = new System.Windows.Forms.Button();
-            this.chatWindow = new System.Windows.Forms.RichTextBox();
-            this.sendButton = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.chatToSend = new System.Windows.Forms.TextBox();
+            this.myTotalTimer = new System.Windows.Forms.Timer(this.components);
             this.tieButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
-            this.muteButton = new System.Windows.Forms.Button();
-            this.hideChatButton = new System.Windows.Forms.Button();
             this.square07 = new System.Windows.Forms.Button();
             this.square06 = new System.Windows.Forms.Button();
             this.square05 = new System.Windows.Forms.Button();
@@ -103,60 +98,36 @@
             this.square72 = new System.Windows.Forms.Button();
             this.square71 = new System.Windows.Forms.Button();
             this.square70 = new System.Windows.Forms.Button();
+            this.myTimeRemaining = new System.Windows.Forms.Label();
+            this.myUsername = new System.Windows.Forms.Label();
+            this.enemyUsername = new System.Windows.Forms.Label();
+            this.enemyTimeRemaining = new System.Windows.Forms.Label();
+            this.myTotalTimeRemaining = new System.Windows.Forms.Label();
+            this.enemyTotalTimeRemaining = new System.Windows.Forms.Label();
+            this.checkLabel = new System.Windows.Forms.Label();
+            this.myTurnTimer = new System.Windows.Forms.Timer(this.components);
+            this.enemyTotalTimer = new System.Windows.Forms.Timer(this.components);
+            this.enemyTurnTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // settingsIcon
             // 
             this.settingsIcon.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("settingsIcon.BackgroundImage")));
             this.settingsIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.settingsIcon.Location = new System.Drawing.Point(50, 590);
-            this.settingsIcon.Margin = new System.Windows.Forms.Padding(2);
+            this.settingsIcon.Location = new System.Drawing.Point(50, 658);
+            this.settingsIcon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.settingsIcon.Name = "settingsIcon";
             this.settingsIcon.Size = new System.Drawing.Size(85, 75);
             this.settingsIcon.TabIndex = 64;
             this.settingsIcon.UseVisualStyleBackColor = true;
             this.settingsIcon.Click += new System.EventHandler(this.settingsIcon_Click);
             // 
-            // chatWindow
-            // 
-            this.chatWindow.BackColor = System.Drawing.Color.White;
-            this.chatWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chatWindow.Location = new System.Drawing.Point(602, 50);
-            this.chatWindow.Margin = new System.Windows.Forms.Padding(0);
-            this.chatWindow.Name = "chatWindow";
-            this.chatWindow.ReadOnly = true;
-            this.chatWindow.Size = new System.Drawing.Size(455, 490);
-            this.chatWindow.TabIndex = 68;
-            this.chatWindow.Text = "";
-            // 
-            // sendButton
-            // 
-            this.sendButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sendButton.Location = new System.Drawing.Point(972, 540);
-            this.sendButton.Margin = new System.Windows.Forms.Padding(0);
-            this.sendButton.Name = "sendButton";
-            this.sendButton.Size = new System.Drawing.Size(85, 29);
-            this.sendButton.TabIndex = 72;
-            this.sendButton.Text = "Send";
-            this.sendButton.UseVisualStyleBackColor = true;
-            this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
-            // 
-            // chatToSend
-            // 
-            this.chatToSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chatToSend.Location = new System.Drawing.Point(602, 541);
-            this.chatToSend.Margin = new System.Windows.Forms.Padding(0);
-            this.chatToSend.Name = "chatToSend";
-            this.chatToSend.Size = new System.Drawing.Size(370, 29);
-            this.chatToSend.TabIndex = 73;
-            this.chatToSend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chatToSend_KeyDown);
-            // 
             // tieButton
             // 
             this.tieButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tieButton.BackgroundImage")));
             this.tieButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.tieButton.Location = new System.Drawing.Point(180, 590);
-            this.tieButton.Margin = new System.Windows.Forms.Padding(2);
+            this.tieButton.Location = new System.Drawing.Point(265, 658);
+            this.tieButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tieButton.Name = "tieButton";
             this.tieButton.Size = new System.Drawing.Size(85, 75);
             this.tieButton.TabIndex = 74;
@@ -167,44 +138,20 @@
             // 
             this.exitButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitButton.BackgroundImage")));
             this.exitButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.exitButton.Location = new System.Drawing.Point(310, 590);
-            this.exitButton.Margin = new System.Windows.Forms.Padding(2);
+            this.exitButton.Location = new System.Drawing.Point(487, 658);
+            this.exitButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(85, 75);
             this.exitButton.TabIndex = 75;
             this.exitButton.UseVisualStyleBackColor = true;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
-            // muteButton
-            // 
-            this.muteButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("muteButton.BackgroundImage")));
-            this.muteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.muteButton.Location = new System.Drawing.Point(842, 590);
-            this.muteButton.Margin = new System.Windows.Forms.Padding(2);
-            this.muteButton.Name = "muteButton";
-            this.muteButton.Size = new System.Drawing.Size(85, 75);
-            this.muteButton.TabIndex = 76;
-            this.muteButton.UseVisualStyleBackColor = true;
-            this.muteButton.Click += new System.EventHandler(this.muteButton_Click);
-            // 
-            // hideChatButton
-            // 
-            this.hideChatButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("hideChatButton.BackgroundImage")));
-            this.hideChatButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.hideChatButton.Location = new System.Drawing.Point(972, 590);
-            this.hideChatButton.Margin = new System.Windows.Forms.Padding(2);
-            this.hideChatButton.Name = "hideChatButton";
-            this.hideChatButton.Size = new System.Drawing.Size(85, 75);
-            this.hideChatButton.TabIndex = 77;
-            this.hideChatButton.UseVisualStyleBackColor = true;
-            this.hideChatButton.Click += new System.EventHandler(this.hideChatButton_Click);
-            // 
             // square07
             // 
             this.square07.BackColor = System.Drawing.Color.Gray;
             this.square07.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square07.Image = ((System.Drawing.Image)(resources.GetObject("square07.Image")));
-            this.square07.Location = new System.Drawing.Point(507, 50);
+            this.square07.Location = new System.Drawing.Point(507, 104);
             this.square07.Margin = new System.Windows.Forms.Padding(0);
             this.square07.Name = "square07";
             this.square07.Size = new System.Drawing.Size(65, 65);
@@ -217,7 +164,7 @@
             this.square06.BackColor = System.Drawing.Color.White;
             this.square06.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square06.Image = ((System.Drawing.Image)(resources.GetObject("square06.Image")));
-            this.square06.Location = new System.Drawing.Point(442, 50);
+            this.square06.Location = new System.Drawing.Point(442, 104);
             this.square06.Margin = new System.Windows.Forms.Padding(0);
             this.square06.Name = "square06";
             this.square06.Size = new System.Drawing.Size(65, 65);
@@ -230,7 +177,7 @@
             this.square05.BackColor = System.Drawing.Color.Gray;
             this.square05.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square05.Image = ((System.Drawing.Image)(resources.GetObject("square05.Image")));
-            this.square05.Location = new System.Drawing.Point(377, 50);
+            this.square05.Location = new System.Drawing.Point(377, 104);
             this.square05.Margin = new System.Windows.Forms.Padding(0);
             this.square05.Name = "square05";
             this.square05.Size = new System.Drawing.Size(65, 65);
@@ -243,7 +190,7 @@
             this.square04.BackColor = System.Drawing.Color.White;
             this.square04.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square04.Image = global::ChessGameAttempt.Properties.Resources.bKing;
-            this.square04.Location = new System.Drawing.Point(312, 50);
+            this.square04.Location = new System.Drawing.Point(312, 104);
             this.square04.Margin = new System.Windows.Forms.Padding(0);
             this.square04.Name = "square04";
             this.square04.Size = new System.Drawing.Size(65, 65);
@@ -256,7 +203,7 @@
             this.square03.BackColor = System.Drawing.Color.Gray;
             this.square03.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square03.Image = global::ChessGameAttempt.Properties.Resources.bQueen;
-            this.square03.Location = new System.Drawing.Point(247, 50);
+            this.square03.Location = new System.Drawing.Point(247, 104);
             this.square03.Margin = new System.Windows.Forms.Padding(0);
             this.square03.Name = "square03";
             this.square03.Size = new System.Drawing.Size(65, 65);
@@ -269,7 +216,7 @@
             this.square02.BackColor = System.Drawing.Color.White;
             this.square02.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square02.Image = ((System.Drawing.Image)(resources.GetObject("square02.Image")));
-            this.square02.Location = new System.Drawing.Point(182, 50);
+            this.square02.Location = new System.Drawing.Point(182, 104);
             this.square02.Margin = new System.Windows.Forms.Padding(0);
             this.square02.Name = "square02";
             this.square02.Size = new System.Drawing.Size(65, 65);
@@ -282,7 +229,7 @@
             this.square01.BackColor = System.Drawing.Color.Gray;
             this.square01.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square01.Image = ((System.Drawing.Image)(resources.GetObject("square01.Image")));
-            this.square01.Location = new System.Drawing.Point(117, 50);
+            this.square01.Location = new System.Drawing.Point(117, 104);
             this.square01.Margin = new System.Windows.Forms.Padding(0);
             this.square01.Name = "square01";
             this.square01.Size = new System.Drawing.Size(65, 65);
@@ -295,7 +242,7 @@
             this.square00.BackColor = System.Drawing.Color.White;
             this.square00.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square00.Image = ((System.Drawing.Image)(resources.GetObject("square00.Image")));
-            this.square00.Location = new System.Drawing.Point(52, 50);
+            this.square00.Location = new System.Drawing.Point(52, 104);
             this.square00.Margin = new System.Windows.Forms.Padding(0);
             this.square00.Name = "square00";
             this.square00.Size = new System.Drawing.Size(65, 65);
@@ -308,7 +255,7 @@
             this.square17.BackColor = System.Drawing.Color.White;
             this.square17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square17.Image = ((System.Drawing.Image)(resources.GetObject("square17.Image")));
-            this.square17.Location = new System.Drawing.Point(507, 115);
+            this.square17.Location = new System.Drawing.Point(507, 169);
             this.square17.Margin = new System.Windows.Forms.Padding(0);
             this.square17.Name = "square17";
             this.square17.Size = new System.Drawing.Size(65, 65);
@@ -321,7 +268,7 @@
             this.square16.BackColor = System.Drawing.Color.Gray;
             this.square16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square16.Image = ((System.Drawing.Image)(resources.GetObject("square16.Image")));
-            this.square16.Location = new System.Drawing.Point(442, 115);
+            this.square16.Location = new System.Drawing.Point(442, 169);
             this.square16.Margin = new System.Windows.Forms.Padding(0);
             this.square16.Name = "square16";
             this.square16.Size = new System.Drawing.Size(65, 65);
@@ -334,7 +281,7 @@
             this.square15.BackColor = System.Drawing.Color.White;
             this.square15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square15.Image = ((System.Drawing.Image)(resources.GetObject("square15.Image")));
-            this.square15.Location = new System.Drawing.Point(377, 115);
+            this.square15.Location = new System.Drawing.Point(377, 169);
             this.square15.Margin = new System.Windows.Forms.Padding(0);
             this.square15.Name = "square15";
             this.square15.Size = new System.Drawing.Size(65, 65);
@@ -347,7 +294,7 @@
             this.square14.BackColor = System.Drawing.Color.Gray;
             this.square14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square14.Image = ((System.Drawing.Image)(resources.GetObject("square14.Image")));
-            this.square14.Location = new System.Drawing.Point(312, 115);
+            this.square14.Location = new System.Drawing.Point(312, 169);
             this.square14.Margin = new System.Windows.Forms.Padding(0);
             this.square14.Name = "square14";
             this.square14.Size = new System.Drawing.Size(65, 65);
@@ -360,7 +307,7 @@
             this.square13.BackColor = System.Drawing.Color.White;
             this.square13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square13.Image = ((System.Drawing.Image)(resources.GetObject("square13.Image")));
-            this.square13.Location = new System.Drawing.Point(247, 115);
+            this.square13.Location = new System.Drawing.Point(247, 169);
             this.square13.Margin = new System.Windows.Forms.Padding(0);
             this.square13.Name = "square13";
             this.square13.Size = new System.Drawing.Size(65, 65);
@@ -373,7 +320,7 @@
             this.square12.BackColor = System.Drawing.Color.Gray;
             this.square12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square12.Image = ((System.Drawing.Image)(resources.GetObject("square12.Image")));
-            this.square12.Location = new System.Drawing.Point(182, 115);
+            this.square12.Location = new System.Drawing.Point(182, 169);
             this.square12.Margin = new System.Windows.Forms.Padding(0);
             this.square12.Name = "square12";
             this.square12.Size = new System.Drawing.Size(65, 65);
@@ -386,7 +333,7 @@
             this.square11.BackColor = System.Drawing.Color.White;
             this.square11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square11.Image = ((System.Drawing.Image)(resources.GetObject("square11.Image")));
-            this.square11.Location = new System.Drawing.Point(117, 115);
+            this.square11.Location = new System.Drawing.Point(117, 169);
             this.square11.Margin = new System.Windows.Forms.Padding(0);
             this.square11.Name = "square11";
             this.square11.Size = new System.Drawing.Size(65, 65);
@@ -399,7 +346,7 @@
             this.square10.BackColor = System.Drawing.Color.Gray;
             this.square10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square10.Image = ((System.Drawing.Image)(resources.GetObject("square10.Image")));
-            this.square10.Location = new System.Drawing.Point(52, 115);
+            this.square10.Location = new System.Drawing.Point(52, 169);
             this.square10.Margin = new System.Windows.Forms.Padding(0);
             this.square10.Name = "square10";
             this.square10.Size = new System.Drawing.Size(65, 65);
@@ -411,7 +358,7 @@
             // 
             this.square27.BackColor = System.Drawing.Color.Gray;
             this.square27.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square27.Location = new System.Drawing.Point(507, 180);
+            this.square27.Location = new System.Drawing.Point(507, 234);
             this.square27.Margin = new System.Windows.Forms.Padding(0);
             this.square27.Name = "square27";
             this.square27.Size = new System.Drawing.Size(65, 65);
@@ -422,7 +369,7 @@
             // 
             this.square26.BackColor = System.Drawing.Color.White;
             this.square26.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square26.Location = new System.Drawing.Point(442, 180);
+            this.square26.Location = new System.Drawing.Point(442, 234);
             this.square26.Margin = new System.Windows.Forms.Padding(0);
             this.square26.Name = "square26";
             this.square26.Size = new System.Drawing.Size(65, 65);
@@ -433,7 +380,7 @@
             // 
             this.square25.BackColor = System.Drawing.Color.Gray;
             this.square25.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square25.Location = new System.Drawing.Point(377, 180);
+            this.square25.Location = new System.Drawing.Point(377, 234);
             this.square25.Margin = new System.Windows.Forms.Padding(0);
             this.square25.Name = "square25";
             this.square25.Size = new System.Drawing.Size(65, 65);
@@ -444,7 +391,7 @@
             // 
             this.square24.BackColor = System.Drawing.Color.White;
             this.square24.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square24.Location = new System.Drawing.Point(312, 180);
+            this.square24.Location = new System.Drawing.Point(312, 234);
             this.square24.Margin = new System.Windows.Forms.Padding(0);
             this.square24.Name = "square24";
             this.square24.Size = new System.Drawing.Size(65, 65);
@@ -455,7 +402,7 @@
             // 
             this.square23.BackColor = System.Drawing.Color.Gray;
             this.square23.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square23.Location = new System.Drawing.Point(247, 180);
+            this.square23.Location = new System.Drawing.Point(247, 234);
             this.square23.Margin = new System.Windows.Forms.Padding(0);
             this.square23.Name = "square23";
             this.square23.Size = new System.Drawing.Size(65, 65);
@@ -466,7 +413,7 @@
             // 
             this.square22.BackColor = System.Drawing.Color.White;
             this.square22.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square22.Location = new System.Drawing.Point(182, 180);
+            this.square22.Location = new System.Drawing.Point(182, 234);
             this.square22.Margin = new System.Windows.Forms.Padding(0);
             this.square22.Name = "square22";
             this.square22.Size = new System.Drawing.Size(65, 65);
@@ -477,7 +424,7 @@
             // 
             this.square21.BackColor = System.Drawing.Color.Gray;
             this.square21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square21.Location = new System.Drawing.Point(117, 180);
+            this.square21.Location = new System.Drawing.Point(117, 234);
             this.square21.Margin = new System.Windows.Forms.Padding(0);
             this.square21.Name = "square21";
             this.square21.Size = new System.Drawing.Size(65, 65);
@@ -488,7 +435,7 @@
             // 
             this.square20.BackColor = System.Drawing.Color.White;
             this.square20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square20.Location = new System.Drawing.Point(52, 180);
+            this.square20.Location = new System.Drawing.Point(52, 234);
             this.square20.Margin = new System.Windows.Forms.Padding(0);
             this.square20.Name = "square20";
             this.square20.Size = new System.Drawing.Size(65, 65);
@@ -499,7 +446,7 @@
             // 
             this.square37.BackColor = System.Drawing.Color.White;
             this.square37.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square37.Location = new System.Drawing.Point(507, 245);
+            this.square37.Location = new System.Drawing.Point(507, 299);
             this.square37.Margin = new System.Windows.Forms.Padding(0);
             this.square37.Name = "square37";
             this.square37.Size = new System.Drawing.Size(65, 65);
@@ -510,7 +457,7 @@
             // 
             this.square36.BackColor = System.Drawing.Color.Gray;
             this.square36.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square36.Location = new System.Drawing.Point(442, 245);
+            this.square36.Location = new System.Drawing.Point(442, 299);
             this.square36.Margin = new System.Windows.Forms.Padding(0);
             this.square36.Name = "square36";
             this.square36.Size = new System.Drawing.Size(65, 65);
@@ -521,7 +468,7 @@
             // 
             this.square35.BackColor = System.Drawing.Color.White;
             this.square35.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square35.Location = new System.Drawing.Point(377, 245);
+            this.square35.Location = new System.Drawing.Point(377, 299);
             this.square35.Margin = new System.Windows.Forms.Padding(0);
             this.square35.Name = "square35";
             this.square35.Size = new System.Drawing.Size(65, 65);
@@ -532,7 +479,7 @@
             // 
             this.square34.BackColor = System.Drawing.Color.Gray;
             this.square34.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square34.Location = new System.Drawing.Point(312, 245);
+            this.square34.Location = new System.Drawing.Point(312, 299);
             this.square34.Margin = new System.Windows.Forms.Padding(0);
             this.square34.Name = "square34";
             this.square34.Size = new System.Drawing.Size(65, 65);
@@ -543,7 +490,7 @@
             // 
             this.square33.BackColor = System.Drawing.Color.White;
             this.square33.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square33.Location = new System.Drawing.Point(247, 245);
+            this.square33.Location = new System.Drawing.Point(247, 299);
             this.square33.Margin = new System.Windows.Forms.Padding(0);
             this.square33.Name = "square33";
             this.square33.Size = new System.Drawing.Size(65, 65);
@@ -554,7 +501,7 @@
             // 
             this.square32.BackColor = System.Drawing.Color.Gray;
             this.square32.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square32.Location = new System.Drawing.Point(182, 245);
+            this.square32.Location = new System.Drawing.Point(182, 299);
             this.square32.Margin = new System.Windows.Forms.Padding(0);
             this.square32.Name = "square32";
             this.square32.Size = new System.Drawing.Size(65, 65);
@@ -565,7 +512,7 @@
             // 
             this.square31.BackColor = System.Drawing.Color.White;
             this.square31.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square31.Location = new System.Drawing.Point(117, 245);
+            this.square31.Location = new System.Drawing.Point(117, 299);
             this.square31.Margin = new System.Windows.Forms.Padding(0);
             this.square31.Name = "square31";
             this.square31.Size = new System.Drawing.Size(65, 65);
@@ -576,7 +523,7 @@
             // 
             this.square30.BackColor = System.Drawing.Color.Gray;
             this.square30.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square30.Location = new System.Drawing.Point(52, 245);
+            this.square30.Location = new System.Drawing.Point(52, 299);
             this.square30.Margin = new System.Windows.Forms.Padding(0);
             this.square30.Name = "square30";
             this.square30.Size = new System.Drawing.Size(65, 65);
@@ -587,7 +534,7 @@
             // 
             this.square47.BackColor = System.Drawing.Color.Gray;
             this.square47.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square47.Location = new System.Drawing.Point(507, 310);
+            this.square47.Location = new System.Drawing.Point(507, 364);
             this.square47.Margin = new System.Windows.Forms.Padding(0);
             this.square47.Name = "square47";
             this.square47.Size = new System.Drawing.Size(65, 65);
@@ -598,7 +545,7 @@
             // 
             this.square46.BackColor = System.Drawing.Color.White;
             this.square46.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square46.Location = new System.Drawing.Point(442, 310);
+            this.square46.Location = new System.Drawing.Point(442, 364);
             this.square46.Margin = new System.Windows.Forms.Padding(0);
             this.square46.Name = "square46";
             this.square46.Size = new System.Drawing.Size(65, 65);
@@ -609,7 +556,7 @@
             // 
             this.square45.BackColor = System.Drawing.Color.Gray;
             this.square45.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square45.Location = new System.Drawing.Point(377, 310);
+            this.square45.Location = new System.Drawing.Point(377, 364);
             this.square45.Margin = new System.Windows.Forms.Padding(0);
             this.square45.Name = "square45";
             this.square45.Size = new System.Drawing.Size(65, 65);
@@ -620,7 +567,7 @@
             // 
             this.square44.BackColor = System.Drawing.Color.White;
             this.square44.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square44.Location = new System.Drawing.Point(312, 310);
+            this.square44.Location = new System.Drawing.Point(312, 364);
             this.square44.Margin = new System.Windows.Forms.Padding(0);
             this.square44.Name = "square44";
             this.square44.Size = new System.Drawing.Size(65, 65);
@@ -631,7 +578,7 @@
             // 
             this.square43.BackColor = System.Drawing.Color.Gray;
             this.square43.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square43.Location = new System.Drawing.Point(247, 310);
+            this.square43.Location = new System.Drawing.Point(247, 364);
             this.square43.Margin = new System.Windows.Forms.Padding(0);
             this.square43.Name = "square43";
             this.square43.Size = new System.Drawing.Size(65, 65);
@@ -642,7 +589,7 @@
             // 
             this.square42.BackColor = System.Drawing.Color.White;
             this.square42.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square42.Location = new System.Drawing.Point(182, 310);
+            this.square42.Location = new System.Drawing.Point(182, 364);
             this.square42.Margin = new System.Windows.Forms.Padding(0);
             this.square42.Name = "square42";
             this.square42.Size = new System.Drawing.Size(65, 65);
@@ -653,7 +600,7 @@
             // 
             this.square41.BackColor = System.Drawing.Color.Gray;
             this.square41.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square41.Location = new System.Drawing.Point(117, 310);
+            this.square41.Location = new System.Drawing.Point(117, 364);
             this.square41.Margin = new System.Windows.Forms.Padding(0);
             this.square41.Name = "square41";
             this.square41.Size = new System.Drawing.Size(65, 65);
@@ -664,7 +611,7 @@
             // 
             this.square40.BackColor = System.Drawing.Color.White;
             this.square40.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square40.Location = new System.Drawing.Point(52, 310);
+            this.square40.Location = new System.Drawing.Point(52, 364);
             this.square40.Margin = new System.Windows.Forms.Padding(0);
             this.square40.Name = "square40";
             this.square40.Size = new System.Drawing.Size(65, 65);
@@ -675,7 +622,7 @@
             // 
             this.square57.BackColor = System.Drawing.Color.White;
             this.square57.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square57.Location = new System.Drawing.Point(507, 375);
+            this.square57.Location = new System.Drawing.Point(507, 429);
             this.square57.Margin = new System.Windows.Forms.Padding(0);
             this.square57.Name = "square57";
             this.square57.Size = new System.Drawing.Size(65, 65);
@@ -686,7 +633,7 @@
             // 
             this.square56.BackColor = System.Drawing.Color.Gray;
             this.square56.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square56.Location = new System.Drawing.Point(442, 375);
+            this.square56.Location = new System.Drawing.Point(442, 429);
             this.square56.Margin = new System.Windows.Forms.Padding(0);
             this.square56.Name = "square56";
             this.square56.Size = new System.Drawing.Size(65, 65);
@@ -697,7 +644,7 @@
             // 
             this.square55.BackColor = System.Drawing.Color.White;
             this.square55.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square55.Location = new System.Drawing.Point(377, 375);
+            this.square55.Location = new System.Drawing.Point(377, 429);
             this.square55.Margin = new System.Windows.Forms.Padding(0);
             this.square55.Name = "square55";
             this.square55.Size = new System.Drawing.Size(65, 65);
@@ -708,7 +655,7 @@
             // 
             this.square54.BackColor = System.Drawing.Color.Gray;
             this.square54.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square54.Location = new System.Drawing.Point(312, 375);
+            this.square54.Location = new System.Drawing.Point(312, 429);
             this.square54.Margin = new System.Windows.Forms.Padding(0);
             this.square54.Name = "square54";
             this.square54.Size = new System.Drawing.Size(65, 65);
@@ -719,7 +666,7 @@
             // 
             this.square53.BackColor = System.Drawing.Color.White;
             this.square53.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square53.Location = new System.Drawing.Point(247, 375);
+            this.square53.Location = new System.Drawing.Point(247, 429);
             this.square53.Margin = new System.Windows.Forms.Padding(0);
             this.square53.Name = "square53";
             this.square53.Size = new System.Drawing.Size(65, 65);
@@ -730,7 +677,7 @@
             // 
             this.square52.BackColor = System.Drawing.Color.Gray;
             this.square52.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square52.Location = new System.Drawing.Point(182, 375);
+            this.square52.Location = new System.Drawing.Point(182, 429);
             this.square52.Margin = new System.Windows.Forms.Padding(0);
             this.square52.Name = "square52";
             this.square52.Size = new System.Drawing.Size(65, 65);
@@ -741,7 +688,7 @@
             // 
             this.square51.BackColor = System.Drawing.Color.White;
             this.square51.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square51.Location = new System.Drawing.Point(117, 375);
+            this.square51.Location = new System.Drawing.Point(117, 429);
             this.square51.Margin = new System.Windows.Forms.Padding(0);
             this.square51.Name = "square51";
             this.square51.Size = new System.Drawing.Size(65, 65);
@@ -752,7 +699,7 @@
             // 
             this.square50.BackColor = System.Drawing.Color.Gray;
             this.square50.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.square50.Location = new System.Drawing.Point(52, 375);
+            this.square50.Location = new System.Drawing.Point(52, 429);
             this.square50.Margin = new System.Windows.Forms.Padding(0);
             this.square50.Name = "square50";
             this.square50.Size = new System.Drawing.Size(65, 65);
@@ -764,7 +711,7 @@
             this.square67.BackColor = System.Drawing.Color.Gray;
             this.square67.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square67.Image = global::ChessGameAttempt.Properties.Resources.wPawn;
-            this.square67.Location = new System.Drawing.Point(507, 440);
+            this.square67.Location = new System.Drawing.Point(507, 494);
             this.square67.Margin = new System.Windows.Forms.Padding(0);
             this.square67.Name = "square67";
             this.square67.Size = new System.Drawing.Size(65, 65);
@@ -777,7 +724,7 @@
             this.square66.BackColor = System.Drawing.Color.White;
             this.square66.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square66.Image = global::ChessGameAttempt.Properties.Resources.wPawn;
-            this.square66.Location = new System.Drawing.Point(442, 440);
+            this.square66.Location = new System.Drawing.Point(442, 494);
             this.square66.Margin = new System.Windows.Forms.Padding(0);
             this.square66.Name = "square66";
             this.square66.Size = new System.Drawing.Size(65, 65);
@@ -790,7 +737,7 @@
             this.square65.BackColor = System.Drawing.Color.Gray;
             this.square65.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square65.Image = global::ChessGameAttempt.Properties.Resources.wPawn;
-            this.square65.Location = new System.Drawing.Point(377, 440);
+            this.square65.Location = new System.Drawing.Point(377, 494);
             this.square65.Margin = new System.Windows.Forms.Padding(0);
             this.square65.Name = "square65";
             this.square65.Size = new System.Drawing.Size(65, 65);
@@ -803,7 +750,7 @@
             this.square64.BackColor = System.Drawing.Color.White;
             this.square64.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square64.Image = global::ChessGameAttempt.Properties.Resources.wPawn;
-            this.square64.Location = new System.Drawing.Point(312, 440);
+            this.square64.Location = new System.Drawing.Point(312, 494);
             this.square64.Margin = new System.Windows.Forms.Padding(0);
             this.square64.Name = "square64";
             this.square64.Size = new System.Drawing.Size(65, 65);
@@ -816,7 +763,7 @@
             this.square63.BackColor = System.Drawing.Color.Gray;
             this.square63.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square63.Image = global::ChessGameAttempt.Properties.Resources.wPawn;
-            this.square63.Location = new System.Drawing.Point(247, 440);
+            this.square63.Location = new System.Drawing.Point(247, 494);
             this.square63.Margin = new System.Windows.Forms.Padding(0);
             this.square63.Name = "square63";
             this.square63.Size = new System.Drawing.Size(65, 65);
@@ -829,7 +776,7 @@
             this.square62.BackColor = System.Drawing.Color.White;
             this.square62.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square62.Image = global::ChessGameAttempt.Properties.Resources.wPawn;
-            this.square62.Location = new System.Drawing.Point(182, 440);
+            this.square62.Location = new System.Drawing.Point(182, 494);
             this.square62.Margin = new System.Windows.Forms.Padding(0);
             this.square62.Name = "square62";
             this.square62.Size = new System.Drawing.Size(65, 65);
@@ -842,7 +789,7 @@
             this.square61.BackColor = System.Drawing.Color.Gray;
             this.square61.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square61.Image = global::ChessGameAttempt.Properties.Resources.wPawn;
-            this.square61.Location = new System.Drawing.Point(117, 440);
+            this.square61.Location = new System.Drawing.Point(117, 494);
             this.square61.Margin = new System.Windows.Forms.Padding(0);
             this.square61.Name = "square61";
             this.square61.Size = new System.Drawing.Size(65, 65);
@@ -855,7 +802,7 @@
             this.square60.BackColor = System.Drawing.Color.White;
             this.square60.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square60.Image = global::ChessGameAttempt.Properties.Resources.wPawn;
-            this.square60.Location = new System.Drawing.Point(52, 440);
+            this.square60.Location = new System.Drawing.Point(52, 494);
             this.square60.Margin = new System.Windows.Forms.Padding(0);
             this.square60.Name = "square60";
             this.square60.Size = new System.Drawing.Size(65, 65);
@@ -868,7 +815,7 @@
             this.square77.BackColor = System.Drawing.Color.White;
             this.square77.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square77.Image = global::ChessGameAttempt.Properties.Resources.wRook;
-            this.square77.Location = new System.Drawing.Point(507, 505);
+            this.square77.Location = new System.Drawing.Point(507, 559);
             this.square77.Margin = new System.Windows.Forms.Padding(0);
             this.square77.Name = "square77";
             this.square77.Size = new System.Drawing.Size(65, 65);
@@ -881,7 +828,7 @@
             this.square76.BackColor = System.Drawing.Color.Gray;
             this.square76.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square76.Image = global::ChessGameAttempt.Properties.Resources.wKnight;
-            this.square76.Location = new System.Drawing.Point(442, 505);
+            this.square76.Location = new System.Drawing.Point(442, 559);
             this.square76.Margin = new System.Windows.Forms.Padding(0);
             this.square76.Name = "square76";
             this.square76.Size = new System.Drawing.Size(65, 65);
@@ -894,7 +841,7 @@
             this.square75.BackColor = System.Drawing.Color.White;
             this.square75.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square75.Image = global::ChessGameAttempt.Properties.Resources.wBishop;
-            this.square75.Location = new System.Drawing.Point(377, 505);
+            this.square75.Location = new System.Drawing.Point(377, 559);
             this.square75.Margin = new System.Windows.Forms.Padding(0);
             this.square75.Name = "square75";
             this.square75.Size = new System.Drawing.Size(65, 65);
@@ -907,7 +854,7 @@
             this.square74.BackColor = System.Drawing.Color.Gray;
             this.square74.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square74.Image = global::ChessGameAttempt.Properties.Resources.wKing;
-            this.square74.Location = new System.Drawing.Point(312, 505);
+            this.square74.Location = new System.Drawing.Point(312, 559);
             this.square74.Margin = new System.Windows.Forms.Padding(0);
             this.square74.Name = "square74";
             this.square74.Size = new System.Drawing.Size(65, 65);
@@ -920,7 +867,7 @@
             this.square73.BackColor = System.Drawing.Color.White;
             this.square73.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square73.Image = global::ChessGameAttempt.Properties.Resources.wQueen;
-            this.square73.Location = new System.Drawing.Point(247, 505);
+            this.square73.Location = new System.Drawing.Point(247, 559);
             this.square73.Margin = new System.Windows.Forms.Padding(0);
             this.square73.Name = "square73";
             this.square73.Size = new System.Drawing.Size(65, 65);
@@ -933,7 +880,7 @@
             this.square72.BackColor = System.Drawing.Color.Gray;
             this.square72.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square72.Image = global::ChessGameAttempt.Properties.Resources.wBishop;
-            this.square72.Location = new System.Drawing.Point(182, 505);
+            this.square72.Location = new System.Drawing.Point(182, 559);
             this.square72.Margin = new System.Windows.Forms.Padding(0);
             this.square72.Name = "square72";
             this.square72.Size = new System.Drawing.Size(65, 65);
@@ -946,7 +893,7 @@
             this.square71.BackColor = System.Drawing.Color.White;
             this.square71.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square71.Image = global::ChessGameAttempt.Properties.Resources.wKnight;
-            this.square71.Location = new System.Drawing.Point(117, 505);
+            this.square71.Location = new System.Drawing.Point(117, 559);
             this.square71.Margin = new System.Windows.Forms.Padding(0);
             this.square71.Name = "square71";
             this.square71.Size = new System.Drawing.Size(65, 65);
@@ -959,13 +906,96 @@
             this.square70.BackColor = System.Drawing.Color.Gray;
             this.square70.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.square70.Image = global::ChessGameAttempt.Properties.Resources.wRook;
-            this.square70.Location = new System.Drawing.Point(52, 505);
+            this.square70.Location = new System.Drawing.Point(52, 559);
             this.square70.Margin = new System.Windows.Forms.Padding(0);
             this.square70.Name = "square70";
             this.square70.Size = new System.Drawing.Size(65, 65);
             this.square70.TabIndex = 128;
             this.square70.Tag = "wRook";
             this.square70.UseVisualStyleBackColor = false;
+            // 
+            // myTimeRemaining
+            // 
+            this.myTimeRemaining.AutoSize = true;
+            this.myTimeRemaining.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.myTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.myTimeRemaining.Location = new System.Drawing.Point(59, 70);
+            this.myTimeRemaining.Name = "myTimeRemaining";
+            this.myTimeRemaining.Size = new System.Drawing.Size(81, 31);
+            this.myTimeRemaining.TabIndex = 192;
+            this.myTimeRemaining.Text = "label1";
+            // 
+            // myUsername
+            // 
+            this.myUsername.AutoSize = true;
+            this.myUsername.BackColor = System.Drawing.Color.Transparent;
+            this.myUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.myUsername.Location = new System.Drawing.Point(54, 41);
+            this.myUsername.Name = "myUsername";
+            this.myUsername.Size = new System.Drawing.Size(79, 29);
+            this.myUsername.TabIndex = 193;
+            this.myUsername.Text = "label1";
+            // 
+            // enemyUsername
+            // 
+            this.enemyUsername.AutoSize = true;
+            this.enemyUsername.BackColor = System.Drawing.Color.Transparent;
+            this.enemyUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.enemyUsername.Location = new System.Drawing.Point(484, 41);
+            this.enemyUsername.Name = "enemyUsername";
+            this.enemyUsername.Size = new System.Drawing.Size(79, 29);
+            this.enemyUsername.TabIndex = 195;
+            this.enemyUsername.Text = "label1";
+            this.enemyUsername.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // enemyTimeRemaining
+            // 
+            this.enemyTimeRemaining.AutoSize = true;
+            this.enemyTimeRemaining.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.enemyTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.enemyTimeRemaining.Location = new System.Drawing.Point(482, 70);
+            this.enemyTimeRemaining.Name = "enemyTimeRemaining";
+            this.enemyTimeRemaining.Size = new System.Drawing.Size(81, 31);
+            this.enemyTimeRemaining.TabIndex = 194;
+            this.enemyTimeRemaining.Text = "label1";
+            this.enemyTimeRemaining.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // myTotalTimeRemaining
+            // 
+            this.myTotalTimeRemaining.AutoSize = true;
+            this.myTotalTimeRemaining.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.myTotalTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.myTotalTimeRemaining.Location = new System.Drawing.Point(146, 70);
+            this.myTotalTimeRemaining.Name = "myTotalTimeRemaining";
+            this.myTotalTimeRemaining.Size = new System.Drawing.Size(81, 31);
+            this.myTotalTimeRemaining.TabIndex = 196;
+            this.myTotalTimeRemaining.Text = "label1";
+            this.myTotalTimeRemaining.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // enemyTotalTimeRemaining
+            // 
+            this.enemyTotalTimeRemaining.AutoSize = true;
+            this.enemyTotalTimeRemaining.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.enemyTotalTimeRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.enemyTotalTimeRemaining.Location = new System.Drawing.Point(395, 70);
+            this.enemyTotalTimeRemaining.Name = "enemyTotalTimeRemaining";
+            this.enemyTotalTimeRemaining.Size = new System.Drawing.Size(81, 31);
+            this.enemyTotalTimeRemaining.TabIndex = 197;
+            this.enemyTotalTimeRemaining.Text = "label1";
+            this.enemyTotalTimeRemaining.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // checkLabel
+            // 
+            this.checkLabel.AutoSize = true;
+            this.checkLabel.BackColor = System.Drawing.Color.Transparent;
+            this.checkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkLabel.ForeColor = System.Drawing.Color.Red;
+            this.checkLabel.Location = new System.Drawing.Point(254, 62);
+            this.checkLabel.Name = "checkLabel";
+            this.checkLabel.Size = new System.Drawing.Size(123, 39);
+            this.checkLabel.TabIndex = 198;
+            this.checkLabel.Text = "Check!";
+            this.checkLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // GameSession
             // 
@@ -974,7 +1004,14 @@
             this.AutoSize = true;
             this.BackgroundImage = global::ChessGameAttempt.Properties.Resources.Abstract_Blue_Water_Backgrounds_800x600;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1088, 716);
+            this.ClientSize = new System.Drawing.Size(626, 748);
+            this.Controls.Add(this.checkLabel);
+            this.Controls.Add(this.enemyTotalTimeRemaining);
+            this.Controls.Add(this.myTotalTimeRemaining);
+            this.Controls.Add(this.enemyUsername);
+            this.Controls.Add(this.enemyTimeRemaining);
+            this.Controls.Add(this.myUsername);
+            this.Controls.Add(this.myTimeRemaining);
             this.Controls.Add(this.square07);
             this.Controls.Add(this.square06);
             this.Controls.Add(this.square05);
@@ -1039,15 +1076,10 @@
             this.Controls.Add(this.square72);
             this.Controls.Add(this.square71);
             this.Controls.Add(this.square70);
-            this.Controls.Add(this.hideChatButton);
-            this.Controls.Add(this.muteButton);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.tieButton);
-            this.Controls.Add(this.chatToSend);
-            this.Controls.Add(this.sendButton);
-            this.Controls.Add(this.chatWindow);
             this.Controls.Add(this.settingsIcon);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "GameSession";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -1057,14 +1089,9 @@
 
         #endregion
         private System.Windows.Forms.Button settingsIcon;
-        private System.Windows.Forms.RichTextBox chatWindow;
-        private System.Windows.Forms.Button sendButton;
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.TextBox chatToSend;
+        private System.Windows.Forms.Timer myTotalTimer;
         private System.Windows.Forms.Button tieButton;
         private System.Windows.Forms.Button exitButton;
-        private System.Windows.Forms.Button muteButton;
-        private System.Windows.Forms.Button hideChatButton;
         private System.Windows.Forms.Button square07;
         private System.Windows.Forms.Button square06;
         private System.Windows.Forms.Button square05;
@@ -1129,6 +1156,16 @@
         private System.Windows.Forms.Button square72;
         private System.Windows.Forms.Button square71;
         private System.Windows.Forms.Button square70;
+        private System.Windows.Forms.Label myTimeRemaining;
+        private System.Windows.Forms.Label myUsername;
+        private System.Windows.Forms.Label enemyUsername;
+        private System.Windows.Forms.Label enemyTimeRemaining;
+        private System.Windows.Forms.Label myTotalTimeRemaining;
+        private System.Windows.Forms.Label enemyTotalTimeRemaining;
+        private System.Windows.Forms.Label checkLabel;
+        private System.Windows.Forms.Timer myTurnTimer;
+        private System.Windows.Forms.Timer enemyTotalTimer;
+        private System.Windows.Forms.Timer enemyTurnTimer;
     }
 }
 

@@ -72,6 +72,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.DefaultButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DB)).BeginInit();
@@ -591,7 +592,7 @@
             // saveButton
             // 
             this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(197, 518);
+            this.saveButton.Location = new System.Drawing.Point(156, 518);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(83, 37);
             this.saveButton.TabIndex = 42;
@@ -608,12 +609,25 @@
             this.cancelButton.TabIndex = 43;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // DefaultButton
+            // 
+            this.DefaultButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DefaultButton.Location = new System.Drawing.Point(22, 518);
+            this.DefaultButton.Name = "DefaultButton";
+            this.DefaultButton.Size = new System.Drawing.Size(83, 37);
+            this.DefaultButton.TabIndex = 44;
+            this.DefaultButton.Text = "Default";
+            this.DefaultButton.UseVisualStyleBackColor = true;
+            this.DefaultButton.Click += new System.EventHandler(this.DefaultButton_Click);
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(409, 567);
+            this.Controls.Add(this.DefaultButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.label10);
@@ -732,5 +746,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Button DefaultButton;
     }
 }

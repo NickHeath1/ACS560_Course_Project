@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static ChessGameAttempt.GameSession;
@@ -37,7 +38,7 @@ namespace ChessGameAttempt
 
             InitializeComponent();
             SetupSettings();
-            client = new TcpClient("localhost", 2346);
+            client = new TcpClient(ChessUtils.IPAddress, ChessUtils.Port + 1);
             stream = client.GetStream();
 
             join.Enabled = remove.Enabled = false;
@@ -52,15 +53,16 @@ namespace ChessGameAttempt
                     remove.Enabled = false;
                 }
             }
+            tcpClientWorker.RunWorkerAsync();
         }
 
         private void SetupSettings()
         {
-            SquareColorSettings colors = DataApiController<SquareColorSettings>.GetData("http://localhost:2345/GetCustomChessboardForUser/" + me.Username);
+            SquareColorSettings colors = DataApiController<SquareColorSettings>.GetData(ChessUtils.IPAddressWithPort + "GetCustomChessboardForUser/" + me.Username);
             ChessUtils.Settings.Color.darkSquareColor = Color.FromArgb(colors.Red1, colors.Green1, colors.Blue1);
             ChessUtils.Settings.Color.lightSquareColor = Color.FromArgb(colors.Red2, colors.Green2, colors.Blue2);
 
-            List<PieceImageSettings> images = DataApiController<List<PieceImageSettings>>.GetData("http://localhost:2345/GetCustomPieceImagesForUser/" + me.Username);
+            List<PieceImageSettings> images = DataApiController<List<PieceImageSettings>>.GetData(ChessUtils.IPAddressWithPort + "GetCustomPieceImagesForUser/" + me.Username);
             if (images != null)
             {
                 foreach (PieceImageSettings image in images)
@@ -328,6 +330,33 @@ namespace ChessGameAttempt
                 if (result == DialogResult.Yes)
                 {
                     // Verify this game can be joined. Send the signal to the other user.
+                    TCPSignal signal = new TCPSignal
+                    {
+                        SignalType = Signal.JoinSession,
+                        GuestPlayerName = me.Username,
+                        SessionID = (int)lobbyTable.SelectedRows[0].Cells[0].Value
+                    };
+                    string json = JsonConvert.SerializeObject(signal) + "\r";
+                    byte[] data = ASCIIEncoding.ASCII.GetBytes(json);
+
+                    stream.Write(data, 0, data.Length);
+
+                    byte[] joined = new byte[1];
+                    stream.Read(joined, 0, 1);
+
+                    // Opponent accepted match
+                    if (joined[0] == 1)
+                    {
+                        byte[] data2 = new byte[65535];
+                        stream.Read(data2, 0, data2.Length);
+                        json = ASCIIEncoding.ASCII.GetString(data2).Replace("\0", "");
+                        TCPSignal signal2 = (TCPSignal)JsonConvert.DeserializeObject(json, typeof(TCPSignal));
+                        tcpClientWorker2.RunWorkerAsync(new object[] { signal2, stream });
+                        while (!tcpClientWorker2.CancellationPending)
+                        {
+                            Thread.Sleep(10);
+                        }
+                    }
                 }
             }
         }
@@ -338,18 +367,33 @@ namespace ChessGameAttempt
             {
                 ViewGameDetailsForm vgdf = new ViewGameDetailsForm();
 
-                string hostUsername = (string)lobbyTable.SelectedRows[0].Cells[2].Value;
-                int gameId = (int)lobbyTable.SelectedRows[0].Cells[5].Value;
-
-                List<CustomGame> games = DataApiController<List<CustomGame>>.GetData("http://localhost:2345/GetCustomGamesForUser/" + hostUsername);
-                CustomGame game = games.Single(x => x.GameID == gameId);
-                if (game != null)
+                bool isCustomGame = (bool)lobbyTable.SelectedRows[0].Cells[1].Value;
+                if (isCustomGame)
                 {
-                    vgdf.SetGameTime(ChessUtils.ConvertSecondsToTimeString(game.GameTimer));
-                    vgdf.SetTurnTime(ChessUtils.ConvertSecondsToTimeString(game.MoveTimer));
-                    vgdf.SetOpponentName(hostUsername);
-                    vgdf.SetToMove(game.WhiteMovesFirst ? "White" : "Black");
-                    vgdf.SetBoard(game.Pieces);
+                    string hostUsername = (string)lobbyTable.SelectedRows[0].Cells[2].Value;
+                    int gameId = (int)lobbyTable.SelectedRows[0].Cells[5].Value;
+
+                    List<CustomGame> games = DataApiController<List<CustomGame>>.GetData(ChessUtils.IPAddressWithPort + "GetCustomGamesForUser/" + hostUsername);
+                    CustomGame game = games.Single(x => x.GameID == gameId);
+                    if (game != null)
+                    {
+                        vgdf.SetGameTime(ChessUtils.ConvertSecondsToTimeString(game.GameTimer));
+                        vgdf.SetTurnTime(ChessUtils.ConvertSecondsToTimeString(game.MoveTimer));
+                        vgdf.SetOpponentName(hostUsername);
+                        vgdf.SetToMove(game.WhiteMovesFirst ? "White" : "Black");
+                        vgdf.SetBoard(game.Pieces);
+                        vgdf.Show();
+                    }
+                }
+                else
+                {
+                    string gameTime = (string)lobbyTable.SelectedRows[0].Cells[4].Value;
+                    string turnTime = (string)lobbyTable.SelectedRows[0].Cells[3].Value;
+                    string host = (string)lobbyTable.SelectedRows[0].Cells[2].Value;
+                    vgdf.SetGameTime(gameTime);
+                    vgdf.SetTurnTime(turnTime);
+                    vgdf.SetOpponentName(host);
+                    vgdf.SetToMove("White");
                     vgdf.Show();
                 }
             }
@@ -472,6 +516,43 @@ namespace ChessGameAttempt
         {
             AchievementsForm form = new AchievementsForm(me);
             form.Show();
+        }
+
+        private void tcpClientWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (!tcpClientWorker.CancellationPending)
+            {
+                byte[] data = new byte[65535];
+                if (lobbyTable.Rows.Count == 0)
+                {
+                    Thread.Sleep(10);
+                    continue;
+                }
+                stream.Read(data, 0, data.Length);
+                string json = ASCIIEncoding.ASCII.GetString(data).Replace("\0", "");
+                TCPSignal signal = (TCPSignal)JsonConvert.DeserializeObject(json, typeof(TCPSignal));
+                if (signal.SignalType == Signal.StartSession)
+                {
+                    tcpClientWorker2.RunWorkerAsync(new object[] { signal, stream });
+                    while (!tcpClientWorker2.CancellationPending)
+                    {
+                        Thread.Sleep(10);
+                    }
+                }
+            }
+        }
+
+        private void tcpClientWorker2_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (!tcpClientWorker2.CancellationPending)
+            {
+                object[] parameters = (object[])e.Argument;
+                TCPSignal signal = (TCPSignal)parameters[0];
+                NetworkStream gameStream = (NetworkStream)parameters[1];
+                GameSession session = new GameSession(me, new User(signal.GuestPlayerName == me.Username ? signal.HostPlayerName : signal.GuestPlayerName, ""), gameStream);
+                session.ShowDialog();
+                tcpClientWorker2.CancelAsync();
+            }
         }
     }
 }

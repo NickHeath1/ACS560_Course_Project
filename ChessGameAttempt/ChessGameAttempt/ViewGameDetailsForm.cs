@@ -12,10 +12,12 @@ namespace ChessGameAttempt
 {
     public partial class ViewGameDetailsForm : Form
     {
+        MoveLogic moveLogic;
         Button[,] board;
         public ViewGameDetailsForm()
         {
             InitializeComponent();
+            moveLogic = new MoveLogic();
             board = new Button[,]
             {
                 { square00, square01, square02, square03, square04, square05, square06, square07},
@@ -27,6 +29,17 @@ namespace ChessGameAttempt
                 { square60, square61, square62, square63, square64, square65, square66, square67},
                 { square70, square71, square72, square73, square74, square75, square76, square77}
             };
+
+            // Set up the customizations of the board
+            foreach (Button square in board)
+            {
+                MoveLogic.Coordinates c = moveLogic.GetCoordinatesOfButton(square);
+                square.BackColor = (c.X + c.Y) % 2 == 0 ? 
+                    ChessUtils.Settings.Color.darkSquareColor : 
+                    ChessUtils.Settings.Color.lightSquareColor;
+
+
+            }
         }
 
         public void SetOpponentName(string name)

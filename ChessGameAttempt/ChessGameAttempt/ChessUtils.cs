@@ -16,6 +16,10 @@ namespace ChessGameAttempt
             Stalemate = 2
         }
 
+        public static string IPAddress = "localhost";
+        public static int Port = 2345;
+        public static string IPAddressWithPort = "http://localhost:2345/";
+
         public static class Settings
         {
             public class Color

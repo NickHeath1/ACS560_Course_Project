@@ -154,7 +154,7 @@ namespace ChessGameAttempt
                 Green2 = greenLightComponent,
                 Blue2 = blueLightComponent
             };
-            DataApiController<SquareColorSettings>.PostData("http://localhost:2345/EditCustomChessboard", settings);
+            DataApiController<SquareColorSettings>.PostData(ChessUtils.IPAddressWithPort + "EditCustomChessboard", settings);
 
             ChessUtils.Settings.Image.BlackKing   = BlackKing;
             ChessUtils.Settings.Image.BlackQueen  = BlackQueen;
@@ -246,8 +246,8 @@ namespace ChessGameAttempt
             };
 
             // Send the pictures to the database
-            DataApiController<object>.PostData("http://localhost:2345/DeleteUsersCustomPieceImages/" + me.Username, null);
-            DataApiController<List<PieceImageSettings>>.PostData("http://localhost:2345/AddCustomPieceImages", images);
+            DataApiController<object>.PostData(ChessUtils.IPAddressWithPort + "DeleteUsersCustomPieceImages/" + me.Username, null);
+            DataApiController<List<PieceImageSettings>>.PostData(ChessUtils.IPAddressWithPort + "AddCustomPieceImages", images);
 
             // Close this form
             Close();
@@ -262,74 +262,139 @@ namespace ChessGameAttempt
 
         private void whiteKingButton_Click(object sender, EventArgs e)
         {
-            WhiteKing = GetImage();
-            WhiteKingImage.Image = WhiteKing;
+            Image image = GetImage();
+            if (image != null)
+            {
+                WhiteKing = WhiteKingImage.Image = image;
+            }
         }
 
         private void whiteQueenButton_Click(object sender, EventArgs e)
         {
-            WhiteQueen = GetImage();
-            WhiteQueenImage.Image = WhiteQueen;
+            Image image = GetImage();
+            if (image != null)
+            {
+                WhiteQueen = WhiteQueenImage.Image = image;
+            }
         }
 
         private void whiteRookButton_Click(object sender, EventArgs e)
         {
-            WhiteRook = GetImage();
-            WhiteRookImage.Image = WhiteRook;
+            Image image = GetImage();
+            if (image != null)
+            {
+                WhiteRook = WhiteRookImage.Image = image;
+            }
         }
 
         private void whiteKnightButton_Click(object sender, EventArgs e)
         {
-            WhiteKnight = GetImage();
-            WhiteKnightImage.Image = WhiteKnight;
+            Image image = GetImage();
+            if (image != null)
+            {
+                WhiteKnight = WhiteKnightImage.Image = image;
+            }
         }
 
         private void whiteBishopButton_Click(object sender, EventArgs e)
         {
-            WhiteBishop = GetImage();
-            WhiteBishopImage.Image = WhiteBishop;
+            Image image = GetImage();
+            if (image != null)
+            {
+                WhiteBishop = WhiteBishopImage.Image = image;
+            }
         }
 
         private void whitePawnButton_Click(object sender, EventArgs e)
         {
-            WhitePawn = GetImage();
-            WhitePawnImage.Image = WhitePawn;
+            Image image = GetImage();
+            if (image != null)
+            {
+                WhitePawnImage.Image = WhitePawn = image;
+            }
         }
 
         private void blackKingButton_Click(object sender, EventArgs e)
         {
-            BlackKing = GetImage();
-            BlackKingImage.Image = BlackKing;
+            Image image = GetImage();
+            if (image != null)
+            {
+                BlackKingImage.Image = BlackKing = image;
+            }
         }
 
         private void blackQueenButton_Click(object sender, EventArgs e)
         {
-            BlackQueen = GetImage();
-            BlackQueenImage.Image = BlackQueen;
+            Image image = GetImage();
+            if (image != null)
+            {
+                BlackQueenImage.Image = BlackQueen = image;
+            }
         }
 
         private void blackRookButton_Click(object sender, EventArgs e)
         {
-            BlackRook = GetImage();
-            BlackRookImage.Image = BlackRook;
+            Image image = GetImage();
+            if (image != null)
+            {
+                BlackRookImage.Image = BlackRook = image;
+            }
         }
 
         private void blackKnightButton_Click(object sender, EventArgs e)
         {
-            BlackKnight = GetImage();
-            BlackKnightImage.Image = BlackKnight;
+            Image image = GetImage();
+            if (image != null)
+            {
+                BlackKnightImage.Image = BlackKnight = image;
+            }
         }
 
         private void blackBishopButton_Click(object sender, EventArgs e)
         {
-            BlackBishop = GetImage();
-            BlackBishopImage.Image = BlackBishop;
+            Image image = GetImage();
+            if (image != null)
+            {
+                BlackBishopImage.Image = BlackBishop = image;
+            }
         }
 
         private void blackPawnButton_Click(object sender, EventArgs e)
         {
-            BlackPawn = GetImage();
-            BlackPawnImage.Image = BlackPawn;
+            Image image = GetImage();
+            if (image != null)
+            {
+                BlackPawnImage.Image = BlackPawn = image;
+            }
+        }
+
+        private void DefaultButton_Click(object sender, EventArgs e)
+        {
+            // Reset all images to the resource images
+            WhiteKingImage.Image = WhiteKing =     ChessGameAttempt.Properties.Resources.wKing;
+            WhiteQueenImage.Image = WhiteQueen =   ChessGameAttempt.Properties.Resources.wQueen;
+            WhiteRookImage.Image = WhiteRook =     ChessGameAttempt.Properties.Resources.wRook;
+            WhiteBishopImage.Image = WhiteBishop = ChessGameAttempt.Properties.Resources.wBishop;
+            WhiteKnightImage.Image = WhiteKnight = ChessGameAttempt.Properties.Resources.wKnight;
+            WhitePawnImage.Image = WhitePawn =     ChessGameAttempt.Properties.Resources.wPawn;
+            BlackKingImage.Image = BlackKing =     ChessGameAttempt.Properties.Resources.bKing;
+            BlackQueenImage.Image = BlackQueen =   ChessGameAttempt.Properties.Resources.bQueen;
+            BlackRookImage.Image = BlackRook =     ChessGameAttempt.Properties.Resources.bRook;
+            BlackBishopImage.Image = BlackBishop = ChessGameAttempt.Properties.Resources.bBishop;
+            BlackKnightImage.Image = BlackKnight = ChessGameAttempt.Properties.Resources.bKnight;
+            BlackPawnImage.Image = BlackPawn =     ChessGameAttempt.Properties.Resources.bPawn;
+
+            DR.Value =
+            DG.Value =
+            DB.Value = 127;
+            LR.Value =
+            LG.Value =
+            LB.Value = 255;
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

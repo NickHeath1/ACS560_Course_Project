@@ -14,7 +14,8 @@ namespace ChessGameAttempt
         GetSessions = 3,
         SendMessage = 4,
         JoinSession = 5,
-        DeleteSession = 6
+        DeleteSession = 6,
+        StartSession = 7
     }
 
     class Move
@@ -42,6 +43,8 @@ namespace ChessGameAttempt
         public Signal SignalType;
         public int SessionID;
         public Move PlayerMove;
+        public string HostPlayerName;
+        public string GuestPlayerName;
         public Session NewSession;
         public String PlayerMessage;
     }

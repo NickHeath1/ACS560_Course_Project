@@ -450,7 +450,7 @@ namespace ChessGameAttempt
                 Pieces = pieces
             };
 
-            bool success = DataApiController<CustomGame>.PostData("http://localhost:2345/AddCustomGame", game);
+            bool success = DataApiController<CustomGame>.PostData(ChessUtils.IPAddressWithPort + "AddCustomGame", game);
             if (!success)
             {
                 ShowErrorMessage("Error while adding custom game to database.");

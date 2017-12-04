@@ -29,7 +29,7 @@ namespace ChessGameAttempt
 
         private void GetGames()
         {
-            gameList = DataApiController<List<CustomGame>>.GetData("http://localhost:2345/GetCustomGamesForUser/" + me.Username);
+            gameList = DataApiController<List<CustomGame>>.GetData(ChessUtils.IPAddressWithPort + "GetCustomGamesForUser/" + me.Username);
             if (gameList != null)
             {
                 foreach (CustomGame game in gameList)
@@ -115,7 +115,7 @@ namespace ChessGameAttempt
                 // The user has selected to delete the custom game, continue...
                 int gameId = (int)gamesList.SelectedRows[0].Cells[0].Value;
 
-                DataApiController<List<CustomGame>>.PostData("http://localhost:2345/DeleteCustomGame/" + gameId.ToString(), null);
+                DataApiController<List<CustomGame>>.PostData(ChessUtils.IPAddressWithPort + "DeleteCustomGame/" + gameId.ToString(), null);
 
                 // Delete the game from the data grid view
                 gamesList.Rows.RemoveAt(gamesList.SelectedRows[0].Index);
@@ -130,7 +130,7 @@ namespace ChessGameAttempt
 
                 int gameId = (int)gamesList.SelectedRows[0].Cells[0].Value;
 
-                List<CustomGame> games = DataApiController<List<CustomGame>>.GetData("http://localhost:2345/GetCustomGamesForUser/" + me.Username);
+                List<CustomGame> games = DataApiController<List<CustomGame>>.GetData(ChessUtils.IPAddressWithPort + "GetCustomGamesForUser/" + me.Username);
                 CustomGame game = games.Single(x => x.GameID == gameId);
                 if (game != null)
                 {

@@ -19,10 +19,10 @@ namespace ChessGameAttempt
         {
             me = user;
             InitializeComponent();
-            AllAchievements = DataApiController<List<Achievement>>.GetData("http://localhost:2345/GetAllAchievements");
+            AllAchievements = DataApiController<List<Achievement>>.GetData(ChessUtils.IPAddressWithPort + "GetAllAchievements");
 
             // At least 1 achievement earned
-            UsersAchievements = DataApiController<List<Achievement>>.GetData("http://localhost:2345/GetAchievementsForUser/" + me.Username);
+            UsersAchievements = DataApiController<List<Achievement>>.GetData(ChessUtils.IPAddressWithPort + me.Username);
             if (UsersAchievements != null)
             {
                 foreach (Achievement achievement in AllAchievements)

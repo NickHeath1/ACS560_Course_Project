@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LobbyForm));
             this.details = new System.Windows.Forms.Button();
             this.lobbyTable = new System.Windows.Forms.DataGridView();
@@ -52,6 +52,8 @@
             this.settingsButton = new System.Windows.Forms.Button();
             this.logout = new System.Windows.Forms.Button();
             this.refreshButton = new System.Windows.Forms.Button();
+            this.tcpClientWorker = new System.ComponentModel.BackgroundWorker();
+            this.tcpClientWorker2 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.lobbyTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,14 +76,14 @@
             this.lobbyTable.AllowUserToOrderColumns = true;
             this.lobbyTable.AllowUserToResizeRows = false;
             this.lobbyTable.BackgroundColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.lobbyTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.lobbyTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.lobbyTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lobbyTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.SessionID,
@@ -96,8 +98,8 @@
             this.lobbyTable.Name = "lobbyTable";
             this.lobbyTable.ReadOnly = true;
             this.lobbyTable.RowHeadersVisible = false;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lobbyTable.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lobbyTable.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.lobbyTable.RowTemplate.Height = 24;
             this.lobbyTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.lobbyTable.Size = new System.Drawing.Size(740, 458);
@@ -113,10 +115,10 @@
             // 
             // custom
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.NullValue = false;
-            this.custom.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.NullValue = false;
+            this.custom.DefaultCellStyle = dataGridViewCellStyle10;
             this.custom.HeaderText = "Custom?";
             this.custom.Name = "custom";
             this.custom.ReadOnly = true;
@@ -124,8 +126,8 @@
             // 
             // username
             // 
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.username.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.username.DefaultCellStyle = dataGridViewCellStyle11;
             this.username.HeaderText = "UserName";
             this.username.Name = "username";
             this.username.ReadOnly = true;
@@ -285,6 +287,15 @@
             this.refreshButton.UseVisualStyleBackColor = true;
             this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
             // 
+            // tcpClientWorker
+            // 
+            this.tcpClientWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.tcpClientWorker_DoWork);
+            // 
+            // tcpClientWorker2
+            // 
+            this.tcpClientWorker2.WorkerSupportsCancellation = true;
+            this.tcpClientWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.tcpClientWorker2_DoWork);
+            // 
             // LobbyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -334,5 +345,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn turnTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn gameTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn GameID;
+        private System.ComponentModel.BackgroundWorker tcpClientWorker;
+        private System.ComponentModel.BackgroundWorker tcpClientWorker2;
     }
 }

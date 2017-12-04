@@ -163,7 +163,9 @@ namespace ChessGameAttempt
             {
                 for (int j = 0; j < 8; ++j)
                 {
-                    board[i, j].BackColor = (i + j) % 2 == 0 ? Color.White : Color.Gray;
+                    board[i, j].BackColor = (i + j) % 2 == 0 ?
+                        ChessUtils.Settings.Color.darkSquareColor :
+                        ChessUtils.Settings.Color.lightSquareColor;
                 }
             }
         }

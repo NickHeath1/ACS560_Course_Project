@@ -23,6 +23,8 @@ type Session struct {
 type TCPSignal struct {
 	SignalType int `json:"SignalType,omitempty"`
 	SessionID int `json:"SessionID,omitempty"`
+	HostPlayerName string `json:"HostPlayerName,omitempty"`
+	GuestPlayerName string `json:"GuestPlayerName,omitempty"`
 	PlayerMove ChessData.Move `json:"PlayerMove,omitempty"`
 	NewSession Session `json:"NewSession,omitempty"`
 	PlayerMessage string `json:"PlayerMessage,omitempty"`
@@ -46,28 +48,29 @@ func CreateSession(client *Client, session *Session) {
 	client.session = &activeSessions[len(activeSessions) - 1]
 }
 
-func JoinSession(client *Client, sessionID int) {
+func JoinSession(client *Client, sessionID int, guestPlayerName string, hostPlayerName string) {
 	found := false
-	for _, session := range activeSessions {
-		if session.SessionID == sessionID {
-			client.session = &session
+	for clientList, _ := range allClients {
+		if clientList.session.SessionID == sessionID {
 			found = true;
+			client.connection = clientList
+			clientList.connection = client
+			client.session = clientList.session
+			signal := new(TCPSignal)
+			signal.SignalType = 7
+			client.session.GuestPlayer = guestPlayerName
+			client.session.HostPlayer = hostPlayerName
+			signal.NewSession = *client.session
+			jsonBytes, _ := json.Marshal(signal)
+			client.WriteDataInt(1)
+			client.WriteDataString(string(jsonBytes))
+			clientList.WriteDataString(string(jsonBytes))
 			break
 		}
 	}
 	if found == false {
-		client.connection.WriteDataInt(0)
-		return;
-	}
-	client.connection.WriteDataInt(1)
-
-	for clientList, _ := range allClients {
-		if clientList.session.SessionID == sessionID {
-			client.connection = clientList
-			clientList.connection = client
-			fmt.Println("Connected")
-			break
-		}
+		client.WriteDataInt(0)
+		return
 	}
 
 }
@@ -145,7 +148,7 @@ func (client *Client) Read() {
 			} else if tcpSignal.SignalType == 4 {
 				SendMessage(client, tcpSignal.PlayerMessage)
 			} else if tcpSignal.SignalType == 5 {
-				JoinSession(client, tcpSignal.SessionID)
+				JoinSession(client, tcpSignal.SessionID, tcpSignal.GuestPlayerName, tcpSignal.HostPlayerName)
 			} else if tcpSignal.SignalType == 6 {
 				DeleteSession(client, tcpSignal.SessionID)
 			}

@@ -107,7 +107,7 @@ namespace ChessGameAttempt
         // Add user request
         bool AddUser(User user)
         {
-            bool success = DataApiController<User>.PostData("http://localhost:2345/AddUser", user);
+            bool success = DataApiController<User>.PostData(ChessUtils.IPAddressWithPort + "AddUser", user);
             if (!success)
             {
                 MessageBox.Show("Error while adding user to database.", "Error");
@@ -118,7 +118,7 @@ namespace ChessGameAttempt
 
         bool IsUserInDb(User user)
         {
-            bool success = DataApiController<User>.PostData("http://localhost:2345/CheckUserAvailability/" + user.Username, null);
+            bool success = DataApiController<User>.PostData(ChessUtils.IPAddressWithPort + "CheckUserAvailability/" + user.Username, null);
             return success;
         }
 
