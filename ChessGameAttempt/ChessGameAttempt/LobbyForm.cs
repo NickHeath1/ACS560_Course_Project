@@ -413,7 +413,7 @@ namespace ChessGameAttempt
                 return;
             }
 
-            AddCustomGameForm form = new AddCustomGameForm(me, this);
+            AddCustomGameForm form = new AddCustomGameForm(me, this, stream);
             form.ShowDialog();
         }
 
