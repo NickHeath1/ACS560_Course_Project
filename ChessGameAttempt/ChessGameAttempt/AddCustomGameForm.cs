@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,11 +19,13 @@ namespace ChessGameAttempt
         public User me;
         LobbyForm lobby;
         List<CustomGame> gameList;
+        NetworkStream stream;
 
-        public AddCustomGameForm(User user, LobbyForm form)
+        public AddCustomGameForm(User user, LobbyForm form, NetworkStream stream)
         {
             me = user;
             lobby = form;
+            this.stream = stream;
             InitializeComponent();
             GetGames();
         }
@@ -99,6 +102,9 @@ namespace ChessGameAttempt
 
                 lobby.RefreshTable();
 
+                GameSession session = new GameSession(me, new User("", ""), stream);
+                session.ShowDialog();
+                Hide();
                 Close();
             }
         }
