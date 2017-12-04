@@ -115,7 +115,7 @@
             this.settingsIcon.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("settingsIcon.BackgroundImage")));
             this.settingsIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.settingsIcon.Location = new System.Drawing.Point(50, 658);
-            this.settingsIcon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.settingsIcon.Margin = new System.Windows.Forms.Padding(2);
             this.settingsIcon.Name = "settingsIcon";
             this.settingsIcon.Size = new System.Drawing.Size(85, 75);
             this.settingsIcon.TabIndex = 64;
@@ -127,7 +127,7 @@
             this.tieButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tieButton.BackgroundImage")));
             this.tieButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.tieButton.Location = new System.Drawing.Point(265, 658);
-            this.tieButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tieButton.Margin = new System.Windows.Forms.Padding(2);
             this.tieButton.Name = "tieButton";
             this.tieButton.Size = new System.Drawing.Size(85, 75);
             this.tieButton.TabIndex = 74;
@@ -139,7 +139,7 @@
             this.exitButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitButton.BackgroundImage")));
             this.exitButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.exitButton.Location = new System.Drawing.Point(487, 658);
-            this.exitButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.exitButton.Margin = new System.Windows.Forms.Padding(2);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(85, 75);
             this.exitButton.TabIndex = 75;
@@ -941,7 +941,7 @@
             this.enemyUsername.AutoSize = true;
             this.enemyUsername.BackColor = System.Drawing.Color.Transparent;
             this.enemyUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enemyUsername.Location = new System.Drawing.Point(484, 41);
+            this.enemyUsername.Location = new System.Drawing.Point(397, 41);
             this.enemyUsername.Name = "enemyUsername";
             this.enemyUsername.Size = new System.Drawing.Size(79, 29);
             this.enemyUsername.TabIndex = 195;
@@ -1079,7 +1079,7 @@
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.tieButton);
             this.Controls.Add(this.settingsIcon);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GameSession";
             this.Text = "Form1";
             this.ResumeLayout(false);

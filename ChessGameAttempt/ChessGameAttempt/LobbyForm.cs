@@ -53,7 +53,7 @@ namespace ChessGameAttempt
                     remove.Enabled = false;
                 }
             }
-            tcpClientWorker.RunWorkerAsync();
+            //tcpClientWorker.RunWorkerAsync();
         }
 
         private void SetupSettings()
@@ -236,6 +236,7 @@ namespace ChessGameAttempt
             stream.Write(jsonBytes, 0, jsonBytes.Length);
 
             RefreshTable();
+            GameSession session = new GameSession(me, new User("", ""), stream);
         }
 
         private void RemoveSessionFromTable()
@@ -334,6 +335,7 @@ namespace ChessGameAttempt
                     {
                         SignalType = Signal.JoinSession,
                         GuestPlayerName = me.Username,
+                        HostPlayerName = (string)lobbyTable.SelectedRows[0].Cells[2].Value,
                         SessionID = (int)lobbyTable.SelectedRows[0].Cells[0].Value
                     };
                     string json = JsonConvert.SerializeObject(signal) + "\r";
@@ -351,11 +353,8 @@ namespace ChessGameAttempt
                         stream.Read(data2, 0, data2.Length);
                         json = ASCIIEncoding.ASCII.GetString(data2).Replace("\0", "");
                         TCPSignal signal2 = (TCPSignal)JsonConvert.DeserializeObject(json, typeof(TCPSignal));
-                        tcpClientWorker2.RunWorkerAsync(new object[] { signal2, stream });
-                        while (!tcpClientWorker2.CancellationPending)
-                        {
-                            Thread.Sleep(10);
-                        }
+                        GameSession session = new GameSession(me, new User(signal2.NewSession.HostPlayer, ""), stream);
+                        session.ShowDialog();
                     }
                 }
             }
@@ -413,7 +412,7 @@ namespace ChessGameAttempt
                 return;
             }
 
-            AddCustomGameForm form = new AddCustomGameForm(me, this);
+            AddCustomGameForm form = new AddCustomGameForm(me, this, stream);
             form.ShowDialog();
         }
 
@@ -462,6 +461,7 @@ namespace ChessGameAttempt
             stream.Write(jsonBytes, 0, jsonBytes.Length);
 
             RefreshTable();
+            GameSession session = new GameSession(me, new User("", ""), stream);
         }
 
         private void twoMinBlitz_Click(object sender, EventArgs e)
@@ -496,6 +496,7 @@ namespace ChessGameAttempt
             stream.Write(jsonBytes, 0, jsonBytes.Length);
 
             RefreshTable();
+            GameSession session = new GameSession(me, new User("", ""), stream);
         }
 
         private bool UserHasActiveGame()
@@ -530,6 +531,7 @@ namespace ChessGameAttempt
                 }
                 stream.Read(data, 0, data.Length);
                 string json = ASCIIEncoding.ASCII.GetString(data).Replace("\0", "");
+                if (!json.Contains("SignalType")) continue;
                 TCPSignal signal = (TCPSignal)JsonConvert.DeserializeObject(json, typeof(TCPSignal));
                 if (signal.SignalType == Signal.StartSession)
                 {

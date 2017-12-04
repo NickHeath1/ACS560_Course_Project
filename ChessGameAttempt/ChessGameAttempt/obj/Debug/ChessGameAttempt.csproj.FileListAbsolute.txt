@@ -39,3 +39,25 @@ C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGa
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.AddCustomGameForm.resources
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.SettingsForm.resources
 C:\Git\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.AchievementsForm.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\bin\Debug\ChessGameAttempt.exe.config
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\bin\Debug\ChessGameAttempt.exe
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\bin\Debug\ChessGameAttempt.pdb
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.csprojResolveAssemblyReference.cache
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.AchievementsForm.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.AddCustomGameForm.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.CreateCustomGameForm.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.CreateUserForm.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.GameSession.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.SettingsForm.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.LobbyForm.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.LogInForm.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.PawnPromotionFormBlack.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.PawnPromotionFormWhite.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.Properties.Resources.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.ViewGameDetailsForm.resources
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.csproj.GenerateResource.Cache
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.csproj.CoreCompileInputs.cache
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.exe
+C:\Users\Caleb\Documents\School\2017-2018\ACS560 Course Project\ACS560_Course_Project\ChessGameAttempt\ChessGameAttempt\obj\Debug\ChessGameAttempt.pdb

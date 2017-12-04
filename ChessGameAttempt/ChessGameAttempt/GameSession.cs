@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -89,6 +90,22 @@ namespace ChessGameAttempt
 
             SetUpButtons();
             moveLogic.ClearChessBoardColors(board);
+            myUsername.Text = me.Username;
+            if (them.Username == "")
+            {
+                Show();
+                Refresh();
+                byte[] data = new byte[65535];
+                stream.Read(data, 0, data.Length);
+                string json = ASCIIEncoding.ASCII.GetString(data).Replace("\0", "");
+                TCPSignal signal = (TCPSignal)JsonConvert.DeserializeObject(json, typeof(TCPSignal));
+                enemyUsername.Text = signal.NewSession.GuestPlayer;
+            }
+            else
+            {
+                enemyUsername.Text = them.Username;
+            }
+            
         }
 
         private void SetUpButtons()
